@@ -1,0 +1,44 @@
+{
+  "eventList": [
+    { 
+      "id": 1, 
+      "name": "Evento Estres", 
+      "stressImpact": -20, 
+      "selfCareImpact": 5, 
+      "communicationImpact": 0, 
+      "maintenanceImpact": 0, 
+      "mainIndicator": 0,
+      "status": 0
+    },
+    { 
+      "id": 2,
+      "name": "Evento Autocuidado",
+      "stressImpact": 5,
+      "selfCareImpact": 10,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 1,
+      "status": 0
+    },
+    { 
+      "id": 2,
+      "name": "Evento Comunicacion",
+      "stressImpact": 5,
+      "selfCareImpact": 10,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 2,
+      "status": 0
+    },
+    { 
+      "id": 2,
+      "name": "Evento Granja",
+      "stressImpact": 5,
+      "selfCareImpact": 10,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 3,
+      "status": 0
+    }
+  ]
+}
