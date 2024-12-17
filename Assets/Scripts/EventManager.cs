@@ -33,7 +33,7 @@ namespace EventManager
 
             // Umbrales
             private const float globalThreshold = 50f;
-            private const float cooldownDuration = 30f;
+            private const float cooldownDuration = 10f;
 
             void Start()
             {
@@ -48,11 +48,11 @@ namespace EventManager
                 {
                     if (eventInProgress)
                     {
-                        yield return new WaitForSeconds(15f); // Baja cada 15 segundos durante un evento activo
+                        yield return new WaitForSeconds(10f); // Baja cada 15 segundos durante un evento activo
                     }
                     else
                     {
-                        yield return new WaitForSeconds(5f); // Baja cada 5 segundos cuando no hay eventos activos
+                        yield return new WaitForSeconds(2f); // Baja cada 5 segundos cuando no hay eventos activos
                     }
 
                     stressIndicator = Mathf.Clamp(stressIndicator + 2f, 0f, 100f);
@@ -86,14 +86,23 @@ namespace EventManager
 
             private void ValidateAndActivateEvent()
             {
-                if (eventInProgress || eventCooldownTimer > 0) return;
+                // No activar eventos si uno ya está en progreso
+                if (eventInProgress) return;
 
+                // Reduce el cooldown si es necesario
+                if (eventCooldownTimer > 0)
+                {
+                    eventCooldownTimer -= Time.deltaTime;
+                    return;
+                }
+
+                // Busca un evento elegible
                 foreach (var e in eventPool)
                 {
                     if (e.status == EventStatus.Pending && ShouldActivateEvent(e))
                     {
                         ActivateEvent(e);
-                        break;
+                        break; // Solo activa un evento a la vez
                     }
                 }
             }
@@ -133,23 +142,29 @@ namespace EventManager
             {
                 Debug.Log($"Evento activado: {e.name}");
 
-                // Aplicar impacto
+                // Aplicar impacto en los indicadores
                 stressIndicator = Mathf.Clamp(stressIndicator + e.stressImpact, 0f, 100f);
                 selfCareIndicator = Mathf.Clamp(selfCareIndicator + e.selfCareImpact, 0f, 100f);
                 communicationIndicator = Mathf.Clamp(communicationIndicator + e.communicationImpact, 0f, 100f);
                 maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + e.maintenanceImpact, 0f, 100f);
 
+                // Cambiar el estado del evento
                 e.status = EventStatus.InProgress;
                 eventInProgress = true;
 
-                StartCoroutine(EndEventAfterDelay(e, 15f)); // Baja indicadores cada 15 segundos
+                // Inicia el proceso para finalizar el evento
+                StartCoroutine(EndEventAfterDelay(e, 3f)); // La duración del evento es de 15 segundos
             }
 
             private IEnumerator EndEventAfterDelay(EventData e, float duration)
             {
                 yield return new WaitForSeconds(duration);
+
+                // Cambia el estado del evento a completado
                 e.status = EventStatus.Completed;
                 eventInProgress = false;
+
+                // Reinicia el cooldown
                 eventCooldownTimer = cooldownDuration;
 
                 Debug.Log($"Evento finalizado: {e.name}");
