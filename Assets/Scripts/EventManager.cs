@@ -98,11 +98,11 @@ namespace EventManager
             } 
             else if (ShouldTriggerEvent(selfCareIndicator, false))
             {
-
+                EventData eventSelected = SelectEvent(IndicatorType.SelfCare);
             }
             else if (ShouldTriggerEvent(communicationIndicator, false))
             {
-
+                EventData eventSelected = SelectEvent(IndicatorType.Communication);
             }
             //else if (validateIndicatorProb(maintenanceIndicator, false))
             //{
