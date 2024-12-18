@@ -689,7 +689,6 @@ GameObject:
   - component: {fileID: 930877528}
   - component: {fileID: 930877529}
   - component: {fileID: 930877530}
-  - component: {fileID: 930877531}
   m_Layer: 0
   m_Name: Alma
   m_TagString: Untagged
@@ -838,7 +837,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 930877522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20eaf0a751f34f3c9a7dfdb3d2493de4, type: 3}
+  m_Script: {fileID: 11500000, guid: aace232cb6af44f8a6e4231b3aa3d3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 1
@@ -853,23 +852,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 930877522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bc60a7f78e6434fb0f3ec0cad3c603c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionDistance: 2
-  interactKey: 120
-  otherCharacter: {fileID: 585789244}
-  holdPositionOffset: {x: 0.58, y: -0.06, z: 0}
---- !u!114 &930877531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930877522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c428c4815b0f4e2492b6c00bd9a74915, type: 3}
+  m_Script: {fileID: 11500000, guid: ec19edcd038349f8a5667d40f7f04950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 2
