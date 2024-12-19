@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Grabbable
   - CoffeeCube
+  - Tetera
+  - Librero
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ItemSpawner
   - Water
   - UI
-  - 
+  - NPC
   - 
   - 
   - 
