@@ -14,8 +14,8 @@ namespace EventManager
         [Range(0f, 100f)] public float maintenanceIndicator = 100f;
         [Range(0f, 300f)] public float globalIndicator;
 
-        // Pool de eventos
-        private List<EventData> eventPool = new List<EventData>();
+        [Header("Events information")]
+        public List<EventData> eventPool = new List<EventData>();
         public EventData currentEvent;
         public GameObject currentNPC;
 
@@ -25,7 +25,7 @@ namespace EventManager
         private float indicatorsAbove70Timer = 0f;
         private int lastEventId = 0;
 
-        private bool eventInProgress = false;
+        public bool eventInProgress = false;
 
         // Umbrales
         private const float globalThreshold = 200f;
@@ -85,11 +85,11 @@ namespace EventManager
             if (eventInProgress) return;
 
             // Reduce el cooldown si es necesario
-            if (eventCooldownTimer > 0)
-            {
-                eventCooldownTimer -= Time.deltaTime;
-                return;
-            }
+            //if (eventCooldownTimer > 0)
+            //{
+            //    eventCooldownTimer -= Time.deltaTime;
+            //    return;
+            //}
 
 
             if (ShouldTriggerEvent(stressIndicator, true))
@@ -126,7 +126,7 @@ namespace EventManager
             {
                 prob = 15f;
             }
-            else if ((indicatorValue >= 30f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 70f))
+            else if ((inverse && indicatorValue >= 30f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 70f))
             {
                 prob = 30f;
             }
@@ -142,7 +142,7 @@ namespace EventManager
         private EventData SelectEvent(IndicatorType indicatorType) {
             foreach (EventData e in eventPool)
             {
-                if (e.mainIndicator == indicatorType && lastEventId != e.id)
+                if (e.mainIndicator == indicatorType) //&& lastEventId != e.id)
                 {
                     currentEvent = e;
                     //currentNPC = ?
@@ -182,7 +182,7 @@ namespace EventManager
             Debug.Log($"Evento activado: {currentEvent.name}");
 
             // Cambiar el estado del evento
-            currentEvent.status = EventStatus.InProgress;
+            currentEvent.status = EventStatus.InProgress; 
             eventInProgress = true;
 
             // Inicia el proceso para finalizar el evento
