@@ -8,6 +8,8 @@ TagManager:
   - CoffeeCube
   - Tetera
   - Librero
+  - Semillas
+  - Cultivo
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - Water
   - UI
   - NPC
-  - 
-  - 
-  - 
+  - Harvest
+  - Basura
+  - Delivery
   - 
   - 
   - 
