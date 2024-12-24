@@ -1,3 +1,4 @@
+using Indicator;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,21 +9,17 @@ namespace EventManager
     public class EventManager : MonoBehaviour
     {
         [Header("Indicators")]
-        [Range(0f, 100f)] public float stressIndicator = 0f;
-        [Range(0f, 100f)] public float selfCareIndicator = 100f;
-        [Range(0f, 100f)] public float communicationIndicator = 100f;
-        [Range(0f, 100f)] public float maintenanceIndicator = 100f;
-        [Range(0f, 300f)] public float globalIndicator;
+        public IndicatorManager indicatorManager;
 
         [Header("Events information")]
         public List<EventData> eventPool = new List<EventData>();
         public EventData currentEvent;
-        public GameObject currentNPC;
+        public int currentNPC;
 
         // Tiempo
-        private float timeSinceLastCheck = 0f;
-        private float eventCooldownTimer = 0f;
-        private float indicatorsAbove70Timer = 0f;
+        //private float timeSinceLastCheck = 0f;
+        //private float eventCooldownTimer = 0f;
+        //private float indicatorsAbove70Timer = 0f;
         private int lastEventId = 0;
 
         public bool eventInProgress = false;
@@ -30,45 +27,24 @@ namespace EventManager
         // Umbrales
         private const float globalThreshold = 200f;
         private const float cooldownDuration = 10f;
+        private Dictionary<System.Func<bool>, System.Action> events;
+
+        private void Awake()
+        {
+            indicatorManager = GetComponent<IndicatorManager>();
+        }
 
         void Start()
         {
             LoadEventsFromFile("Assets/Data/events.json");
-            StartCoroutine(DecreaseIndicatorsRoutine());
+            events = new Dictionary<System.Func<bool>, System.Action>
+            {
+                { () => ShouldTriggerEvent(indicatorManager.stressIndicator, true), () => SelectEvent(IndicatorType.Stress) },
+                { () => ShouldTriggerEvent(indicatorManager.selfCareIndicator, false), () => SelectEvent(IndicatorType.SelfCare) },
+                { () => ShouldTriggerEvent(indicatorManager.communicationIndicator, false), () => SelectEvent(IndicatorType.Communication) },
+                { () => ShouldTriggerEvent(indicatorManager.maintenanceIndicator, false), () => SelectEvent(IndicatorType.Farming) }
+            };
             StartCoroutine(CheckForEventActivationRoutine());
-        }
-
-        private IEnumerator DecreaseIndicatorsRoutine()
-        {
-            while (true)
-            {
-                if (eventInProgress)
-                {
-                    yield return new WaitForSeconds(10f); // Baja cada 15 segundos durante un evento activo
-                }
-                else
-                {
-                    yield return new WaitForSeconds(2f); // Baja cada 5 segundos cuando no hay eventos activos
-                }
-
-                stressIndicator = Mathf.Clamp(stressIndicator + 2f, 0f, 100f);
-                selfCareIndicator = Mathf.Clamp(selfCareIndicator - 1f, 0f, 100f);
-                communicationIndicator = Mathf.Clamp(communicationIndicator - 1f, 0f, 100f);
-                maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 1f, 0f, 100f);
-
-                UpdateGlobalIndicator();
-                Debug.Log($"[Indicadores] Estrés: {stressIndicator}, Autocuidado: {selfCareIndicator}, Comunicación: {communicationIndicator}, Mantenimiento: {maintenanceIndicator}, Global: {globalIndicator}");
-            }
-        }
-
-        private void UpdateGlobalIndicator()
-        {
-            globalIndicator = stressIndicator + selfCareIndicator + communicationIndicator + maintenanceIndicator;
-
-            if (globalIndicator < globalThreshold)
-            {
-                Debug.Log("¡Umbral crítico alcanzado en el indicador global!");
-            }
         }
 
         private IEnumerator CheckForEventActivationRoutine()
@@ -76,36 +52,53 @@ namespace EventManager
             while (true)
             {
                 yield return new WaitForSeconds(10f); // Chequeo cada 10 segundos
-                ValidateAndActivateEvent();
+
+                if (!eventInProgress)
+                {
+                    ValidateAndActivateEvent();
+                }
             }
         }
 
         private void ValidateAndActivateEvent()
         {
-            if (eventInProgress) return;
-
             // Reduce el cooldown si es necesario
             //if (eventCooldownTimer > 0)
             //{
             //    eventCooldownTimer -= Time.deltaTime;
             //    return;
             //}
+            // Mezclar las claves (condiciones)
 
+            // Evaluar condiciones en orden aleatorio
+            var shuffledKeys = new List<System.Func<bool>>(events.Keys);
+            foreach (var condition in shuffledKeys)
+            {
+                if (condition.Invoke())
+                {
+                    events[condition].Invoke();
+                    Shuffle(shuffledKeys);
+                    break; // Salir al cumplirse la primera condición
+                }
+            }
 
-            if (ShouldTriggerEvent(stressIndicator, true))
-            {
-                EventData eventSelected = SelectEvent(IndicatorType.Stress);
-            } 
-            else if (ShouldTriggerEvent(selfCareIndicator, false))
-            {
-                EventData eventSelected = SelectEvent(IndicatorType.SelfCare);
-            }
-            else if (ShouldTriggerEvent(communicationIndicator, false))
-            {
-                EventData eventSelected = SelectEvent(IndicatorType.Communication);
-            }
+            // SE CAMBIA PARA QUE LA PRIORIDAD NO SIEMPRE SEA LA MISMA
+            //if (ShouldTriggerEvent(stressIndicator, true))
+            //{
+            //    EventData eventSelected = SelectEvent(IndicatorType.Stress);
+            //}
+            //else if (ShouldTriggerEvent(selfCareIndicator, false))
+            //{
+            //    EventData eventSelected = SelectEvent(IndicatorType.SelfCare);
+            //}
+            //else if (ShouldTriggerEvent(communicationIndicator, false))
+            //{
+            //    EventData eventSelected = SelectEvent(IndicatorType.Communication);
+            //}
             //else if (validateIndicatorProb(maintenanceIndicator, false))
             //{
+
+
 
             //}
             //// Busca un evento elegible
@@ -119,19 +112,23 @@ namespace EventManager
             //}
         }
 
-        private bool ShouldTriggerEvent(float indicatorValue,  bool inverse) {
+        private bool ShouldTriggerEvent(float indicatorValue, bool inverse)
+        {
             float prob = 0f;
 
             if ((inverse && indicatorValue < 30f) || (!inverse && indicatorValue > 70f))
             {
+                Debug.Log("PROP 15");
                 prob = 15f;
             }
             else if ((inverse && indicatorValue >= 30f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 70f))
             {
+                Debug.Log("PROP 30");
                 prob = 30f;
             }
             else
             {
+                Debug.Log("PROP 65");
                 prob = 60f;
             }
 
@@ -139,10 +136,11 @@ namespace EventManager
             return randomValue <= prob;
         }
 
-        private EventData SelectEvent(IndicatorType indicatorType) {
+        private EventData SelectEvent(IndicatorType indicatorType)
+        {
             foreach (EventData e in eventPool)
             {
-                if (e.mainIndicator == indicatorType) //&& lastEventId != e.id)
+                if (e.mainIndicator == indicatorType && lastEventId != e.id)
                 {
                     currentEvent = e;
                     //currentNPC = ?
@@ -150,31 +148,7 @@ namespace EventManager
                     return currentEvent;
                 }
             }
-            return null;        
-        }
-
-        private float GetEventActivationProbability(IndicatorType type)
-        {
-            float value = 0f;
-            switch (type)
-            {
-                case IndicatorType.Stress:
-                    value = stressIndicator;
-                    break;
-                case IndicatorType.SelfCare:
-                    value = selfCareIndicator;
-                    break;
-                case IndicatorType.Communication:
-                    value = communicationIndicator;
-                    break;
-                case IndicatorType.Farming:
-                    value = maintenanceIndicator;
-                    break;
-            }
-
-            if (value <= 30) return 70f; // Alta probabilidad
-            if (value <= 70) return 40f; // Media probabilidad
-            return 10f; // Baja probabilidad
+            return null;
         }
 
         private void ActivateEvent()
@@ -182,35 +156,61 @@ namespace EventManager
             Debug.Log($"Evento activado: {currentEvent.name}");
 
             // Cambiar el estado del evento
-            currentEvent.status = EventStatus.InProgress; 
+            currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
 
             // Inicia el proceso para finalizar el evento
-            StartCoroutine(EndEventAfterDelay(5f)); // La duración del evento es de 5 segundos
+            //StartCoroutine(EndEventAfterDelay(5f)); // La duración del evento es de 5 segundos
+            StartCoroutine(EndEventWhenStatusChanges()); // La duración del evento es de 5 segundos
 
             // Quizas debo validar en la corutina si el evento cambia a estado completado, ahi activo el end event
         }
 
-        private IEnumerator EndEventAfterDelay(float duration)
+        private IEnumerator EndEventWhenStatusChanges()
         {
-            yield return new WaitForSeconds(duration);
+            while (currentEvent != null && currentEvent.status != EventStatus.Completed)
+            {
+                yield return null; // Espera hasta el siguiente frame.
+            }
 
             // Aplicar impacto en los indicadores
-            stressIndicator = Mathf.Clamp(stressIndicator + currentEvent.stressImpact, 0f, 100f);
-            selfCareIndicator = Mathf.Clamp(selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
-            communicationIndicator = Mathf.Clamp(communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
-            maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
+            indicatorManager.stressIndicator = Mathf.Clamp(indicatorManager.stressIndicator + currentEvent.stressImpact, 0f, 100f);
+            indicatorManager.selfCareIndicator = Mathf.Clamp(indicatorManager.selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
+            indicatorManager.communicationIndicator = Mathf.Clamp(indicatorManager.communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
+            indicatorManager.maintenanceIndicator = Mathf.Clamp(indicatorManager.maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
 
-            // Cambia el estado del evento a completado
-            currentEvent.status = EventStatus.Completed; // Cuando valide la completitud esto ya no es necesario
+            // Cambiar el estado del evento
             eventInProgress = false;
-
-            // Reinicia el cooldown
-            eventCooldownTimer = cooldownDuration;
+            //eventCooldownTimer = cooldownDuration;
 
             Debug.Log($"Evento finalizado: {currentEvent.name}");
             currentEvent = null;
         }
+
+
+        // SE MODIFICA PARA QUE NO SEA CADA CIERTO TIEMPO, SINO CUANDO TERMINA EL EVENTO
+        //private IEnumerator EndEventAfterDelay(float duration)
+        //{
+        //    yield return new WaitForSeconds(duration);
+
+        //    // Aplicar impacto en los indicadores
+        //    stressIndicator = Mathf.Clamp(stressIndicator + currentEvent.stressImpact, 0f, 100f);
+        //    selfCareIndicator = Mathf.Clamp(selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
+        //    communicationIndicator = Mathf.Clamp(communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
+        //    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
+
+        //    // Cambia el estado del evento a completado
+        //    currentEvent.status = EventStatus.Completed; // Cuando valide la completitud esto ya no es necesario
+        //    eventInProgress = false;
+
+        //    // Reinicia el cooldown
+        //    eventCooldownTimer = cooldownDuration;
+
+        //    Debug.Log($"Evento finalizado: {currentEvent.name}");
+        //    currentEvent = null;
+        //}
+
+
 
         private void LoadEventsFromFile(string path)
         {
@@ -222,6 +222,24 @@ namespace EventManager
             else
             {
                 Debug.LogError("No se encontró el archivo de eventos: " + path);
+            }
+        }
+
+        private void Shuffle<T>(List<T> list)
+        {
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
+            }
+        }
+
+        public void CompleteEvent()
+        {
+            if (currentEvent != null)
+            {
+                currentEvent.status = EventStatus.Completed;
+                Debug.Log($"Evento {currentEvent.name} completado.");
             }
         }
     }
