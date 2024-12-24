@@ -3,7 +3,7 @@
     { 
       "id": 1, 
       "name": "Evento Estres 1", 
-      "stressImpact": -20, 
+      "stressImpact": 20, 
       "selfCareImpact": 5, 
       "communicationImpact": 0, 
       "maintenanceImpact": 0, 
@@ -13,7 +13,7 @@
     { 
       "id": 2, 
       "name": "Evento Estres 2", 
-      "stressImpact": -20, 
+      "stressImpact": 20, 
       "selfCareImpact": 5, 
       "communicationImpact": 0, 
       "maintenanceImpact": 0, 

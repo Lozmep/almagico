@@ -27,7 +27,7 @@ namespace EventManager
         // Umbrales
         private const float globalThreshold = 200f;
         private const float cooldownDuration = 10f;
-        private Dictionary<System.Func<bool>, System.Action> events;
+        public Dictionary<System.Func<bool>, System.Action> events;
 
         private void Awake()
         {
@@ -55,6 +55,7 @@ namespace EventManager
 
                 if (!eventInProgress)
                 {
+                    Debug.Log("Validando si evento se debe activar");
                     ValidateAndActivateEvent();
                 }
             }
@@ -72,12 +73,13 @@ namespace EventManager
 
             // Evaluar condiciones en orden aleatorio
             var shuffledKeys = new List<System.Func<bool>>(events.Keys);
+            Shuffle(shuffledKeys);
+
             foreach (var condition in shuffledKeys)
             {
                 if (condition.Invoke())
                 {
                     events[condition].Invoke();
-                    Shuffle(shuffledKeys);
                     break; // Salir al cumplirse la primera condición
                 }
             }
@@ -143,7 +145,7 @@ namespace EventManager
                 if (e.mainIndicator == indicatorType && lastEventId != e.id)
                 {
                     currentEvent = e;
-                    //currentNPC = ?
+                    currentNPC = Random.Range(1, 4);
                     ActivateEvent();
                     return currentEvent;
                 }
@@ -174,10 +176,8 @@ namespace EventManager
             }
 
             // Aplicar impacto en los indicadores
-            indicatorManager.stressIndicator = Mathf.Clamp(indicatorManager.stressIndicator + currentEvent.stressImpact, 0f, 100f);
-            indicatorManager.selfCareIndicator = Mathf.Clamp(indicatorManager.selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
-            indicatorManager.communicationIndicator = Mathf.Clamp(indicatorManager.communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
-            indicatorManager.maintenanceIndicator = Mathf.Clamp(indicatorManager.maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
+
+            indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
 
             // Cambiar el estado del evento
             eventInProgress = false;
