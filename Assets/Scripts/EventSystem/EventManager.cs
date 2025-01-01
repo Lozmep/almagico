@@ -9,7 +9,7 @@ namespace EventManager
     public class EventManager : MonoBehaviour
     {
         [Header("Indicators")]
-        public IndicatorManager indicatorManager;
+        private IndicatorManager indicatorManager;
 
         [Header("Events information")]
         public List<EventData> eventPool = new List<EventData>();
