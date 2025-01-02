@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Harvest : MonoBehaviour
 {
-    private TakeItem takeItem;
+    private TakeItemEvent takeItem;
 
     private RaycastHit hit;
     private Vector3 origin;
@@ -15,7 +15,7 @@ public class Harvest : MonoBehaviour
 
     private void Awake()
     {
-        takeItem = GetComponent<TakeItem>();
+        takeItem = GetComponent<TakeItemEvent>();
         
     }
 
