@@ -112,7 +112,11 @@ public class TakeItemEvent : MonoBehaviour
         var actions = new Dictionary<int, (string tag, GameObject obj, string message)>
         {
             { 1, ("Tetera", tinto, "Impacto con una Tetera") },
-            { 2, ("Librero", libro, "Impacto con un Librero") }
+            { 2, ("Librero", libro, "Impacto con un Librero") },
+            { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
+            { 4, ("Librero", libro, "Impacto con un Librero 2") },
+            { 5, ("Tetera", tinto, "Impacto con una Tetera 3") },
+            { 6, ("Librero", tinto, "Impacto con una Librero 3") }
         };
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)
