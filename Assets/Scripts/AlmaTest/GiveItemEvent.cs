@@ -44,19 +44,20 @@ public class GiveItemEvent : MonoBehaviour
                         Debug.Log("Gracias por el tinto! Seamos amigos");
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
+                        takeItem.currentItemID = 0;
+                        eventManager.CompleteEvent();
                         break;
 
                     case 2:
                         Debug.Log("Leer es saber");
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
+                        takeItem.currentItemID = 0;
+                        eventManager.CompleteEvent();
                         break;
 
                     case 3:
                         Debug.Log("Gracias por la venta! ");
-                        break;
-
-                    default:
                         break;
                 }
 

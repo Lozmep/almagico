@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Garbage : MonoBehaviour
 {
-    private TakeItem takeItem;
+    private TakeItemEvent takeItem;
 
     public GameObject[] childrenArray;
 
@@ -12,7 +12,7 @@ public class Garbage : MonoBehaviour
 
     private void Awake()
     {
-        takeItem = GetComponentInParent<TakeItem>();
+        takeItem = GetComponentInParent<TakeItemEvent>();
     }
     void Start()
     {
