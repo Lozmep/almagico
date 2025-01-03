@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AlmaMovement : MonoBehaviour
 {
-    public float velocidadMoviento = 5.0f;
+    public float velocidadMoviento = 40.0f;
     public float velocidadRotacion = 200.0f;
 
     private Animator anim;
