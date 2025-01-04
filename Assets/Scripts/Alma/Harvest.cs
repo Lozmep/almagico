@@ -9,8 +9,8 @@ public class Harvest : MonoBehaviour
     private Vector3 direction;
     public float maxDistance = 1f;
     public LayerMask layerMask;
+    public float verticalDistance = 0.8f;
 
-    
 
 
     private void Awake()
@@ -29,11 +29,11 @@ public class Harvest : MonoBehaviour
     {
 
         Vector3 direction = transform.forward;
-        Vector3 origin = transform.position;
+        Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
 
         if (Input.GetKey(KeyCode.X) && takeItem.isCultivating)
         {
-
+            Debug.DrawRay(origin, direction * maxDistance, Color.cyan);
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 Growing grow = hit.collider.GetComponent<Growing>();

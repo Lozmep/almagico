@@ -22,8 +22,8 @@ namespace Indicator {
         }
         public bool IncreaseDecayRate
         {
-            get { return IncreaseDecayRate; }
-            set { IncreaseDecayRate = value; }
+            get { return increaseDecayRate; }
+            set { increaseDecayRate = value; }
         }
 
         void Start()

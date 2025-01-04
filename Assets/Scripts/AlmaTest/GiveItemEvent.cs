@@ -13,6 +13,7 @@ public class GiveItemEvent : MonoBehaviour
     public float maxDistance = 1f;
     public LayerMask layerMask;
     public LayerMask layerDeliveryMask;
+    public float verticalDistance = 0.9f;
 
     [Header("Event Management")]
     public EventManager.EventManager eventManager;
@@ -27,13 +28,13 @@ public class GiveItemEvent : MonoBehaviour
     void Update()
     {
         Vector3 direction = transform.forward;
-        Vector3 origin = transform.position;
-
+        Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
+        
         if (Input.GetKey(KeyCode.X))
         {
+            Debug.DrawRay(origin, direction * maxDistance, Color.red);
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
-
                 NPC npc = hit.collider.GetComponent<NPC>();
 
                 if (npc.ID != eventManager.currentNPC) return;
@@ -60,10 +61,6 @@ public class GiveItemEvent : MonoBehaviour
                         Debug.Log("Gracias por la venta! ");
                         break;
                 }
-
-
-
-                Debug.DrawRay(transform.position, transform.forward * maxDistance, Color.red);
             }
 
             if (Physics.Raycast(origin, direction, out RaycastHit shoot, maxDistance, layerDeliveryMask))

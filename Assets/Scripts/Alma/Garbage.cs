@@ -9,6 +9,7 @@ public class Garbage : MonoBehaviour
 
     public float maxDistance = 1f;
     public LayerMask layerMask;
+    public float verticalDistance = 0.8f;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class Garbage : MonoBehaviour
     {
 
         Vector3 direction = transform.forward;
-        Vector3 origin = transform.position;
+        Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0); ;
 
         if (Input.GetKey(KeyCode.X))
         {
@@ -45,7 +46,7 @@ public class Garbage : MonoBehaviour
                 takeItem.currentItemID = 0;
                 
 
-                Debug.DrawRay(transform.position, transform.forward * maxDistance, Color.red);
+                Debug.DrawRay(transform.position, transform.forward * maxDistance, Color.gray);
             }
         }
 

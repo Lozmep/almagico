@@ -5,6 +5,7 @@ public class TakeItemEvent : MonoBehaviour
 {
     [Header("Raycast Settings")]
     public float maxDistance = 1f;
+    public float verticalDistance = 0.8f;
     public LayerMask layerMask;
     public LayerMask layerCropMask;
 
@@ -32,7 +33,7 @@ public class TakeItemEvent : MonoBehaviour
 
     private void PerformRaycast()
     {
-        Vector3 origin = transform.position;
+        Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
         Vector3 direction = transform.forward;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
@@ -51,6 +52,7 @@ public class TakeItemEvent : MonoBehaviour
     private void HandleHit(RaycastHit hit)
     {
         Item item = hit.collider.GetComponent<Item>();
+        Debug.Log("Item" + item.name);
         if (item == null) return;
 
         currentItemID = item.itemID;

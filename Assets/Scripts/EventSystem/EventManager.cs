@@ -140,12 +140,14 @@ namespace EventManager
 
         private EventData SelectEvent(IndicatorType indicatorType)
         {
-            foreach (EventData e in eventPool)
+            List<EventData> shuffledEvents = new List<EventData>(eventPool);
+            Shuffle(shuffledEvents);
+
+            foreach (EventData e in shuffledEvents)
             {
                 if (e.mainIndicator == indicatorType && lastEventId != e.id)
                 {
                     currentEvent = e;
-                    currentNPC = Random.Range(1, 4);
                     ActivateEvent();
                     return currentEvent;
                 }
@@ -155,6 +157,9 @@ namespace EventManager
 
         private void ActivateEvent()
         {
+            currentNPC = Random.Range(1, 4);
+            lastEventId = currentEvent.id;
+            indicatorManager.IncreaseDecayRate = true;
             Debug.Log($"Evento activado: {currentEvent.name}");
 
             // Cambiar el estado del evento
@@ -239,6 +244,7 @@ namespace EventManager
             if (currentEvent != null)
             {
                 currentEvent.status = EventStatus.Completed;
+                indicatorManager.IncreaseDecayRate = true;
                 Debug.Log($"Evento {currentEvent.name} completado.");
             }
         }
