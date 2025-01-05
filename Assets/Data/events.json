@@ -1,0 +1,64 @@
+{
+  "eventList": [
+    { 
+      "id": 1, 
+      "name": "Evento Estres 1", 
+      "stressImpact": 20, 
+      "selfCareImpact": 5, 
+      "communicationImpact": 0, 
+      "maintenanceImpact": 0, 
+      "mainIndicator": 0,
+      "status": 0
+    },
+    { 
+      "id": 2, 
+      "name": "Evento Estres 2", 
+      "stressImpact": 20, 
+      "selfCareImpact": 5, 
+      "communicationImpact": 0, 
+      "maintenanceImpact": 0, 
+      "mainIndicator": 0,
+      "status": 0
+    },
+    { 
+      "id": 3,
+      "name": "Evento Autocuidado 1",
+      "stressImpact": 5,
+      "selfCareImpact": 20,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 1,
+      "status": 0
+    },
+    { 
+      "id": 4,
+      "name": "Evento Autocuidado 2",
+      "stressImpact": 5,
+      "selfCareImpact": 20,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 1,
+      "status": 0
+    },
+    { 
+      "id": 5,
+      "name": "Evento Comunicacion 1",
+      "stressImpact": 5,
+      "selfCareImpact": 0,
+      "communicationImpact": 20,
+      "maintenanceImpact": 3,
+      "mainIndicator": 2,
+      "status": 0
+    },
+    { 
+      "id": 6,
+      "name": "Evento Comunicacion 2",
+      "stressImpact": 5,
+      "selfCareImpact": 0,
+      "communicationImpact": 20,
+      "maintenanceImpact": 3,
+      "mainIndicator": 2,
+      "status": 0
+    }
+  ]
+}
