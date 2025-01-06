@@ -41,11 +41,6 @@ public class Garbage : MonoBehaviour
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 DeactivateChildren();
-                takeItem.isFree = true;
-                takeItem.isCultivating = false;
-                takeItem.currentItemID = 0;
-                
-
                 Debug.DrawRay(transform.position, transform.forward * maxDistance, Color.gray);
             }
         }
@@ -57,9 +52,18 @@ public class Garbage : MonoBehaviour
     {
         foreach (GameObject child in childrenArray)
         {
-            if (child != null) 
+            if (child != null && child.CompareTag("CurrentItem"))
             {
-                child.SetActive(false); 
+                takeItem.isFree = true;
+                takeItem.isCultivating = false;
+                takeItem.currentItemID = 0;
+                foreach (Transform grandchild in child.transform)
+                {
+                    if (grandchild.gameObject.activeSelf)
+                    {
+                        grandchild.gameObject.SetActive(false);
+                    }
+                }
             }
         }
 

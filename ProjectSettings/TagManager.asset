@@ -10,6 +10,7 @@ TagManager:
   - Librero
   - Semillas
   - Cultivo
+  - CurrentItem
   layers:
   - Default
   - TransparentFX

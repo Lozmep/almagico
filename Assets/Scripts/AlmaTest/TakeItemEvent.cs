@@ -98,7 +98,7 @@ public class TakeItemEvent : MonoBehaviour
             if (crop != null)
             {
                 crop.isCropFree = true;
-
+                Debug.Log("KLK");
                 GameObject collidedObject = cropHit.collider.gameObject;
                 Transform childTransform = collidedObject.transform.GetChild(1);
                 if (childTransform != null)
