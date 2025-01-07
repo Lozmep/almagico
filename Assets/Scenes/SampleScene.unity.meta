@@ -5,3 +5,10 @@ DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 147389
+  packageName: Puzzle stage & settings GUI Pack
+  packageVersion: 1.0
+  assetPath: Assets/Scenes/SampleScene.unity
+  uploadId: 313665
