@@ -6,7 +6,7 @@ public class GiveItemEvent : MonoBehaviour
 
     private TakeItemEvent takeItem;
 
-
+    [Header("Raycast Info")]
     private RaycastHit hit;
     private Vector3 origin;
     private Vector3 direction;
@@ -17,6 +17,9 @@ public class GiveItemEvent : MonoBehaviour
 
     [Header("Event Management")]
     public EventManager.EventManager eventManager;
+
+    [Header("Event Management")]
+    public AchievementSystem achievEvent;
 
 
     private void Awake()
@@ -77,6 +80,13 @@ public class GiveItemEvent : MonoBehaviour
                     takeItem.isFree = true;
                     delivery.deliverySum++;
                     Debug.Log(delivery.deliverySum);
+
+                    if (delivery.deliverySum == 10)
+                    {
+                        Debug.Log("Ha obtenido el primer logro");
+                        achievEvent.CompareValuesInChildren(0);
+                    }
+
                 }
 
             }
