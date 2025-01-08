@@ -4,21 +4,20 @@ using UnityEngine;
 using UnityEngine.LightTransport;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.UI;
+using Indicator;
 
 public class AchievementSystem : MonoBehaviour
 {
 
     [SerializeField] private GameObject parentObject; // Objeto padre que contiene los hijos
     public bool newState;
+    public IndicatorManager indicatorManager;
+    public TextController textController;
 
     private void Awake()
     {
         newState = false;
         parentObject.SetActive(newState);
-    }
-    private void Start()
-    {
-        CompareValuesInChildren(0);
     }
     public void ToggleVisibility()
     {
@@ -76,6 +75,9 @@ public class AchievementSystem : MonoBehaviour
                         Debug.Log("Entró");
                         Debug.Log(child.gameObject.name);   
                         SetAlphaTo100(child.gameObject);
+                        Debug.Log("Se logró gente");
+                        indicatorManager.modifyIndicators(10f, 10f, 10f, 10f);
+                        textController.ShowTextWithFade("Has desbloqueado un logro!!!");
                     }
 
                 } else

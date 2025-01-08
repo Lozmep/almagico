@@ -81,7 +81,7 @@ public class GiveItemEvent : MonoBehaviour
                     delivery.deliverySum++;
                     Debug.Log(delivery.deliverySum);
 
-                    if (delivery.deliverySum == 10)
+                    if (delivery.deliverySum == 1)
                     {
                         Debug.Log("Ha obtenido el primer logro");
                         achievEvent.CompareValuesInChildren(0);
