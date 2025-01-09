@@ -1,16 +1,27 @@
 using UnityEngine;
 using TMPro;
 using System.Collections; // Necesario para trabajar con TextMeshProUGUI
+using UnityEngine.UI;
 
 public class TextController : MonoBehaviour
 {
+    [Header("Text Fade")]
     [SerializeField] private TextMeshProUGUI myText; // Asigna esto en el Inspector
     [SerializeField] private GameObject gameObjectText; // Asigna esto en el Inspector
     [SerializeField] private float fadeDuration = 1f; // Duración para hacer el texto completamente visible
 
+    [Header("Dialogue Settings")]
+    public GameObject dialogue;
+    public TextMeshProUGUI txtDialogue;
+    public TextMeshProUGUI txtName;
+    public TxtLines[] tryDialogue;
+    public KeyCode teclaSkip = KeyCode.Mouse0;
+    public AudioSource keyBubble;
+
     private void Start()
     {
         gameObjectText.SetActive(false);
+        dialogue.SetActive(false);
     }
 
     // Método para hacer visible el texto gradualmente
@@ -64,4 +75,50 @@ public class TextController : MonoBehaviour
     }
 
 
+    public IEnumerator Speak(TxtLines[] _dialogue)
+    {
+        dialogue.SetActive(true);
+
+        for (int i = 0; i < _dialogue.Length; i++)
+        {
+
+            txtName.text = _dialogue[i].actorName;
+
+            for (int j = 0; j < _dialogue[i].texts.Length + 1; j++)
+            {
+                //keyBubble.Play();
+                yield return new WaitForSeconds(0.09f);
+                if (Input.GetMouseButton(0))
+                {
+                    j = _dialogue[i].texts.Length;
+                    Debug.Log("Skip");
+                }
+                txtDialogue.text = _dialogue[i].texts.Substring(0, j);
+
+            }
+
+            txtDialogue.text = _dialogue[i].texts;
+            yield return new WaitForSeconds(0.2f);
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        }
+        dialogue.SetActive(false);
+
+    }
+
+    //[ContextMenu("Prueba texto")]
+
+    public void IntTxt()
+    {
+        StartCoroutine(Speak(tryDialogue));
+    }
+
+
+}
+
+[System.Serializable]
+
+public class TxtLines
+{
+    public string texts;
+    public string actorName;
 }

@@ -21,6 +21,9 @@ public class GiveItemEvent : MonoBehaviour
     [Header("Event Management")]
     public AchievementSystem achievEvent;
 
+    [Header("Text Controller")]
+    public TextController textController;
+
 
     private void Awake()
     {
@@ -49,6 +52,7 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
+                        textController.IntTxt();
                         eventManager.CompleteEvent();
                         break;
 
@@ -57,6 +61,7 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
+                        textController.IntTxt();
                         eventManager.CompleteEvent();
                         break;
 
