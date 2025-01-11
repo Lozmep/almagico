@@ -1,3 +1,4 @@
+using DialogueSystem;
 using Indicator;
 using System.Collections;
 using System.Collections.Generic;
@@ -275,10 +276,11 @@ namespace EventManager
         public float selfCareImpact;
         public float communicationImpact;
         public float maintenanceImpact;
+        public DialogueScript dialogue;
         public IndicatorType mainIndicator;
         public EventStatus status;
     }
-
+    
     [System.Serializable]
     public class EventDataArray
     {

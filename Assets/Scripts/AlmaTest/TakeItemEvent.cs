@@ -1,3 +1,5 @@
+using DialogueSystem;
+using EventManager;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +10,7 @@ public class TakeItemEvent : MonoBehaviour
     public float verticalDistance = 0.8f;
     public LayerMask layerMask;
     public LayerMask layerCropMask;
+    public LayerMask layerNPCMask;
 
     [Header("GameObjects")]
     public GameObject tinto;
@@ -23,6 +26,9 @@ public class TakeItemEvent : MonoBehaviour
     public int currentItemID;
     public EventManager.EventManager eventManager;
 
+    [Header("Dialogue Management")]
+    public DialogueManager dialogueManager;
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.X) && isFree)
@@ -36,10 +42,16 @@ public class TakeItemEvent : MonoBehaviour
         Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
         Vector3 direction = transform.forward;
 
+        if (Physics.Raycast(origin, direction, out RaycastHit hitDialog, maxDistance, layerNPCMask))
+        {
+            HandleDialog(hitDialog);
+        }
+
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
         {
             HandleHit(hit);
         }
+
 
         if (Physics.Raycast(origin, direction, out RaycastHit cropHit, maxDistance, layerCropMask))
         {
@@ -67,6 +79,15 @@ public class TakeItemEvent : MonoBehaviour
         {
             HandleTagAction(objectTag, hit);
         }
+    }
+
+    private void HandleDialog(RaycastHit hit)
+    {
+        NPC npc = hit.collider.GetComponent<NPC>();
+
+        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || npc.ID != eventManager.currentNPC ||  dialogueManager.isActive) return;
+
+        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
     }
 
     private void HandleTagAction(string objectTag, RaycastHit hit)
@@ -116,9 +137,25 @@ public class TakeItemEvent : MonoBehaviour
             { 1, ("Tetera", tinto, "Impacto con una Tetera") },
             { 2, ("Librero", libro, "Impacto con un Librero") },
             { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
-            { 4, ("Librero", libro, "Impacto con un Librero 2") },
-            { 5, ("Tetera", tinto, "Impacto con una Tetera 3") },
-            { 6, ("Librero", tinto, "Impacto con una Librero 3") }
+            { 4, ("Librero", libro, "Impacto con un Librero 2") }
+        };
+
+        if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)
+        {
+            Debug.Log($"{action.message}: {hit.collider.name}");
+            action.obj.SetActive(true);
+            isFree = false;
+        }
+    }
+
+    private void ValidateDialog(int eventId, string objectTag, RaycastHit hit)
+    {
+        var actions = new Dictionary<int, (string tag, GameObject obj, string message)>
+        {
+            { 1, ("Tetera", tinto, "Impacto con una Tetera") },
+            { 2, ("Librero", libro, "Impacto con un Librero") },
+            { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
+            { 4, ("Librero", libro, "Impacto con un Librero 2") }
         };
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)

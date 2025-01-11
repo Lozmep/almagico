@@ -8,7 +8,16 @@
       "communicationImpact": 0, 
       "maintenanceImpact": 0, 
       "mainIndicator": 0,
-      "status": 0
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["KLK1, Gracias mi rey1."],
+            "triggerChoices": false
+          }
+        ]
+      }
     },
     { 
       "id": 2, 
@@ -18,7 +27,16 @@
       "communicationImpact": 0, 
       "maintenanceImpact": 0, 
       "mainIndicator": 0,
-      "status": 0
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["KLK2, Gracias mi rey2."],
+            "triggerChoices": false
+          }
+        ]
+      }
     },
     { 
       "id": 3,
@@ -28,7 +46,16 @@
       "communicationImpact": 0,
       "maintenanceImpact": 3,
       "mainIndicator": 1,
-      "status": 0
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["KLK3, Gracias mi rey3."],
+            "triggerChoices": false
+          }
+        ]
+      }
     },
     { 
       "id": 4,
@@ -38,7 +65,16 @@
       "communicationImpact": 0,
       "maintenanceImpact": 3,
       "mainIndicator": 1,
-      "status": 0
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["KLK4, Gracias mi rey4."],
+            "triggerChoices": false
+          }
+        ]
+      }
     },
     { 
       "id": 5,
@@ -48,7 +84,53 @@
       "communicationImpact": 20,
       "maintenanceImpact": 3,
       "mainIndicator": 2,
-      "status": 0
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["KLK5, Gracias mi rey5."],
+            "triggerChoices": false
+          },
+          {
+            "character": "Alma",
+            "text": ["Yo no wo a decilo"],
+            "triggerChoices": true,
+            "choices": [
+              {
+                "text": ["Si wo a decilo"],
+                "stressImpact": 5,
+                "selfCareImpact": 0,
+                "communicationImpact": 20,
+                "maintenanceImpact": 3
+              },
+              {
+                "text": ["No lo wo a deci y ya"],
+                "stressImpact": -5,
+                "selfCareImpact": 0,
+                "communicationImpact": -10,
+                "maintenanceImpact": 0
+              },
+              {
+                "text": ["Que no lo wo a deci!!"],
+                "stressImpact": -10,
+                "selfCareImpact": 0,
+                "communicationImpact": -15,
+                "maintenanceImpact": 3
+              }
+            ]
+          },
+          {
+            "character": "NPC",
+            "text": [],
+            "triggerChoices": false,
+            "conditionalText1": ["Todo bien, todo bonito1", "Todo bien, todo bonito1.2"],
+            "conditionalText2": ["Todo bien, todo bonito1", "Todo bien, todo bonito2.2"],
+            "conditionalText3": ["Todo bien, todo bonito1", "Todo bien, todo bonito3.2"],
+            "conditionalText4": ["Todo bien, todo bonito1", "Todo bien, todo bonito4.2"]
+          }
+        ]
+      }
     },
     { 
       "id": 6,
@@ -58,7 +140,53 @@
       "communicationImpact": 20,
       "maintenanceImpact": 3,
       "mainIndicator": 2,
-      "status": 0
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["KLK6, Gracias mi rey6."],
+            "triggerChoices": false
+          },
+          {
+            "character": "Alma",
+            "text": ["Yo no wo a decilo"],
+            "triggerChoices": true,
+            "choices": [
+              {
+                "text": ["Si wo a decilo"],
+                "stressImpact": 5,
+                "selfCareImpact": 0,
+                "communicationImpact": 20,
+                "maintenanceImpact": 3
+              },
+              {
+                "text": ["No lo wo a deci y ya"],
+                "stressImpact": -5,
+                "selfCareImpact": 0,
+                "communicationImpact": -10,
+                "maintenanceImpact": 0
+              },
+              {
+                "text": ["Que no lo wo a deci!!"],
+                "stressImpact": -10,
+                "selfCareImpact": 0,
+                "communicationImpact": -15,
+                "maintenanceImpact": 3
+              }
+            ]
+          },
+          {
+            "character": "NPC",
+            "text": [],
+            "triggerChoices": false,
+            "conditionalText1": ["Todo bien, todo bonito1", "Todo bien, todo bonito1.2"],
+            "conditionalText2": ["Todo bien, todo bonito1", "Todo bien, todo bonito2.2"],
+            "conditionalText3": ["Todo bien, todo bonito1", "Todo bien, todo bonito3.2"],
+            "conditionalText4": ["Todo bien, todo bonito1", "Todo bien, todo bonito4.2"]
+          }
+        ]
+      }
     }
   ]
 }

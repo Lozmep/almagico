@@ -49,19 +49,19 @@ public class GiveItemEvent : MonoBehaviour
                 {
                     case 1:
                         Debug.Log("Gracias por el tinto! Seamos amigos");
+                        textController.IntTxt();
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
-                        textController.IntTxt();
                         eventManager.CompleteEvent();
                         break;
 
                     case 2:
                         Debug.Log("Leer es saber");
+                        textController.IntTxt();
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
-                        textController.IntTxt();
                         eventManager.CompleteEvent();
                         break;
 
