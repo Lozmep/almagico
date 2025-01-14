@@ -85,7 +85,7 @@ public class TakeItemEvent : MonoBehaviour
     {
         NPC npc = hit.collider.GetComponent<NPC>();
 
-        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || npc.ID != eventManager.currentNPC ||  dialogueManager.isActive) return;
+        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || npc.ID != eventManager.currentNPC || dialogueManager.isActive) return;
 
         StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
     }

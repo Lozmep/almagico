@@ -16,6 +16,7 @@ namespace DialogueSystem
         
         [SerializeField] private float autoAdvanceTime = 3f;
         private bool isSelecting;
+        private bool skipTyping;
         private int selectedOption = 1;
         // Componente para opciones -- este es el que cambia is selection
         private DialogueScript _dialogue;
@@ -44,6 +45,8 @@ namespace DialogueSystem
         {
             dialogueBox.SetActive(true);
             isActive = true;
+
+            StartCoroutine(DetectKeyPress());
 
             foreach (Lines dialogue in dialogueLines)
             {
@@ -79,20 +82,33 @@ namespace DialogueSystem
                 foreach (string fullText in textLines)
                 {
                     txtDialogue.text = "";
-                    yield return StartCoroutine(TypeText(fullText));
+
+                    for (int i = 0; i <= fullText.Length; i++)
+                    {
+                        txtDialogue.text = fullText.Substring(0, i);
+                        yield return new WaitForSeconds(0.1f);
+                        if (skipTyping)
+                        {
+                            txtDialogue.text = fullText;
+                            Debug.Log("Skipped");
+                            break;
+                        }
+                    }
+                    Debug.Log("Pasa al while");
 
                     float elapsedTime = 0f;
-                    bool clicked = false;
 
-                    while (elapsedTime < autoAdvanceTime && !clicked)
+                    while (elapsedTime < autoAdvanceTime)
                     {
-                        if (Input.GetMouseButtonDown(0))
+                        if (Input.GetKeyDown(KeyCode.Space))
                         {
-                            clicked = true;
+                            elapsedTime = autoAdvanceTime;
                         }
                         elapsedTime += Time.deltaTime;
                         yield return null;
                     }
+                    Debug.Log("Pasa al for");
+                    skipTyping = false;
                 }
             }
 
@@ -102,24 +118,19 @@ namespace DialogueSystem
             eventManager.CompleteEvent();
         }
 
-        private IEnumerator TypeText(string text)
+        private IEnumerator DetectKeyPress()
         {
-            txtDialogue.text = "";
-
-            for (int i = 0; i <= text.Length; i++)
+            while (isActive)
             {
-                txtDialogue.text = text.Substring(0, i);
-
-                if (Input.GetKey(KeyCode.X))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    txtDialogue.text = text;
-                    yield break;
+                    skipTyping = true;
                 }
-
-                yield return new WaitForSeconds(0.2f);
+                yield return null;
             }
         }
     }
+
 
     [System.Serializable]
 
