@@ -122,17 +122,17 @@ namespace EventManager
             if ((inverse && indicatorValue < 30f) || (!inverse && indicatorValue > 70f))
             {
                 Debug.Log("PROP 15");
-                prob = 15f;
+                prob = 0f;
             }
             else if ((inverse && indicatorValue >= 30f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 70f))
             {
                 Debug.Log("PROP 30");
-                prob = 30f;
+                prob = 1f;
             }
             else
             {
                 Debug.Log("PROP 65");
-                prob = 60f;
+                prob = 100f;
             }
 
             float randomValue = Random.Range(0f, 100f);
