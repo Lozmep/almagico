@@ -1,0 +1,18 @@
+{
+  "signals": [
+    {
+      "type": "crop",
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "Cultivo",
+            "text": [
+              "Para cultivar, debes tener una semilla en la mano",
+              "Presiona 'X' frente a los cuadros de cultivo para sembrar"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
