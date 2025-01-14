@@ -1653,6 +1653,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  maxDistance: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  verticalDistance: 0.9
+  rayColorHit: {r: 1, g: 0, b: 0, a: 1}
+  rayColorMiss: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &930877529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1762,6 +1769,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
+  verticalDistance: 0.8
 --- !u!1 &1066349082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2071,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 256
+  verticalDistance: 0.8
 --- !u!1 &1268349438
 GameObject:
   m_ObjectHideFlags: 0

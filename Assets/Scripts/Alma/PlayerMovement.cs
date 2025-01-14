@@ -1,4 +1,6 @@
+using EventManager;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -7,6 +9,18 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
 
     private Vector3 moveDirection;
+
+    [Header("Wall Detector Settings")]
+    private RaycastHit hit;
+    private Vector3 origin;
+    private Vector3 direction;
+    public float maxDistance = 1f;
+    public LayerMask layerMask;
+    public float verticalDistance = 0.9f;
+    public Color rayColorHit = Color.red;
+    public Color rayColorMiss = Color.green;
+
+    
 
     void Start()
     {
@@ -19,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Vector3 direction = transform.forward;
+        Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask)) return;
         HandleInput();
     }
 
@@ -42,4 +60,26 @@ public class PlayerMovement : MonoBehaviour
         // Mover el Rigidbody
         rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
     }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 direction = transform.forward;
+        Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
+
+        // Comprueba si el raycast detectaría algo
+        bool hitSomething = Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask);
+
+        // Cambia el color del Gizmo dependiendo del resultado del raycast
+        Gizmos.color = hitSomething ? rayColorHit : rayColorMiss;
+
+        // Dibuja la línea representando el raycast
+        Gizmos.DrawLine(origin, hitSomething ? hit.point : origin + direction * maxDistance);
+
+        // Si hay un impacto, dibuja una pequeña esfera en el punto de impacto
+        if (hitSomething)
+        {
+            Gizmos.DrawSphere(hit.point, 0.1f);
+        }
+    }
+
 }
