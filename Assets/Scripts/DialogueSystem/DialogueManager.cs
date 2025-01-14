@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using EventManager;
+using SignalSystem;
 
 namespace DialogueSystem
 {
@@ -116,6 +117,63 @@ namespace DialogueSystem
             isSelecting = false;
             isActive = false;
             eventManager.CompleteEvent();
+        }
+
+        public IEnumerator Speak(SignalLines[] dialogueLines)
+        {
+            dialogueBox.SetActive(true);
+            isActive = true;
+
+            StartCoroutine(DetectKeyPress());
+
+            print("Dialog1");
+            print(dialogueLines);
+
+            foreach (SignalLines dialogue in dialogueLines)
+            {
+                txtName.text = dialogue.character;
+                string[] textLines;
+
+                textLines = dialogue.text;
+
+                print("Dialog");
+                print(textLines);
+
+                foreach (string fullText in textLines)
+                {
+                    txtDialogue.text = "";
+
+                    for (int i = 0; i <= fullText.Length; i++)
+                    {
+                        txtDialogue.text = fullText.Substring(0, i);
+                        yield return new WaitForSeconds(0.1f);
+                        if (skipTyping)
+                        {
+                            txtDialogue.text = fullText;
+                            Debug.Log("Skipped");
+                            break;
+                        }
+                    }
+                    Debug.Log("Pasa al while");
+
+                    float elapsedTime = 0f;
+
+                    while (elapsedTime < autoAdvanceTime)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            elapsedTime = autoAdvanceTime;
+                        }
+                        elapsedTime += Time.deltaTime;
+                        yield return null;
+                    }
+                    Debug.Log("Pasa al for");
+                    skipTyping = false;
+                }
+            }
+
+            dialogueBox.SetActive(false);
+            isActive = false;
         }
 
         private IEnumerator DetectKeyPress()
