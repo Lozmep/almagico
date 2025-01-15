@@ -104,7 +104,7 @@ namespace EventManager
 
 
             //}
-            //// Busca un evento elegible
+            //// Forma anterior de buscar eventos
             //foreach (var e in eventPool)
             //{
             //    if (e.status == EventStatus.Pending && ShouldActivateEvent(e))
