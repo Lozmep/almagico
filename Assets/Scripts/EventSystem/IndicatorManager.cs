@@ -1,4 +1,5 @@
 using System.Collections;
+using UI;
 using UnityEngine;
 
 namespace Indicator {    
@@ -10,6 +11,13 @@ namespace Indicator {
         [Range(0f, 100f)] public float communicationIndicator = 100f;
         [Range(0f, 100f)] public float maintenanceIndicator = 100f;
         [Range(0f, 400f)] public float globalIndicator = 400f;
+
+        [Header("Indicators UI")]
+        public ProgressBar stressBar;
+        public ProgressBar selfcareBar;
+        public ProgressBar communicationBar;
+        public ProgressBar maintenanceBar;
+        public ProgressBar globalBar;
 
         [Range(0, 1)] private int threshold;
         private bool increaseDecayRate = false;
@@ -42,6 +50,11 @@ namespace Indicator {
                 communicationIndicator = Mathf.Clamp(communicationIndicator - 1f, 0f, 100f);
                 maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 1f, 0f, 100f);
 
+                stressBar.SetProgress(stressIndicator);
+                selfcareBar.SetProgress(100f - selfCareIndicator);
+                communicationBar.SetProgress(100f - communicationIndicator);
+                maintenanceBar.SetProgress(100f - maintenanceIndicator);
+
                 UpdateGlobalIndicator();
                 Debug.Log($"[Indicadores] Estrés: {stressIndicator}, Autocuidado: {selfCareIndicator}, Comunicación: {communicationIndicator}, Mantenimiento: {maintenanceIndicator}, Global: {globalIndicator}");           
             }
@@ -50,6 +63,8 @@ namespace Indicator {
         private void UpdateGlobalIndicator()
         {
             globalIndicator = selfCareIndicator + communicationIndicator + maintenanceIndicator + (100 - stressIndicator);
+
+            globalBar.SetProgress(400f - globalIndicator);
 
             if (globalIndicator < 200)
             {
