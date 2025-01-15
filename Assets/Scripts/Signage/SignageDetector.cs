@@ -1,36 +1,40 @@
 using DialogueSystem;
 using SignalSystem;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SignageDetector : MonoBehaviour
 {
     public float radius; 
     public string playerTag = "Player"; 
-    private bool isPlayerInRange = false;
     public GameObject signObject;
     public SignalDialogue signalDialogue;
     public DialogueManager dialogueManager;
+    public string type;
+    private bool isSignaling;
+    public bool playerInRange;
 
     private void Update()
     {
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
-        signObject.SetActive(false);
-        
-
 
         foreach (var hitCollider in hitColliders)
         {
+            playerInRange = false;
+            IsColliding(playerInRange);
+
             if (hitCollider.CompareTag(playerTag))
             {
-                signObject.SetActive(true);
+                playerInRange = true;
+                IsColliding(playerInRange);
 
                 if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive) {
                     Debug.Log("XD");
                     SignalObject signal = null;
                     foreach (var signalObject in signalDialogue.signalPool)
                     {
-                        if (signalObject.type == "crop")
+                        if (signalObject.type == type)
                         {
                             signal = signalObject;
                             break;
@@ -38,19 +42,24 @@ public class SignageDetector : MonoBehaviour
                     }
                     if (signal != null)
                     {
-                        Debug.Log("Reconoce Signal");
                         StartCoroutine(dialogueManager.Speak(signal.dialogue.spanish));
                     }
                 }
-
-                
-
-
             }
+            
         }
+
 
     }
 
-   
+    private void IsColliding(bool playerInRange)
+    {
+        isSignaling = playerInRange;
+        signObject.SetActive(isSignaling);
+    }
+
+
+
+
 
 }
