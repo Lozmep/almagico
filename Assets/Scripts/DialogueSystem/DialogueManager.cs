@@ -142,17 +142,19 @@ namespace DialogueSystem
                 foreach (string fullText in textLines)
                 {
                     txtDialogue.text = "";
+                    skipTyping = false;
 
                     for (int i = 0; i <= fullText.Length; i++)
                     {
                         txtDialogue.text = fullText.Substring(0, i);
-                        yield return new WaitForSeconds(0.1f);
                         if (skipTyping)
                         {
                             txtDialogue.text = fullText;
                             Debug.Log("Skipped");
+                            yield return new WaitForSeconds(0.1f);
                             break;
                         }
+                        yield return new WaitForSeconds(0.1f);
                     }
                     Debug.Log("Pasa al while");
 
@@ -168,7 +170,7 @@ namespace DialogueSystem
                         yield return null;
                     }
                     Debug.Log("Pasa al for");
-                    skipTyping = false;
+                    
                 }
             }
 
