@@ -5,3 +5,5 @@ public class NPC : MonoBehaviour
     public int ID;
 
 }
+
+

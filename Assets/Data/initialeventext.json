@@ -1,0 +1,60 @@
+{
+  "initialeventext": [
+    {
+        "id": 1,
+        "dialogue": {
+            "spanish": [
+                {
+                    "character": "Alma y NPC",
+                    "text": [
+                        "Estoy estresado,",
+                        "Tráeme tinto."
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "dialogue": {
+            "spanish": [
+                {
+                    "character": "Alma y NPC",
+                    "text": [
+                        "Estoy estresado,",
+                        "Tráeme un libro."
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "dialogue": {
+            "spanish": [
+                {
+                    "character": "Alma y NPC",
+                    "text": [
+                        "Tengo hambre,",
+                        "Tráeme una manzana."
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "dialogue": {
+            "spanish": [
+                {
+                    "character": "Alma y NPC",
+                    "text": [
+                        "No he dormido,",
+                        "Voy a dormir."
+                    ]
+                }
+            ]
+        }
+    }
+  ]
+}

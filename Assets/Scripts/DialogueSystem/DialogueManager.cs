@@ -14,7 +14,8 @@ namespace DialogueSystem
         public TextMeshProUGUI txtName;
         public bool isActive;
         public EventManager.EventManager eventManager;
-        
+        public TxtLines[] NotMineDialogue;
+
         [SerializeField] private float autoAdvanceTime = 3f;
         private bool isSelecting;
         private bool skipTyping;
@@ -189,6 +190,129 @@ namespace DialogueSystem
                 yield return null;
             }
         }
+
+        public IEnumerator Speak(InitEventLines[] dialogueLines)
+        {
+            dialogueBox.SetActive(true);
+            isActive = true;
+
+            StartCoroutine(DetectKeyPress());
+
+            print("Dialog1");
+            print(dialogueLines);
+
+            foreach (InitEventLines dialogue in dialogueLines)
+            {
+                txtName.text = dialogue.character;
+                string[] textLines;
+
+                textLines = dialogue.text;
+
+                print("Dialog");
+                print(textLines);
+
+                foreach (string fullText in textLines)
+                {
+                    txtDialogue.text = "";
+                    skipTyping = false;
+
+                    for (int i = 0; i <= fullText.Length; i++)
+                    {
+                        txtDialogue.text = fullText.Substring(0, i);
+                        if (skipTyping)
+                        {
+                            txtDialogue.text = fullText;
+                            Debug.Log("Skipped");
+                            yield return new WaitForSeconds(0.1f);
+                            break;
+                        }
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    Debug.Log("Pasa al while");
+
+                    float elapsedTime = 0f;
+
+                    while (elapsedTime < autoAdvanceTime)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            elapsedTime = autoAdvanceTime;
+                        }
+                        elapsedTime += Time.deltaTime;
+                        yield return null;
+                    }
+                    Debug.Log("Pasa al for");
+
+                }
+            }
+
+            dialogueBox.SetActive(false);
+            isActive = false;
+        }
+
+        public IEnumerator Speak(TxtLines[] dialogueLines)
+        {
+            dialogueBox.SetActive(true);
+            isActive = true;
+
+            StartCoroutine(DetectKeyPress());
+
+            print("Dialog1");
+            print(dialogueLines);
+
+            foreach (TxtLines dialogue in dialogueLines)
+            {
+                txtName.text = dialogue.character;
+                string[] textLines;
+
+                textLines = dialogue.texts;
+
+                print("Dialog");
+                print(textLines);
+
+                foreach (string fullText in textLines)
+                {
+                    txtDialogue.text = "";
+                    skipTyping = false;
+
+                    for (int i = 0; i <= fullText.Length; i++)
+                    {
+                        txtDialogue.text = fullText.Substring(0, i);
+                        if (skipTyping)
+                        {
+                            txtDialogue.text = fullText;
+                            Debug.Log("Skipped");
+                            yield return new WaitForSeconds(0.1f);
+                            break;
+                        }
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    Debug.Log("Pasa al while");
+
+                    float elapsedTime = 0f;
+
+                    while (elapsedTime < autoAdvanceTime)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            elapsedTime = autoAdvanceTime;
+                        }
+                        elapsedTime += Time.deltaTime;
+                        yield return null;
+                    }
+                    Debug.Log("Pasa al for");
+
+                }
+            }
+
+            dialogueBox.SetActive(false);
+            isActive = false;
+        }
+
+        public void IntTxt()
+        {
+            StartCoroutine(Speak(NotMineDialogue));
+        }
     }
 
 
@@ -221,5 +345,12 @@ namespace DialogueSystem
         public float selfCareImpact;
         public float communicationImpact;
         public float maintenanceImpact;
+    }
+
+    [System.Serializable]
+    public class TxtLines
+    {
+        public string[] texts;
+        public string character;
     }
 }

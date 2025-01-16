@@ -14,7 +14,7 @@ public class TextController : MonoBehaviour
     public GameObject dialogue;
     public TextMeshProUGUI txtDialogue;
     public TextMeshProUGUI txtName;
-    public TxtLines[] tryDialogue;
+    public TxtLines[] NotMineDialogue;
     public KeyCode teclaSkip = KeyCode.Mouse0;
     public AudioSource keyBubble;
 
@@ -88,7 +88,7 @@ public class TextController : MonoBehaviour
             {
                 //keyBubble.Play();
                 yield return new WaitForSeconds(0.09f);
-                if (Input.GetMouseButton(0))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     j = _dialogue[i].texts.Length;
                     Debug.Log("Skip");
@@ -99,7 +99,7 @@ public class TextController : MonoBehaviour
 
             txtDialogue.text = _dialogue[i].texts;
             yield return new WaitForSeconds(0.2f);
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
         }
         dialogue.SetActive(false);
 
@@ -109,7 +109,7 @@ public class TextController : MonoBehaviour
 
     public void IntTxt()
     {
-        StartCoroutine(Speak(tryDialogue));
+        StartCoroutine(Speak(NotMineDialogue));
     }
 
 
