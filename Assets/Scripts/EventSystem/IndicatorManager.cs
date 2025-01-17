@@ -19,6 +19,9 @@ namespace Indicator {
         public ProgressBar maintenanceBar;
         public ProgressBar globalBar;
 
+        [Header("Event Manager")]
+        private EventManager.EventManager eventManager;
+
         [Range(0, 1)] private int threshold;
         private bool increaseDecayRate = false;
         private float decayRate = 2f;
@@ -32,6 +35,11 @@ namespace Indicator {
         {
             get { return increaseDecayRate; }
             set { increaseDecayRate = value; }
+        }
+
+        private void Awake()
+        {
+            eventManager = GetComponent<EventManager.EventManager>();
         }
 
         void Start()
@@ -48,7 +56,14 @@ namespace Indicator {
                 stressIndicator = Mathf.Clamp(stressIndicator + 2f, 0f, 100f);
                 selfCareIndicator = Mathf.Clamp(selfCareIndicator - 1f, 0f, 100f);
                 communicationIndicator = Mathf.Clamp(communicationIndicator - 1f, 0f, 100f);
-                maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 1f, 0f, 100f);
+
+                if(eventManager.isFarming)
+                {
+                    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 2f, 0f, 100f);
+                } else
+                {
+                    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 1f, 0f, 100f);
+                }
 
                 stressBar.SetProgress(stressIndicator);
                 selfcareBar.SetProgress(100f - selfCareIndicator);

@@ -25,11 +25,16 @@ public class GiveItemEvent : MonoBehaviour
     [Header("Dialogue Management")]
     public DialogueManager textController;
 
+    [Header("Initial Event Dialogue Management")]
+    public EventDialogue eventDialogue;
+
 
     private void Awake()
     {
         takeItem = GetComponent<TakeItemEvent>();
+        eventDialogue = GetComponent<EventDialogue>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -57,6 +62,7 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
                         eventManager.CompleteEvent();
+                        eventDialogue.isIndicated = false;
                         break;
 
                     case 2:
@@ -65,6 +71,7 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
                         eventManager.CompleteEvent();
+                        eventDialogue.isIndicated = false;
                         break;
 
                     case 3:

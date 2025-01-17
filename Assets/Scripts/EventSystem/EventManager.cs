@@ -16,6 +16,10 @@ namespace EventManager
         public List<EventData> eventPool = new List<EventData>();
         public EventData currentEvent;
         public int currentNPC;
+        public bool isFarming;
+
+        [Header("Initial Event Dialogue Management")]
+        public EventDialogue eventDialogue;
 
         // Tiempo
         //private float timeSinceLastCheck = 0f;
@@ -160,12 +164,26 @@ namespace EventManager
         {
             currentNPC = Random.Range(1, 4);
             lastEventId = currentEvent.id;
+
             indicatorManager.IncreaseDecayRate = true;
             Debug.Log($"Evento activado: {currentEvent.name}");
 
             // Cambiar el estado del evento
             currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
+
+            if (currentEvent.id == 4)
+            {
+                if (eventDialogue.isIndicated) {
+
+                    isFarming = true;
+                    FarmingDuration();
+                }
+            }
+            else
+            {
+                isFarming = false;
+            }
 
             // Inicia el proceso para finalizar el evento
             //StartCoroutine(EndEventAfterDelay(5f)); // La duración del evento es de 5 segundos
@@ -192,6 +210,14 @@ namespace EventManager
             Debug.Log($"Evento finalizado: {currentEvent.name}");
             currentEvent = null;
         }
+
+        private IEnumerator FarmingDuration()
+        {
+            yield return new WaitForSeconds(15f);
+            isFarming = false;
+            CompleteEvent();
+        }
+        
 
 
         // SE MODIFICA PARA QUE NO SEA CADA CIERTO TIEMPO, SINO CUANDO TERMINA EL EVENTO

@@ -16,6 +16,7 @@ public class EventDialogue : MonoBehaviour
     public float maxDistance = 1f;
     public LayerMask layerMask;
     public float verticalDistance = 0.9f;
+    public bool isIndicated;
 
     [Header("Event Management")]
     public EventManager.EventManager eventManager;
@@ -34,6 +35,7 @@ public class EventDialogue : MonoBehaviour
     void Start()
     {
         LoadEventsFromFile("Assets/Data/initialeventext.json");
+        isIndicated = false;
     }
 
     private void LoadEventsFromFile(string path)
@@ -73,6 +75,7 @@ public class EventDialogue : MonoBehaviour
                         {
                             compareID = initialDialogue;
                             StartCoroutine(dialogueManager.Speak(compareID.dialogue.spanish));
+                            isIndicated = true;
                             break;
                         }
                     }
