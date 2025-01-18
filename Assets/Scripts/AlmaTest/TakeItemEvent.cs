@@ -29,6 +29,14 @@ public class TakeItemEvent : MonoBehaviour
     [Header("Dialogue Management")]
     public DialogueManager dialogueManager;
 
+    [Header("Initial Event Dialogue Management")]
+    public EventDialogue eventDialogue;
+
+    private void Awake()
+    {
+        eventDialogue = GetComponent<EventDialogue>();
+    }
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.X) && isFree)
@@ -75,7 +83,7 @@ public class TakeItemEvent : MonoBehaviour
             ValidateInteraction(eventManager.currentEvent.id, objectTag, hit);
         }
 
-        if (isFree)
+        if (isFree && eventDialogue.isIndicated)
         {
             HandleTagAction(objectTag, hit);
         }

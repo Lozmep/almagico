@@ -1,3 +1,4 @@
+using DialogueSystem;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
@@ -21,14 +22,19 @@ public class GiveItemEvent : MonoBehaviour
     [Header("Event Management")]
     public AchievementSystem achievEvent;
 
-    [Header("Text Controller")]
-    public TextController textController;
+    [Header("Dialogue Management")]
+    public DialogueManager textController;
+
+    [Header("Initial Event Dialogue Management")]
+    public EventDialogue eventDialogue;
 
 
     private void Awake()
     {
         takeItem = GetComponent<TakeItemEvent>();
+        eventDialogue = GetComponent<EventDialogue>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -43,26 +49,29 @@ public class GiveItemEvent : MonoBehaviour
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
 
-                if (npc.ID != eventManager.currentNPC) return;
+                if (npc.ID != eventManager.currentNPC) goto ItemNotMine;
+
+                ItemNotMine:
+                textController.IntTxt();
 
                 switch (takeItem.currentItemID)
                 {
                     case 1:
                         Debug.Log("Gracias por el tinto! Seamos amigos");
-                        textController.IntTxt();
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
                         eventManager.CompleteEvent();
+                        eventDialogue.isIndicated = false;
                         break;
 
                     case 2:
                         Debug.Log("Leer es saber");
-                        textController.IntTxt();
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
                         eventManager.CompleteEvent();
+                        eventDialogue.isIndicated = false;
                         break;
 
                     case 3:
@@ -98,4 +107,5 @@ public class GiveItemEvent : MonoBehaviour
         }
 
     }
+
 }

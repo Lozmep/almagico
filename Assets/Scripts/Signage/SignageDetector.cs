@@ -11,55 +11,39 @@ public class SignageDetector : MonoBehaviour
     public SignalDialogue signalDialogue;
     public DialogueManager dialogueManager;
     public string type;
-    private bool isSignaling;
-    public bool playerInRange;
 
-    private void Update()
+    private void OnTriggerStay(Collider other)
     {
-
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
-
-        foreach (var hitCollider in hitColliders)
+        if (other.gameObject.CompareTag(playerTag))
         {
-            playerInRange = false;
-            IsColliding(playerInRange);
+            signObject.SetActive(true);
+            Debug.Log(dialogueManager.isActive);
 
-            if (hitCollider.CompareTag(playerTag))
+            if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive)
             {
-                playerInRange = true;
-                IsColliding(playerInRange);
+                Debug.Log("XD");
 
-                if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive) {
-                    Debug.Log("XD");
-                    SignalObject signal = null;
-                    foreach (var signalObject in signalDialogue.signalPool)
+                SignalObject signal = null;
+                foreach (var signalObject in signalDialogue.signalPool)
+                {
+                    if (signalObject.type == type)
                     {
-                        if (signalObject.type == type)
-                        {
-                            signal = signalObject;
-                            break;
-                        }
-                    }
-                    if (signal != null)
-                    {
-                        StartCoroutine(dialogueManager.Speak(signal.dialogue.spanish));
+                        signal = signalObject;
+                        break;
                     }
                 }
+                if (signal != null)
+                {
+                    StartCoroutine(dialogueManager.Speak(signal.dialogue.spanish));
+                }
+
             }
-            
         }
-
-
     }
 
-    private void IsColliding(bool playerInRange)
+    private void OnTriggerExit(Collider other)
     {
-        isSignaling = playerInRange;
-        signObject.SetActive(isSignaling);
+        signObject.SetActive(false);
     }
-
-
-
-
 
 }
