@@ -5,10 +5,16 @@
         "dialogue": {
             "spanish": [
                 {
-                    "character": "Alma y NPC",
+                    "character": "NPC",
                     "text": [
-                        "Estoy estresado,",
-                        "Tráeme tinto."
+                        "¡Qué cosa tan berraca! Siento que no descanso nunca"
+                    ]
+                },
+                {
+                    "character": "Alma",
+                    "text": [
+                        "A veces, unos minutos de descanso pueden marcar la diferencia.",
+                        "Voy a buscar una aromatica, que te puede ayudar"
                     ]
                 }
             ]
@@ -19,10 +25,17 @@
         "dialogue": {
             "spanish": [
                 {
-                    "character": "Alma y NPC",
+                    "character": "NPC",
                     "text": [
-                        "Estoy estresado,",
-                        "Tráeme un libro."
+                        "Hoy me siento como si tuviera un peso enorme encima.",
+                        "Nada me sale bien."
+                    ]
+                },
+                {
+                    "character": "Alma",
+                    "text": [
+                        "Es normal sentirse así a veces. Vamos a buscar una solución.",
+                        "Voy a buscar un libro ideal para este caso."
                     ]
                 }
             ]
@@ -33,10 +46,16 @@
         "dialogue": {
             "spanish": [
                 {
-                    "character": "Alma y NPC",
+                    "character": "NPC",
                     "text": [
-                        "Tengo hambre,",
-                        "Tráeme una manzana."
+                        "No sé, Alma. Siento que no tengo tiempo ni para mí mismo",
+                        "No he podido desayunar nada."
+                    ]
+                },
+                {
+                    "character": "Alma",
+                    "text": [
+                        "Venga yo le traigo una manzana"
                     ]
                 }
             ]
@@ -47,10 +66,15 @@
         "dialogue": {
             "spanish": [
                 {
-                    "character": "Alma y NPC",
+                    "character": "NPC",
                     "text": [
-                        "No he dormido,",
-                        "Voy a dormir."
+                        "Llevo dos dias sin poder mimir"
+                    ]
+                },
+                {
+                    "character": "Alma",
+                    "text": [
+                        "Descansa un ratico pues"
                     ]
                 }
             ]

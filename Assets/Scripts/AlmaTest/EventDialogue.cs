@@ -66,7 +66,12 @@ public class EventDialogue : MonoBehaviour
                 NPC npc = hit.collider.GetComponent<NPC>();
                 Debug.Log("MMMM1");
 
-                if (npc.ID != eventManager.currentNPC) return;
+                if (npc.ID != eventManager.currentNPC) {
+                    if (!dialogueManager.isActive) {
+                        dialogueManager.IntTxt();
+                    }
+                    return;
+                }
 
                 Debug.Log("MMMM2");
 

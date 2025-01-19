@@ -1,4 +1,5 @@
 using DialogueSystem;
+using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
@@ -42,14 +43,15 @@ public class GiveItemEvent : MonoBehaviour
         Vector3 direction = transform.forward;
         Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
         
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && !takeItem.isFree)
         {
             Debug.DrawRay(origin, direction * maxDistance, Color.red);
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
+                Debug.Log($"tARGET: {eventManager.currentNPC} DETECTED: {npc.ID}");
 
-                if (npc.ID != eventManager.currentNPC && !dialogueManager.isActive) {
+                if (npc.ID != eventManager.currentNPC || !dialogueManager.isActive) {
                     dialogueManager.IntTxt();
                     return;
                 }
@@ -61,7 +63,7 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
-                        eventManager.CompleteEvent();
+                        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
                         eventDialogue.isIndicated = false;
                         break;
 
@@ -70,10 +72,9 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
-                        eventManager.CompleteEvent();
+                        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
                         eventDialogue.isIndicated = false;
                         break;
-
                     case 3:
                         Debug.Log("Gracias por la venta! ");
                         break;
