@@ -60,7 +60,6 @@ public class TakeItemEvent : MonoBehaviour
             HandleHit(hit);
         }
 
-
         if (Physics.Raycast(origin, direction, out RaycastHit cropHit, maxDistance, layerCropMask))
         {
             HandleCropHit(cropHit);
@@ -91,10 +90,14 @@ public class TakeItemEvent : MonoBehaviour
 
     private void HandleDialog(RaycastHit hit)
     {
+        if (dialogueManager.isActive)
+        {
+            Debug.LogWarning("Dialogue already active, ignoring new interaction.");
+            return;
+        }
         NPC npc = hit.collider.GetComponent<NPC>();
 
-        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || npc.ID != eventManager.currentNPC || dialogueManager.isActive) return;
-
+        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || (npc.ID != eventManager.currentNPC) || dialogueManager.isActive) return;
         StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
     }
 

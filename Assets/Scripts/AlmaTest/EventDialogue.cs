@@ -55,18 +55,24 @@ public class EventDialogue : MonoBehaviour
         Vector3 direction = transform.forward;
         Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
 
-        if (Input.GetKey(KeyCode.X))
+        if (eventManager.currentEvent == null || eventManager.currentEvent.mainIndicator == IndicatorType.Communication) return;
+
+        if (Input.GetKey(KeyCode.X) && takeItem.isFree)
         {
             Debug.DrawRay(origin, direction * maxDistance, Color.red);
+            Debug.Log("MMMM0");
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
+                Debug.Log("MMMM1");
 
-                if (npc.ID != eventManager.currentNPC && !takeItem.isFree) return;
+                if (npc.ID != eventManager.currentNPC) return;
 
-                if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive)
+                Debug.Log("MMMM2");
+
+                if (!dialogueManager.isActive)
                 {
-                    Debug.Log("XD");
+                    Debug.Log("MMMM3");
 
                     InitialDialogue compareID = null;
                     foreach (var initialDialogue in initDialoguePool)

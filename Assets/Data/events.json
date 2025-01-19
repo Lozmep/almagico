@@ -98,21 +98,21 @@
             "triggerChoices": true,
             "choices": [
               {
-                "text": ["Si wo a decilo"],
+                "text": "Si wo a decilo",
                 "stressImpact": 5,
                 "selfCareImpact": 0,
                 "communicationImpact": 20,
                 "maintenanceImpact": 3
               },
               {
-                "text": ["No lo wo a deci y ya"],
+                "text": "No lo wo a deci y ya",
                 "stressImpact": -5,
                 "selfCareImpact": 0,
                 "communicationImpact": -10,
                 "maintenanceImpact": 0
               },
               {
-                "text": ["Que no lo wo a deci!!"],
+                "text": "Que no lo wo a deci!!",
                 "stressImpact": -10,
                 "selfCareImpact": 0,
                 "communicationImpact": -15,
@@ -154,21 +154,21 @@
             "triggerChoices": true,
             "choices": [
               {
-                "text": ["Si wo a decilo"],
+                "text": "Si wo a decilo",
                 "stressImpact": 5,
                 "selfCareImpact": 0,
                 "communicationImpact": 20,
                 "maintenanceImpact": 3
               },
               {
-                "text": ["No lo wo a deci y ya"],
+                "text": "No lo wo a deci y ya",
                 "stressImpact": -5,
                 "selfCareImpact": 0,
                 "communicationImpact": -10,
                 "maintenanceImpact": 0
               },
               {
-                "text": ["Que no lo wo a deci!!"],
+                "text": "Que no lo wo a deci!!",
                 "stressImpact": -10,
                 "selfCareImpact": 0,
                 "communicationImpact": -15,

@@ -23,7 +23,7 @@ public class GiveItemEvent : MonoBehaviour
     public AchievementSystem achievEvent;
 
     [Header("Dialogue Management")]
-    public DialogueManager textController;
+    public DialogueManager dialogueManager;
 
     [Header("Initial Event Dialogue Management")]
     public EventDialogue eventDialogue;
@@ -49,10 +49,10 @@ public class GiveItemEvent : MonoBehaviour
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
 
-                if (npc.ID != eventManager.currentNPC) goto ItemNotMine;
-
-                ItemNotMine:
-                textController.IntTxt();
+                if (npc.ID != eventManager.currentNPC && !dialogueManager.isActive) {
+                    dialogueManager.IntTxt();
+                    return;
+                }
 
                 switch (takeItem.currentItemID)
                 {
