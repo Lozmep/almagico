@@ -6,18 +6,23 @@ TagManager:
   tags:
   - Grabbable
   - CoffeeCube
+  - Tetera
+  - Librero
+  - Semillas
+  - Cultivo
+  - CurrentItem
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ItemSpawner
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - NPC
+  - Harvest
+  - Basura
+  - Delivery
+  - Wall
   - 
   - 
   - 

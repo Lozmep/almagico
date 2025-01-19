@@ -1,0 +1,262 @@
+{
+  "eventList": [
+    { 
+      "id": 1, 
+      "name": "Evento Estres 1", 
+      "stressImpact": 20, 
+      "selfCareImpact": 5, 
+      "communicationImpact": 0, 
+      "maintenanceImpact": 0, 
+      "mainIndicator": 0,
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "Alma",
+            "text": [
+              "Recuerda que el estrés es una reacción normal ante situaciones difíciles, pero si dura mucho tiempo, puede afectar tu salud física y mental.",
+              "Dificultad para dormir, dolores de cabeza, problemas digestivos o incluso mal genio, son señales de que debes parar y tomar un respiro."          
+            ],
+            "triggerChoices": false
+          },
+          {
+            "character": "NPC",
+            "text": [
+              "¡Gracias, Alma! Voy a intentar tomarme un tiempo para descansar."          
+            ],
+            "triggerChoices": false
+          }
+        ]
+      }
+    },
+    { 
+      "id": 2, 
+      "name": "Evento Estres 2", 
+      "stressImpact": 20, 
+      "selfCareImpact": 5, 
+      "communicationImpact": 0, 
+      "maintenanceImpact": 0, 
+      "mainIndicator": 0,
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "Alma",
+            "text": [
+              "Recuerda que el estrés prolongado puede traer consecuencias negativas. Intenta identificar tus fuentes de estrés y busca soluciones pequeñas.",
+              "A veces, hablar de lo que te preocupa o tomarte unos minutos para ti mismo puede hacer una gran diferencia."
+            ],
+            "triggerChoices": false
+          },
+          {
+            "character": "NPC",
+            "text": [
+              "¡Muchas gracias, Alma! Voy a intentar buscar esos pequeños momentos para relajarme."
+            ],
+            "triggerChoices": false
+          }
+        ]
+      }
+    },
+    { 
+      "id": 3,
+      "name": "Evento Autocuidado 1",
+      "stressImpact": 5,
+      "selfCareImpact": 20,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 1,
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "Alma",
+            "text": [
+              "El autocuidado no es un lujo, es una necesidad. Dormir bien, comer sano y buscar momentos para relajarte",
+              "Son pequeñas acciones que pueden cambiar tu día.",
+              "No descuides tu salud física y emocional por estar ocupado."
+            ],
+            "triggerChoices": false
+          },
+          {
+            "character": "NPC",
+            "text": [ "¡Gracias, Alma! Necesitaba un recordatorio de eso. Voy a comer algo y tomarme un descanso." ],
+            "triggerChoices": false
+          }
+        ]
+      }
+    },
+    { 
+      "id": 4,
+      "name": "Evento Autocuidado 2",
+      "stressImpact": 5,
+      "selfCareImpact": 20,
+      "communicationImpact": 0,
+      "maintenanceImpact": 3,
+      "mainIndicator": 1,
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "Alma",
+            "text": [ "Recuerda que el autocuidado no es solo descansar, sino también cuidar de ti mismo de manera integral.",
+            "Duerme bien, alimenta tu cuerpo de forma saludable y, sobre todo, haz espacio para ti.",
+            "Esto te ayudará a estar más fuerte y equilibrado."],
+            "triggerChoices": false
+          },
+          {
+            "character": "NPC",
+            "text": [ "Gracias, Alma. Voy a intentar descansar un poco más y tomarme un tiempo para mí." ],
+            "triggerChoices": false
+          }
+        ]
+      }
+    },
+    { 
+      "id": 5,
+      "name": "Evento Comunicacion 1",
+      "stressImpact": 5,
+      "selfCareImpact": 0,
+      "communicationImpact": 20,
+      "maintenanceImpact": 3,
+      "mainIndicator": 2,
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": ["Últimamente me siento un poco desconectado, no sé qué hacer al respecto."],
+            "triggerChoices": false
+          },
+          {
+            "character": "Alma",
+            "text": ["¿Cómo puedo ayudarle?"],
+            "triggerChoices": true,
+            "choices": [
+              {
+                "text": "Decirle que se tome un descanso y se de un respiro.",
+                "stressImpact": 2,
+                "selfCareImpact": 20,
+                "communicationImpact": 2,
+                "maintenanceImpact": 2
+              },
+              {
+                "text": "Sugerirle que quizás hablar con alguien de confianza sobre lo que siente podría ayudarle.",
+                "stressImpact": 2,
+                "selfCareImpact": 2,
+                "communicationImpact": 20,
+                "maintenanceImpact": 2
+              },
+              {
+                "text": "Decirle que Intente organizar sus tareas y que enfocarse en una cosa a la vez puede aliviarle.",
+                "stressImpact": 2,
+                "selfCareImpact": 2,
+                "communicationImpact": 20,
+                "maintenanceImpact": 2
+              },
+              {
+                "text": "Finge demencia.",
+                "stressImpact": -5,
+                "selfCareImpact": -10,
+                "communicationImpact": -5,
+                "maintenanceImpact": -5
+              }
+            ]
+          },
+          {
+            "character": "NPC",
+            "text": [],
+            "triggerChoices": false,
+            "conditionalText1": [
+              "Eso suena bien, podría intentar descansar un poco.",
+              "Me parece buena idea, necesito organizarme mejor."
+            ],
+            "conditionalText2": [
+              "Hablar con alguien suena útil, pero no sé con quién.",
+              "No había pensado en hablarlo con alguien, podría probar."
+            ],
+            "conditionalText3": [
+              "Definitivamente necesito organizarme mejor. Intentaré hacerlo de a poco.",
+              "Creo que podría tomar un respiro y enfocarme en una cosa a la vez."
+            ],
+            "conditionalText4": [
+              "Te miro, te observo, te analizo y te ignoro!"
+            ]
+          }
+        ]
+      }
+    },
+    { 
+      "id": 6,
+      "name": "Evento Comunicacion 2",
+      "stressImpact": 5,
+      "selfCareImpact": 0,
+      "communicationImpact": 20,
+      "maintenanceImpact": 3,
+      "mainIndicator": 2,
+      "status": 0,
+      "dialogue": {
+        "spanish": [
+          {
+            "character": "NPC",
+            "text": [ "A veces me siento incomprendido, y no sé cómo decirlo." ],
+            "triggerChoices": false
+          },
+          {
+            "character": "Alma",
+            "text": ["Le debería sugerir que..."],
+            "triggerChoices": true,
+            "choices": [
+              {
+                "text": "Quizás podrías empezar por hablar con alguien de confianza y contarle cómo te sientes.",
+                "stressImpact": 2,
+                "selfCareImpact": 2,
+                "communicationImpact": 20,
+                "maintenanceImpact": 2
+              },
+              {
+                "text": "Desahogarte escribiendo tus pensamientos también puede ayudarte a aclarar lo que sientes.",
+                "stressImpact": 2,
+                "selfCareImpact": 2,
+                "communicationImpact": 20,
+                "maintenanceImpact": 2
+              },
+              {
+                "text": "Es importante que te des permiso para sentir lo que sientes sin miedo al juicio.",
+                "stressImpact": 2,
+                "selfCareImpact": 2,
+                "communicationImpact": 20,
+                "maintenanceImpact": 2
+              },
+              {
+                "text": "Yo no wo a decilo",
+                "stressImpact": -5,
+                "selfCareImpact": -5,
+                "communicationImpact": -10,
+                "maintenanceImpact": -5
+              }
+            ]
+          },
+          {
+            "character": "NPC",
+            "text": [],
+            "triggerChoices": false,
+            "conditionalText1": [
+              "¡Gracias! Hablarlo con alguien de confianza me hará sentir mejor.",
+              "Me siento mejor al poder compartirlo con alguien."
+            ],
+            "conditionalText2": [
+              "Escribiré lo que siento en mi diario",
+              "¡Muchas gracias!"
+            ],
+            "conditionalText3": [
+              "Tomaré tu consejo y manifestaré más lo que siento",
+              "¡Gracias por ayudarme!"
+            ],
+              "conditionalText4": ["Ah bueno, yo tampoco"]
+          }
+        ]
+      }
+    }
+  ]
+}
