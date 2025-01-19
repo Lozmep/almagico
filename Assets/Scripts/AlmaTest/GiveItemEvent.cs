@@ -1,6 +1,7 @@
 using DialogueSystem;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using TMPro;
 
 public class GiveItemEvent : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class GiveItemEvent : MonoBehaviour
 
     [Header("Initial Event Dialogue Management")]
     public EventDialogue eventDialogue;
+
+    [Header("Selling Features")]
+    public TextMeshProUGUI sellCount;
 
 
     private void Awake()
@@ -93,6 +97,10 @@ public class GiveItemEvent : MonoBehaviour
                     takeItem.currentItemID = 0;
                     takeItem.isFree = true;
                     delivery.deliverySum++;
+
+                    string newString = delivery.deliverySum.ToString();
+                    sellCount.text = "Ventas:" + newString;
+
                     Debug.Log(delivery.deliverySum);
 
                     if (delivery.deliverySum == 1)
