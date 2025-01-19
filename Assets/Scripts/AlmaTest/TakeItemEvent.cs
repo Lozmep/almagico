@@ -78,12 +78,12 @@ public class TakeItemEvent : MonoBehaviour
         currentItemID = item.itemID;
         string objectTag = hit.collider.tag;
 
-        if (eventManager?.currentEvent != null)
+        if (eventManager?.currentEvent != null && eventDialogue.isIndicated)
         {
             ValidateInteraction(eventManager.currentEvent.id, objectTag, hit);
         }
 
-        if (isFree && eventDialogue.isIndicated)
+        if (isFree)
         {
             HandleTagAction(objectTag, hit);
         }

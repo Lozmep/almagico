@@ -10,6 +10,7 @@ public class SignageDetector : MonoBehaviour
     public GameObject signObject;
     public SignalDialogue signalDialogue;
     public DialogueManager dialogueManager;
+    public TakeItemEvent takeItem;
     public string type;
 
     private void OnTriggerStay(Collider other)
@@ -19,7 +20,7 @@ public class SignageDetector : MonoBehaviour
             signObject.SetActive(true);
             Debug.Log(dialogueManager.isActive);
 
-            if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive)
+            if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive && takeItem.isFree)
             {
                 Debug.Log("XD");
 

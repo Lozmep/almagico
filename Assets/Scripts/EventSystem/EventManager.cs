@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace EventManager
 {
@@ -20,6 +22,11 @@ namespace EventManager
 
         [Header("Initial Event Dialogue Management")]
         public EventDialogue eventDialogue;
+
+        [Header("Fade feature")]
+        public FadeObject fade;
+        public Image activatePanel;
+        public TextMeshProUGUI activatePanelText;
 
         // Tiempo
         //private float timeSinceLastCheck = 0f;
@@ -162,6 +169,7 @@ namespace EventManager
 
         private void ActivateEvent()
         {
+            StartCoroutine(fade.Fading(activatePanel, activatePanelText));
             currentNPC = Random.Range(1, 4);
             lastEventId = currentEvent.id;
 
