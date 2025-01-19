@@ -146,9 +146,7 @@ public class TakeItemEvent : MonoBehaviour
         var actions = new Dictionary<int, (string tag, GameObject obj, string message)>
         {
             { 1, ("Tetera", tinto, "Impacto con una Tetera") },
-            { 2, ("Librero", libro, "Impacto con un Librero") },
-            { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
-            { 4, ("Librero", libro, "Impacto con un Librero 2") }
+            { 2, ("Librero", libro, "Impacto con un Librero") }
         };
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)
@@ -164,9 +162,7 @@ public class TakeItemEvent : MonoBehaviour
         var actions = new Dictionary<int, (string tag, GameObject obj, string message)>
         {
             { 1, ("Tetera", tinto, "Impacto con una Tetera") },
-            { 2, ("Librero", libro, "Impacto con un Librero") },
-            { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
-            { 4, ("Librero", libro, "Impacto con un Librero 2") }
+            { 2, ("Librero", libro, "Impacto con un Librero") }
         };
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)

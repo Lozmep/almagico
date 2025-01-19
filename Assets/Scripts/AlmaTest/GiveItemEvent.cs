@@ -3,6 +3,7 @@ using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using TMPro;
+using Indicator;
 
 public class GiveItemEvent : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class GiveItemEvent : MonoBehaviour
 
     [Header("Initial Event Dialogue Management")]
     public EventDialogue eventDialogue;
+
+    [Header("Indicator Management")]
+    public IndicatorManager indicatorManager;
 
     [Header("Selling Features")]
     public TextMeshProUGUI sellCount;
@@ -98,6 +102,7 @@ public class GiveItemEvent : MonoBehaviour
                     takeItem.currentItemID = 0;
                     takeItem.isFree = true;
                     delivery.deliverySum++;
+                    indicatorManager.modifyIndicators(0f, 0f, 0f, 10f);
 
                     string newString = delivery.deliverySum.ToString();
                     sellCount.text = "Ventas:" + newString;

@@ -195,55 +195,7 @@ namespace EventManager
             currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
             isFarming = false;
-
-            //if (currentEvent.id == 4)
-            //{
-            //    if (eventDialogue.isIndicated) {
-
-            //        isFarming = true;
-            //        FarmingDuration();
-            //    }
-            //}
-            //else
-            //{
-            //    isFarming = false;
-            //}
-
-            // Quizas debo validar en la corutina si el evento cambia a estado completado, ahi activo el end event
         }
-
-        private IEnumerator FarmingDuration()
-        {
-            yield return new WaitForSeconds(15f);
-            isFarming = false;
-            CompleteEvent();
-        }
-        
-
-
-        // SE MODIFICA PARA QUE NO SEA CADA CIERTO TIEMPO, SINO CUANDO TERMINA EL EVENTO
-        //private IEnumerator EndEventAfterDelay(float duration)
-        //{
-        //    yield return new WaitForSeconds(duration);
-
-        //    // Aplicar impacto en los indicadores
-        //    stressIndicator = Mathf.Clamp(stressIndicator + currentEvent.stressImpact, 0f, 100f);
-        //    selfCareIndicator = Mathf.Clamp(selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
-        //    communicationIndicator = Mathf.Clamp(communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
-        //    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
-
-        //    // Cambia el estado del evento a completado
-        //    currentEvent.status = EventStatus.Completed; // Cuando valide la completitud esto ya no es necesario
-        //    eventInProgress = false;
-
-        //    // Reinicia el cooldown
-        //    eventCooldownTimer = cooldownDuration;
-
-        //    Debug.Log($"Evento finalizado: {currentEvent.name}");
-        //    currentEvent = null;
-        //}
-
-
 
         private void LoadEventsFromFile(string path)
         {
