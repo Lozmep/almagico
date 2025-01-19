@@ -21,7 +21,7 @@ public class TextController : MonoBehaviour
     private void Start()
     {
         gameObjectText.SetActive(false);
-        dialogue.SetActive(false);
+        
     }
 
     // Método para hacer visible el texto gradualmente

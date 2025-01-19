@@ -15,6 +15,7 @@ namespace DialogueSystem
         public bool isActive;
         public EventManager.EventManager eventManager;
         public TxtLines[] NotMineDialogue;
+        public TxtLines[] tutorialDialogue;
 
         [SerializeField] private float autoAdvanceTime = 3f;
         private bool isSelecting;
@@ -36,11 +37,6 @@ namespace DialogueSystem
         {
             get { return selectedOption; }
             set { selectedOption = value; }
-        }
-
-        void Start()
-        {
-            dialogueBox.SetActive(false);
         }
 
         public IEnumerator Speak(Lines[] dialogueLines)
@@ -312,6 +308,11 @@ namespace DialogueSystem
         public void IntTxt()
         {
             StartCoroutine(Speak(NotMineDialogue));
+        }
+
+        public void TutorialTxt()
+        {
+            StartCoroutine(Speak(tutorialDialogue));
         }
     }
 
