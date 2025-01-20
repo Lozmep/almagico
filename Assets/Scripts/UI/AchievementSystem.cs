@@ -5,6 +5,7 @@ using UnityEngine.LightTransport;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.UI;
 using Indicator;
+using GameSystem;
 
 public class AchievementSystem : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class AchievementSystem : MonoBehaviour
     public bool isGameFinished;
     public IndicatorManager indicatorManager;
     public TextController textController;
+    public GameStatusManager gameStatusManager;
     private List<int> completedAchievements = new List<int>();
 
     private void Awake()
@@ -23,7 +25,7 @@ public class AchievementSystem : MonoBehaviour
     }
     public void ToggleVisibility()
     {
-        if (parentObject != null)
+        if (parentObject != null && !gameStatusManager.isOver)
         {
             newState = !newState;
             parentObject.SetActive(newState);
