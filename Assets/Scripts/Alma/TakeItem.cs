@@ -43,8 +43,9 @@ public class TakeItem : MonoBehaviour
                 isFree = false;
 
                 string objectTag = hit.collider.tag;
-                
-                
+                AudioManager.Instance.Play("Grab");
+
+
                 switch (objectTag)
                 {
                     case "Tetera":
