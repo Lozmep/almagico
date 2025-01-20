@@ -60,7 +60,6 @@ public class TakeItemEvent : MonoBehaviour
             HandleHit(hit);
         }
 
-
         if (Physics.Raycast(origin, direction, out RaycastHit cropHit, maxDistance, layerCropMask))
         {
             HandleCropHit(cropHit);
@@ -78,7 +77,7 @@ public class TakeItemEvent : MonoBehaviour
         currentItemID = item.itemID;
         string objectTag = hit.collider.tag;
 
-        if (eventManager?.currentEvent != null && eventDialogue.isIndicated)
+        if (eventManager && eventManager.currentEvent != null && eventDialogue.isIndicated)
         {
             ValidateInteraction(eventManager.currentEvent.id, objectTag, hit);
         }
@@ -91,10 +90,14 @@ public class TakeItemEvent : MonoBehaviour
 
     private void HandleDialog(RaycastHit hit)
     {
+        if (dialogueManager.isActive)
+        {
+            Debug.LogWarning("Dialogue already active, ignoring new interaction.");
+            return;
+        }
         NPC npc = hit.collider.GetComponent<NPC>();
 
-        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || npc.ID != eventManager.currentNPC || dialogueManager.isActive) return;
-
+        if (eventManager.currentEvent.mainIndicator != IndicatorType.Communication || (npc.ID != eventManager.currentNPC) || dialogueManager.isActive) return;
         StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
     }
 
@@ -143,9 +146,7 @@ public class TakeItemEvent : MonoBehaviour
         var actions = new Dictionary<int, (string tag, GameObject obj, string message)>
         {
             { 1, ("Tetera", tinto, "Impacto con una Tetera") },
-            { 2, ("Librero", libro, "Impacto con un Librero") },
-            { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
-            { 4, ("Librero", libro, "Impacto con un Librero 2") }
+            { 2, ("Librero", libro, "Impacto con un Librero") }
         };
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)
@@ -161,9 +162,7 @@ public class TakeItemEvent : MonoBehaviour
         var actions = new Dictionary<int, (string tag, GameObject obj, string message)>
         {
             { 1, ("Tetera", tinto, "Impacto con una Tetera") },
-            { 2, ("Librero", libro, "Impacto con un Librero") },
-            { 3, ("Tetera", tinto, "Impacto con una Tetera 2") },
-            { 4, ("Librero", libro, "Impacto con un Librero 2") }
+            { 2, ("Librero", libro, "Impacto con un Librero") }
         };
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)

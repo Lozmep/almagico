@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using EventManager;
 using SignalSystem;
+using Indicator;
+using NUnit.Framework;
 
 namespace DialogueSystem
 {
@@ -15,6 +17,9 @@ namespace DialogueSystem
         public bool isActive;
         public EventManager.EventManager eventManager;
         public TxtLines[] NotMineDialogue;
+        public ChoiceManager choiceManager;
+        public IndicatorManager indicatorManager;
+        public NPC[] npcList;
         public TxtLines[] tutorialDialogue;
 
         [SerializeField] private float autoAdvanceTime = 3f;
@@ -41,8 +46,11 @@ namespace DialogueSystem
 
         public IEnumerator Speak(Lines[] dialogueLines)
         {
+            Debug.Log("Ingresa SPEAK");
+            Debug.Log(isActive);
             dialogueBox.SetActive(true);
             isActive = true;
+            Debug.Log($"isActive set to {isActive} at {Time.time}");
 
             StartCoroutine(DetectKeyPress());
 
@@ -51,63 +59,81 @@ namespace DialogueSystem
                 txtName.text = dialogue.character;
                 string[] textLines;
 
-                if (dialogue.text.Length > 0)
+                if (!dialogue.triggerChoices)
                 {
-                    textLines = dialogue.text;
-                }
-                else
-                {
-                    switch (selectedOption)
+                    if (dialogue.text.Length > 0)
                     {
-                        case 1:
-                            textLines = dialogue.conditionalText1;
-                            break;
-                        case 2:
-                            textLines = dialogue.conditionalText2;
-                            break;
-                        case 3:
-                            textLines = dialogue.conditionalText3;
-                            break;
-                        case 4:
-                            textLines = dialogue.conditionalText4;
-                            break;
-                        default:
-                            textLines = new string[0];
-                            break;
+                        textLines = dialogue.text;
                     }
-                }
-
-                foreach (string fullText in textLines)
-                {
-                    txtDialogue.text = "";
-
-                    for (int i = 0; i <= fullText.Length; i++)
+                    else
                     {
-                        txtDialogue.text = fullText.Substring(0, i);
+                        switch (selectedOption)
+                        {
+                            case 1:
+                                textLines = dialogue.conditionalText1;
+                                break;
+                            case 2:
+                                textLines = dialogue.conditionalText2;
+                                break;
+                            case 3:
+                                textLines = dialogue.conditionalText3;
+                                break;
+                            case 4:
+                                textLines = dialogue.conditionalText4;
+                                break;
+                            default:
+                                textLines = new string[0];
+                                break;
+                        }
+                    }
+
+                    foreach (string fullText in textLines)
+                    {
+                        txtDialogue.text = "";
+
+                        for (int i = 0; i <= fullText.Length; i++)
+                        {
+                            txtDialogue.text = fullText.Substring(0, i);
+                            if (skipTyping)
+                            {
+                                txtDialogue.text = fullText;
+                                Debug.Log("Skipped");
+                                yield return new WaitForSeconds(0.1f);
+                                break;
+                            }
+                            yield return new WaitForSeconds(0.1f);
+                        }
+                        Debug.Log("Pasa al while");
+
+                        float elapsedTime = 0f;
+
+                        while (elapsedTime < autoAdvanceTime)
+                        {
+                            if (Input.GetKeyDown(KeyCode.Space))
+                            {
+                                elapsedTime = autoAdvanceTime;
+                            }
+                            elapsedTime += Time.deltaTime;
+                            yield return null;
+                        }
+                        Debug.Log("Pasa al for");
+                        skipTyping = false;
+                    }
+                } else 
+                {
+                    isSelecting = true;
+                    txtDialogue.text = dialogue.text[0];
+                    choiceManager.SetChoiceTexts(dialogue.choices);
+                    choiceManager.gameObject.SetActive(true);
+                    while (isSelecting) {
                         yield return new WaitForSeconds(0.1f);
-                        if (skipTyping)
-                        {
-                            txtDialogue.text = fullText;
-                            Debug.Log("Skipped");
-                            break;
-                        }
                     }
-                    Debug.Log("Pasa al while");
+                    selectedOption = choiceManager.selectedButtonIndex + 1;
+                    DialogueChoice choice = dialogue.choices[choiceManager.selectedButtonIndex];
+                    indicatorManager.modifyIndicators(choice.stressImpact, choice.selfCareImpact, choice.communicationImpact, choice.maintenanceImpact);
+                    choiceManager.gameObject.SetActive(false);
 
-                    float elapsedTime = 0f;
-
-                    while (elapsedTime < autoAdvanceTime)
-                    {
-                        if (Input.GetKeyDown(KeyCode.Space))
-                        {
-                            elapsedTime = autoAdvanceTime;
-                        }
-                        elapsedTime += Time.deltaTime;
-                        yield return null;
-                    }
-                    Debug.Log("Pasa al for");
-                    skipTyping = false;
-                }
+                }    
             }
 
             dialogueBox.SetActive(false);
@@ -167,7 +193,7 @@ namespace DialogueSystem
                         yield return null;
                     }
                     Debug.Log("Pasa al for");
-                    
+
                 }
             }
 
@@ -244,6 +270,19 @@ namespace DialogueSystem
 
             dialogueBox.SetActive(false);
             isActive = false;
+
+            if (eventManager.currentEvent.id == 3 || eventManager.currentEvent.id == 4)
+            {
+                if (eventManager.eventDialogue.isIndicated)
+                {
+                    eventManager.isFarming = true;
+                    StartCoroutine(FarmingDuration());
+                }
+            }
+            else
+            {
+                eventManager.isFarming = false;
+            }
         }
 
         public IEnumerator Speak(TxtLines[] dialogueLines)
@@ -308,6 +347,15 @@ namespace DialogueSystem
         public void IntTxt()
         {
             StartCoroutine(Speak(NotMineDialogue));
+        }
+
+        private IEnumerator FarmingDuration()
+        {
+            npcList[eventManager.currentNPC - 1].gameObject.SetActive(false);
+            yield return new WaitForSeconds(30f);
+            eventManager.isFarming = false;
+            npcList[eventManager.currentNPC - 1].gameObject.SetActive(true);
+            eventManager.CompleteEvent();
         }
 
         public void TutorialTxt()

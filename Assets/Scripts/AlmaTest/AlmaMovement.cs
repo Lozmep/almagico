@@ -1,3 +1,4 @@
+using DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class AlmaMovement : MonoBehaviour
     public Color rayColorHit = Color.red;
     public Color rayColorMiss = Color.green;
     public AudioManager audioManager;
+    public DialogueManager dialogueManager;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +36,10 @@ public class AlmaMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleMovement();
+        if (!dialogueManager.isActive)
+        {
+            HandleMovement();
+        }
     }
 
     private void HandleMovement()
@@ -56,7 +61,8 @@ public class AlmaMovement : MonoBehaviour
                 y = 0;
             }
 
-        } else if (Physics.Raycast(origin, reverseDirection, maxDistance, layerMask))
+        }
+        else if (Physics.Raycast(origin, reverseDirection, maxDistance, layerMask))
         {
             y = Input.GetAxis("Vertical");
 
@@ -64,11 +70,12 @@ public class AlmaMovement : MonoBehaviour
             {
                 y = 0;
             }
-        } else
+        }
+        else
         {
             y = Input.GetAxis("Vertical");
         }
-       
+
         x = Input.GetAxis("Horizontal");
 
         transform.Translate(0, 0, y * Time.deltaTime * velocidadMoviento);
@@ -92,16 +99,16 @@ public class AlmaMovement : MonoBehaviour
         Vector3 direction = -transform.forward + new Vector3(0, -verticalDistance, 0);
         Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
 
-        // Comprueba si el raycast detectaría algo
+        // Comprueba si el raycast detectara algo
         bool hitSomething = Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask);
 
         // Cambia el color del Gizmo dependiendo del resultado del raycast
         Gizmos.color = hitSomething ? rayColorHit : rayColorMiss;
 
-        // Dibuja la línea representando el raycast
+        // Dibuja la linea representando el raycast
         Gizmos.DrawLine(origin, hitSomething ? hit.point : origin + direction * maxDistance);
 
-        // Si hay un impacto, dibuja una pequeña esfera en el punto de impacto
+        // Si hay un impacto, dibuja una pequena esfera en el punto de impacto
         if (hitSomething)
         {
             Gizmos.DrawSphere(hit.point, 0.1f);

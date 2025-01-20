@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using NUnit.Framework;
 
 namespace EventManager
 {
@@ -20,8 +21,12 @@ namespace EventManager
         public int currentNPC;
         public bool isFarming;
 
+        [Header("Event Management")]
+        public AchievementSystem achievementSystem;
+
         [Header("Initial Event Dialogue Management")]
         public EventDialogue eventDialogue;
+        private List<int> completedEvents = new List<int>();
 
         [Header("Fade feature")]
         public FadeObject fade;
@@ -130,19 +135,34 @@ namespace EventManager
         {
             float prob = 0f;
 
-            if ((inverse && indicatorValue < 30f) || (!inverse && indicatorValue > 70f))
+            if ((inverse && indicatorValue < 10f) || (!inverse && indicatorValue > 90f))
             {
-                Debug.Log("PROP 15");
-                prob = 0f;
+                Debug.Log("PROP 1");
+                prob = 1f;
             }
-            else if ((inverse && indicatorValue >= 30f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 70f))
+            else if ((inverse && indicatorValue >= 10f && indicatorValue < 30f) || (!inverse && indicatorValue > 70f && indicatorValue <= 90f))
+            {
+                Debug.Log("PROP 10");
+                prob = 10f;
+            }
+            else if ((inverse && indicatorValue >= 30f && indicatorValue < 50f) || (!inverse && indicatorValue > 50f && indicatorValue <= 70f))
+            {
+                Debug.Log("PROP 20");
+                prob = 20f;
+            }
+            else if ((inverse && indicatorValue >= 50f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 50f))
             {
                 Debug.Log("PROP 30");
-                prob = 1f;
+                prob = 30f;
+            }
+            else if ((inverse && indicatorValue >= 70f && indicatorValue < 90f) || (!inverse && indicatorValue > 10f && indicatorValue <= 30f))
+            {
+                Debug.Log("PROP 50");
+                prob = 50f;
             }
             else
             {
-                Debug.Log("PROP 65");
+                Debug.Log("PROP 100");
                 prob = 100f;
             }
 
@@ -179,78 +199,8 @@ namespace EventManager
             // Cambiar el estado del evento
             currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
-
-            if (currentEvent.id == 4)
-            {
-                if (eventDialogue.isIndicated) {
-
-                    isFarming = true;
-                    FarmingDuration();
-                }
-            }
-            else
-            {
-                isFarming = false;
-            }
-
-            // Inicia el proceso para finalizar el evento
-            //StartCoroutine(EndEventAfterDelay(5f)); // La duración del evento es de 5 segundos
-            StartCoroutine(EndEventWhenStatusChanges()); // La duración del evento es de 5 segundos
-
-            // Quizas debo validar en la corutina si el evento cambia a estado completado, ahi activo el end event
-        }
-
-        private IEnumerator EndEventWhenStatusChanges()
-        {
-            while (currentEvent != null && currentEvent.status != EventStatus.Completed)
-            {
-                yield return null; // Espera hasta el siguiente frame.
-            }
-
-            // Aplicar impacto en los indicadores
-
-            indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
-
-            // Cambiar el estado del evento
-            eventInProgress = false;
-            //eventCooldownTimer = cooldownDuration;
-
-            Debug.Log($"Evento finalizado: {currentEvent.name}");
-            currentEvent = null;
-        }
-
-        private IEnumerator FarmingDuration()
-        {
-            yield return new WaitForSeconds(15f);
             isFarming = false;
-            CompleteEvent();
         }
-        
-
-
-        // SE MODIFICA PARA QUE NO SEA CADA CIERTO TIEMPO, SINO CUANDO TERMINA EL EVENTO
-        //private IEnumerator EndEventAfterDelay(float duration)
-        //{
-        //    yield return new WaitForSeconds(duration);
-
-        //    // Aplicar impacto en los indicadores
-        //    stressIndicator = Mathf.Clamp(stressIndicator + currentEvent.stressImpact, 0f, 100f);
-        //    selfCareIndicator = Mathf.Clamp(selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
-        //    communicationIndicator = Mathf.Clamp(communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
-        //    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
-
-        //    // Cambia el estado del evento a completado
-        //    currentEvent.status = EventStatus.Completed; // Cuando valide la completitud esto ya no es necesario
-        //    eventInProgress = false;
-
-        //    // Reinicia el cooldown
-        //    eventCooldownTimer = cooldownDuration;
-
-        //    Debug.Log($"Evento finalizado: {currentEvent.name}");
-        //    currentEvent = null;
-        //}
-
-
 
         private void LoadEventsFromFile(string path)
         {
@@ -280,7 +230,22 @@ namespace EventManager
             {
                 currentEvent.status = EventStatus.Completed;
                 indicatorManager.IncreaseDecayRate = true;
+                if (currentEvent.mainIndicator != IndicatorType.Communication) {
+                    indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
+                }
+                eventInProgress = false;
+                checkEventAchievement();
                 Debug.Log($"Evento {currentEvent.name} completado.");
+                currentEvent = null;
+            }
+        }
+
+        private void checkEventAchievement() {
+            if (!completedEvents.Contains(currentEvent.id)) { 
+                completedEvents.Add(currentEvent.id);
+            }
+            if (completedEvents.Count == 1) { //4
+                achievementSystem.CompareValuesInChildren(1);
             }
         }
     }

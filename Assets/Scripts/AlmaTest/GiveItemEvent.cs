@@ -1,7 +1,9 @@
 using DialogueSystem;
+using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using TMPro;
+using Indicator;
 
 public class GiveItemEvent : MonoBehaviour
 {
@@ -20,14 +22,17 @@ public class GiveItemEvent : MonoBehaviour
     [Header("Event Management")]
     public EventManager.EventManager eventManager;
 
-    [Header("Event Management")]
+    [Header("Achievement Management")]
     public AchievementSystem achievEvent;
 
     [Header("Dialogue Management")]
-    public DialogueManager textController;
+    public DialogueManager dialogueManager;
 
     [Header("Initial Event Dialogue Management")]
     public EventDialogue eventDialogue;
+
+    [Header("Indicator Management")]
+    public IndicatorManager indicatorManager;
 
     [Header("Selling Features")]
     public TextMeshProUGUI sellCount;
@@ -46,16 +51,16 @@ public class GiveItemEvent : MonoBehaviour
         Vector3 direction = transform.forward;
         Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
         
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && !takeItem.isFree)
         {
             Debug.DrawRay(origin, direction * maxDistance, Color.red);
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
+                Debug.Log($"tARGET: {eventManager.currentNPC} DETECTED: {npc.ID}");
 
-                if (npc.ID != eventManager.currentNPC)
-                {
-                    textController.IntTxt();
+                if (npc.ID != eventManager.currentNPC || !dialogueManager.isActive) {
+                    dialogueManager.IntTxt();
                     return;
                 }
 
@@ -66,7 +71,7 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
-                        eventManager.CompleteEvent();
+                        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
                         eventDialogue.isIndicated = false;
                         break;
 
@@ -75,10 +80,9 @@ public class GiveItemEvent : MonoBehaviour
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
                         takeItem.currentItemID = 0;
-                        eventManager.CompleteEvent();
+                        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
                         eventDialogue.isIndicated = false;
                         break;
-
                     case 3:
                         Debug.Log("Gracias por la venta! ");
                         break;
