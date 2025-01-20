@@ -21,6 +21,7 @@ namespace Indicator {
 
         [Header("Event Manager")]
         private EventManager.EventManager eventManager;
+        public bool isGameOver;
 
         [Range(0, 1)] private int threshold;
         private bool increaseDecayRate = false;
@@ -45,6 +46,16 @@ namespace Indicator {
         void Start()
         {
             StartCoroutine(DecreaseIndicatorsRoutine());
+        }
+
+        private void Update()
+        {
+            if (globalIndicator <= 100)
+            {
+                isGameOver = true;
+                gameObject.SetActive(false);
+                return;
+            }
         }
 
         private IEnumerator DecreaseIndicatorsRoutine()

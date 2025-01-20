@@ -22,7 +22,7 @@ public class GiveItemEvent : MonoBehaviour
     [Header("Event Management")]
     public EventManager.EventManager eventManager;
 
-    [Header("Event Management")]
+    [Header("Achievement Management")]
     public AchievementSystem achievEvent;
 
     [Header("Dialogue Management")]
@@ -102,7 +102,6 @@ public class GiveItemEvent : MonoBehaviour
                     takeItem.currentItemID = 0;
                     takeItem.isFree = true;
                     delivery.deliverySum++;
-                    indicatorManager.modifyIndicators(0f, 0f, 0f, 10f);
 
                     string newString = delivery.deliverySum.ToString();
                     sellCount.text = "Ventas:" + newString;

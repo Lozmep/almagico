@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using NUnit.Framework;
 
 namespace EventManager
 {
@@ -20,8 +21,12 @@ namespace EventManager
         public int currentNPC;
         public bool isFarming;
 
+        [Header("Event Management")]
+        public AchievementSystem achievementSystem;
+
         [Header("Initial Event Dialogue Management")]
         public EventDialogue eventDialogue;
+        private List<int> completedEvents = new List<int>();
 
         [Header("Fade feature")]
         public FadeObject fade;
@@ -229,8 +234,18 @@ namespace EventManager
                     indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
                 }
                 eventInProgress = false;
+                checkEventAchievement();
                 Debug.Log($"Evento {currentEvent.name} completado.");
                 currentEvent = null;
+            }
+        }
+
+        private void checkEventAchievement() {
+            if (!completedEvents.Contains(currentEvent.id)) { 
+                completedEvents.Add(currentEvent.id);
+            }
+            if (completedEvents.Count == 1) { //4
+                achievementSystem.CompareValuesInChildren(1);
             }
         }
     }

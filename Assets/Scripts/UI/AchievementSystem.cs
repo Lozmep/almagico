@@ -11,8 +11,10 @@ public class AchievementSystem : MonoBehaviour
 
     [SerializeField] private GameObject parentObject; // Objeto padre que contiene los hijos
     public bool newState;
+    public bool isGameFinished;
     public IndicatorManager indicatorManager;
     public TextController textController;
+    private List<int> completedAchievements = new List<int>();
 
     private void Awake()
     {
@@ -76,8 +78,9 @@ public class AchievementSystem : MonoBehaviour
                         Debug.Log(child.gameObject.name);   
                         SetAlphaTo100(child.gameObject);
                         Debug.Log("Se logró gente");
-                        indicatorManager.modifyIndicators(10f, 10f, 10f, 10f);
+                        indicatorManager.modifyIndicators(7f, 6f, 6f, 6f);
                         textController.ShowTextWithFade("Has desbloqueado un logro!!!");
+                        CheckAchievements(targetValue);
                     }
 
                 } else
@@ -91,6 +94,18 @@ public class AchievementSystem : MonoBehaviour
             Debug.Log("No se ha encontrado al padre");
         }
 
+    }
+
+    private void CheckAchievements(int value)
+    {
+        if (!completedAchievements.Contains(value))
+        {
+            completedAchievements.Add(value);
+        }
+        if (completedAchievements.Count == 3)
+        {
+            isGameFinished = true;
+        }
     }
 
 }
