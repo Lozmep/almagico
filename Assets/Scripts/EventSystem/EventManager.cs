@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using NUnit.Framework;
 
 namespace EventManager
 {
@@ -20,8 +21,12 @@ namespace EventManager
         public int currentNPC;
         public bool isFarming;
 
+        [Header("Event Management")]
+        public AchievementSystem achievementSystem;
+
         [Header("Initial Event Dialogue Management")]
         public EventDialogue eventDialogue;
+        private List<int> completedEvents = new List<int>();
 
         [Header("Fade feature")]
         public FadeObject fade;
@@ -195,55 +200,7 @@ namespace EventManager
             currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
             isFarming = false;
-
-            //if (currentEvent.id == 4)
-            //{
-            //    if (eventDialogue.isIndicated) {
-
-            //        isFarming = true;
-            //        FarmingDuration();
-            //    }
-            //}
-            //else
-            //{
-            //    isFarming = false;
-            //}
-
-            // Quizas debo validar en la corutina si el evento cambia a estado completado, ahi activo el end event
         }
-
-        private IEnumerator FarmingDuration()
-        {
-            yield return new WaitForSeconds(15f);
-            isFarming = false;
-            CompleteEvent();
-        }
-        
-
-
-        // SE MODIFICA PARA QUE NO SEA CADA CIERTO TIEMPO, SINO CUANDO TERMINA EL EVENTO
-        //private IEnumerator EndEventAfterDelay(float duration)
-        //{
-        //    yield return new WaitForSeconds(duration);
-
-        //    // Aplicar impacto en los indicadores
-        //    stressIndicator = Mathf.Clamp(stressIndicator + currentEvent.stressImpact, 0f, 100f);
-        //    selfCareIndicator = Mathf.Clamp(selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
-        //    communicationIndicator = Mathf.Clamp(communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
-        //    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
-
-        //    // Cambia el estado del evento a completado
-        //    currentEvent.status = EventStatus.Completed; // Cuando valide la completitud esto ya no es necesario
-        //    eventInProgress = false;
-
-        //    // Reinicia el cooldown
-        //    eventCooldownTimer = cooldownDuration;
-
-        //    Debug.Log($"Evento finalizado: {currentEvent.name}");
-        //    currentEvent = null;
-        //}
-
-
 
         private void LoadEventsFromFile(string path)
         {
@@ -277,8 +234,18 @@ namespace EventManager
                     indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
                 }
                 eventInProgress = false;
+                checkEventAchievement();
                 Debug.Log($"Evento {currentEvent.name} completado.");
                 currentEvent = null;
+            }
+        }
+
+        private void checkEventAchievement() {
+            if (!completedEvents.Contains(currentEvent.id)) { 
+                completedEvents.Add(currentEvent.id);
+            }
+            if (completedEvents.Count == 1) { //4
+                achievementSystem.CompareValuesInChildren(1);
             }
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 using EventManager;
 using SignalSystem;
 using Indicator;
+using NUnit.Framework;
 
 namespace DialogueSystem
 {
@@ -18,6 +19,7 @@ namespace DialogueSystem
         public TxtLines[] NotMineDialogue;
         public ChoiceManager choiceManager;
         public IndicatorManager indicatorManager;
+        public NPC[] npcList;
 
         [SerializeField] private float autoAdvanceTime = 3f;
         private bool isSelecting;
@@ -272,6 +274,19 @@ namespace DialogueSystem
 
             dialogueBox.SetActive(false);
             isActive = false;
+
+            if (eventManager.currentEvent.id == 3 || eventManager.currentEvent.id == 4)
+            {
+                if (eventManager.eventDialogue.isIndicated)
+                {
+                    eventManager.isFarming = true;
+                    StartCoroutine(FarmingDuration());
+                }
+            }
+            else
+            {
+                eventManager.isFarming = false;
+            }
         }
 
         public IEnumerator Speak(TxtLines[] dialogueLines)
@@ -336,6 +351,15 @@ namespace DialogueSystem
         public void IntTxt()
         {
             StartCoroutine(Speak(NotMineDialogue));
+        }
+
+        private IEnumerator FarmingDuration()
+        {
+            npcList[eventManager.currentNPC - 1].gameObject.SetActive(false);
+            yield return new WaitForSeconds(30f);
+            eventManager.isFarming = false;
+            npcList[eventManager.currentNPC - 1].gameObject.SetActive(true);
+            eventManager.CompleteEvent();
         }
     }
 
