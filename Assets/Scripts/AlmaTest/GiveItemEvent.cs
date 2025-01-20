@@ -53,10 +53,11 @@ public class GiveItemEvent : MonoBehaviour
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
 
-                if (npc.ID != eventManager.currentNPC) goto ItemNotMine;
-
-                ItemNotMine:
-                textController.IntTxt();
+                if (npc.ID != eventManager.currentNPC)
+                {
+                    textController.IntTxt();
+                    return;
+                }
 
                 switch (takeItem.currentItemID)
                 {

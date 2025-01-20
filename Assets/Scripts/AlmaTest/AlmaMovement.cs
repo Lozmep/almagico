@@ -23,6 +23,7 @@ public class AlmaMovement : MonoBehaviour
     public float verticalDistance = 1f;
     public Color rayColorHit = Color.red;
     public Color rayColorMiss = Color.green;
+    public AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +73,16 @@ public class AlmaMovement : MonoBehaviour
 
         transform.Translate(0, 0, y * Time.deltaTime * velocidadMoviento);
         transform.Rotate(0, x * Time.deltaTime * velocidadRotacion, 0);
+        Debug.Log(y);
+
+        if (y == 0 && AudioManager.Instance.isPlaying)
+        {
+            AudioManager.Instance.Stop("Walk");
+        }
+        else if (y != 0 && !AudioManager.Instance.isPlaying)
+        {
+            AudioManager.Instance.Play("Walk"); 
+        }
 
 
     }
