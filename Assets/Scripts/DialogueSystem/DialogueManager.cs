@@ -20,6 +20,7 @@ namespace DialogueSystem
         public ChoiceManager choiceManager;
         public IndicatorManager indicatorManager;
         public NPC[] npcList;
+        public TxtLines[] tutorialDialogue;
 
         [SerializeField] private float autoAdvanceTime = 3f;
         private bool isSelecting;
@@ -41,11 +42,6 @@ namespace DialogueSystem
         {
             get { return selectedOption; }
             set { selectedOption = value; }
-        }
-
-        void Start()
-        {
-            dialogueBox.SetActive(false);
         }
 
         public IEnumerator Speak(Lines[] dialogueLines)
@@ -360,6 +356,11 @@ namespace DialogueSystem
             eventManager.isFarming = false;
             npcList[eventManager.currentNPC - 1].gameObject.SetActive(true);
             eventManager.CompleteEvent();
+        }
+
+        public void TutorialTxt()
+        {
+            StartCoroutine(Speak(tutorialDialogue));
         }
     }
 
