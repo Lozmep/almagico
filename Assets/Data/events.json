@@ -14,8 +14,10 @@
           {
             "character": "Alma",
             "text": [
-              "Recuerda que el estrés es una reacción normal ante situaciones difíciles, pero si dura mucho tiempo, puede afectar tu salud física y mental.",
-              "Dificultad para dormir, dolores de cabeza, problemas digestivos o incluso mal genio, son señales de que debes parar y tomar un respiro."          
+              "Recuerda que el estrés es una reacción normal ante situaciones difíciles",
+              "Pero si dura mucho tiempo, puede afectar tu salud física y mental.",
+              "Dificultad para dormir, dolores de cabeza, problemas digestivos o incluso mal genio",
+              "Son señales de que debes parar y tomar un respiro."          
             ],
             "triggerChoices": false
           },
@@ -43,8 +45,9 @@
           {
             "character": "Alma",
             "text": [
-              "Recuerda que el estrés prolongado puede traer consecuencias negativas. Intenta identificar tus fuentes de estrés y busca soluciones pequeñas.",
-              "A veces, hablar de lo que te preocupa o tomarte unos minutos para ti mismo puede hacer una gran diferencia."
+              "Recuerda que el estrés prolongado puede traer consecuencias negativas.",
+              "Intenta identificar tus fuentes de estrés y busca soluciones pequeñas.",
+              "A veces, hablar de lo que te preocupa o tomarte unos minutos para ti mismo puede hacer la diferencia."
             ],
             "triggerChoices": false
           },

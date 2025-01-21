@@ -46,8 +46,6 @@ namespace DialogueSystem
 
         public IEnumerator Speak(Lines[] dialogueLines)
         {
-            Debug.Log("Ingresa SPEAK");
-            Debug.Log(isActive);
             dialogueBox.SetActive(true);
             isActive = true;
             Debug.Log($"isActive set to {isActive} at {Time.time}");
@@ -58,6 +56,7 @@ namespace DialogueSystem
             {
                 txtName.text = dialogue.character;
                 string[] textLines;
+                txtDialogue.text = "";
 
                 if (!dialogue.triggerChoices)
                 {
@@ -285,7 +284,7 @@ namespace DialogueSystem
             }
         }
 
-        public IEnumerator Speak(TxtLines[] dialogueLines)
+        public IEnumerator Speak(TxtLines[] dialogueLines, bool isTutorial)
         {
             dialogueBox.SetActive(true);
             isActive = true;
@@ -342,11 +341,17 @@ namespace DialogueSystem
 
             dialogueBox.SetActive(false);
             isActive = false;
+
+            if (isTutorial)
+            {
+                StartCoroutine(indicatorManager.DecreaseIndicatorsRoutine());
+                isTutorial = false;
+            }
         }
 
         public void IntTxt()
         {
-            StartCoroutine(Speak(NotMineDialogue));
+            StartCoroutine(Speak(NotMineDialogue, false));
         }
 
         private IEnumerator FarmingDuration()
@@ -360,7 +365,7 @@ namespace DialogueSystem
 
         public void TutorialTxt()
         {
-            StartCoroutine(Speak(tutorialDialogue));
+            StartCoroutine(Speak(tutorialDialogue, true));
         }
     }
 

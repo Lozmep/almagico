@@ -43,11 +43,6 @@ namespace Indicator {
             eventManager = GetComponent<EventManager.EventManager>();
         }
 
-        void Start()
-        {
-            StartCoroutine(DecreaseIndicatorsRoutine());
-        }
-
         private void Update()
         {
             if (globalIndicator <= 100)
@@ -58,7 +53,7 @@ namespace Indicator {
             }
         }
 
-        private IEnumerator DecreaseIndicatorsRoutine()
+        public IEnumerator DecreaseIndicatorsRoutine()
         {
             while (true)
             {

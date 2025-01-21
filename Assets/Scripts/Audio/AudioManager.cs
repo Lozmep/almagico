@@ -40,9 +40,9 @@ public class AudioManager : MonoBehaviour
         volumeSlider.value = volSaved;
         volumeValue = volumeSlider.value;
         ChangeVolume();
-        //Play("Musica");
-        //Play("Tractor");
-        
+        Play("Musica");
+        Play("Tractor");
+
     }
 
     private void Update()
@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
 
         lastVolumeValue = volumeValue;
 
-        StartCoroutine(PlaySound("Ambiente1"));
+        StartCoroutine(PlaySound("Vaca"));
     }
 
     public void Play(string name)

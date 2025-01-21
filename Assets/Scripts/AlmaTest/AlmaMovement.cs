@@ -80,7 +80,6 @@ public class AlmaMovement : MonoBehaviour
 
         transform.Translate(0, 0, y * Time.deltaTime * velocidadMoviento);
         transform.Rotate(0, x * Time.deltaTime * velocidadRotacion, 0);
-        Debug.Log(y);
 
         //if (y == 0 && AudioManager.Instance.isPlaying)
         //{
