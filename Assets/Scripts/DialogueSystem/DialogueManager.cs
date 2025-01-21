@@ -48,7 +48,6 @@ namespace DialogueSystem
         {
             dialogueBox.SetActive(true);
             isActive = true;
-            Debug.Log($"isActive set to {isActive} at {Time.time}");
 
             StartCoroutine(DetectKeyPress());
 
@@ -96,13 +95,11 @@ namespace DialogueSystem
                             if (skipTyping)
                             {
                                 txtDialogue.text = fullText;
-                                Debug.Log("Skipped");
                                 yield return new WaitForSeconds(0.1f);
                                 break;
                             }
                             yield return new WaitForSeconds(0.1f);
                         }
-                        Debug.Log("Pasa al while");
 
                         float elapsedTime = 0f;
 
@@ -115,7 +112,6 @@ namespace DialogueSystem
                             elapsedTime += Time.deltaTime;
                             yield return null;
                         }
-                        Debug.Log("Pasa al for");
                         skipTyping = false;
                     }
                 } else 
@@ -172,13 +168,11 @@ namespace DialogueSystem
                         if (skipTyping)
                         {
                             txtDialogue.text = fullText;
-                            Debug.Log("Skipped");
                             yield return new WaitForSeconds(0.1f);
                             break;
                         }
                         yield return new WaitForSeconds(0.1f);
                     }
-                    Debug.Log("Pasa al while");
 
                     float elapsedTime = 0f;
 
@@ -191,7 +185,6 @@ namespace DialogueSystem
                         elapsedTime += Time.deltaTime;
                         yield return null;
                     }
-                    Debug.Log("Pasa al for");
 
                 }
             }
@@ -243,13 +236,11 @@ namespace DialogueSystem
                         if (skipTyping)
                         {
                             txtDialogue.text = fullText;
-                            Debug.Log("Skipped");
                             yield return new WaitForSeconds(0.1f);
                             break;
                         }
                         yield return new WaitForSeconds(0.1f);
                     }
-                    Debug.Log("Pasa al while");
 
                     float elapsedTime = 0f;
 
@@ -262,7 +253,6 @@ namespace DialogueSystem
                         elapsedTime += Time.deltaTime;
                         yield return null;
                     }
-                    Debug.Log("Pasa al for");
 
                 }
             }
@@ -315,13 +305,11 @@ namespace DialogueSystem
                         if (skipTyping)
                         {
                             txtDialogue.text = fullText;
-                            Debug.Log("Skipped");
                             yield return new WaitForSeconds(0.1f);
                             break;
                         }
                         yield return new WaitForSeconds(0.1f);
                     }
-                    Debug.Log("Pasa al while");
 
                     float elapsedTime = 0f;
 
@@ -334,7 +322,6 @@ namespace DialogueSystem
                         elapsedTime += Time.deltaTime;
                         yield return null;
                     }
-                    Debug.Log("Pasa al for");
 
                 }
             }

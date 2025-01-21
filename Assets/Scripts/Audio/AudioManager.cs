@@ -66,7 +66,6 @@ public class AudioManager : MonoBehaviour
 
         if(a == null)
         {
-            Debug.LogWarning("Nulo");
             return;
         }
         isPlaying = true;
@@ -79,7 +78,6 @@ public class AudioManager : MonoBehaviour
 
         if (a == null)
         {
-            Debug.LogWarning("Nulo");
             return;
         }
         isPlaying = false;

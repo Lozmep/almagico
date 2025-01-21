@@ -43,8 +43,6 @@ public class Growing : MonoBehaviour
             Transform plantTransform = transform.GetChild(0);
             plantTransform.gameObject.SetActive(false);
 
-
-            Debug.Log("Hijo activado tras el temporizador.");
         }
         
     }

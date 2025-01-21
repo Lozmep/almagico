@@ -76,8 +76,7 @@ namespace Indicator {
                 communicationBar.SetProgress(100f - communicationIndicator);
                 maintenanceBar.SetProgress(100f - maintenanceIndicator);
 
-                UpdateGlobalIndicator();
-                Debug.Log($"[Indicadores] Estrés: {stressIndicator}, Autocuidado: {selfCareIndicator}, Comunicación: {communicationIndicator}, Mantenimiento: {maintenanceIndicator}, Global: {globalIndicator}");           
+                UpdateGlobalIndicator();                
             }
         }
 
@@ -89,7 +88,6 @@ namespace Indicator {
 
             if (globalIndicator < 200)
             {
-                Debug.Log("¡Umbral crítico alcanzado en el indicador global!");
                 threshold = 1;
             } 
             else
