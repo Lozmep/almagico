@@ -19,10 +19,14 @@ namespace EventManager
         public List<EventData> eventPool = new List<EventData>();
         public EventData currentEvent;
         public int currentNPC;
+        public NPC currentNpcObject; 
         public bool isFarming;
 
         [Header("Event Management")]
         public AchievementSystem achievementSystem;
+
+        [Header("Dialogue Management")]
+        public DialogueManager dialogueManager;
 
         [Header("Initial Event Dialogue Management")]
         public EventDialogue eventDialogue;
@@ -191,6 +195,8 @@ namespace EventManager
         {
             StartCoroutine(fade.Fading(activatePanel, activatePanelText));
             currentNPC = Random.Range(1, 4);
+            currentNpcObject = dialogueManager.npcList[currentNPC - 1];
+            currentNpcObject.exclamation.SetActive(true);
             lastEventId = currentEvent.id;
 
             indicatorManager.IncreaseDecayRate = true;
@@ -228,11 +234,12 @@ namespace EventManager
         {
             if (currentEvent != null)
             {
+                currentNpcObject.exclamation.SetActive(false);
                 currentEvent.status = EventStatus.Completed;
                 indicatorManager.IncreaseDecayRate = true;
-                if (currentEvent.mainIndicator != IndicatorType.Communication) {
+                if (currentEvent.mainIndicator != IndicatorType.Communication || currentEvent.mainIndicator != IndicatorType.Farming) {
                     indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
-                }
+                } 
                 eventInProgress = false;
                 eventDialogue.isIndicated = false;
                 checkEventAchievement();
