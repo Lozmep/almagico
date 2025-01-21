@@ -4,6 +4,8 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using TMPro;
 using Indicator;
+using SignalSystem;
+using System.Collections;
 
 public class GiveItemEvent : MonoBehaviour
 {
@@ -57,14 +59,12 @@ public class GiveItemEvent : MonoBehaviour
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
-                Debug.Log($"tARGET: {eventManager.currentNPC} DETECTED: {npc.ID}");
 
                 if (npc.ID == eventManager.currentNPC)
                 {
                     switch (takeItem.currentItemID)
                     {
                         case 1:
-                            Debug.Log("Gracias por el tinto! Seamos amigos");
                             takeItem.tinto.SetActive(false);
                             takeItem.isFree = true;
                             takeItem.currentItemID = 0;
@@ -72,14 +72,12 @@ public class GiveItemEvent : MonoBehaviour
                             break;
 
                         case 2:
-                            Debug.Log("Leer es saber");
                             takeItem.libro.SetActive(false);
                             takeItem.isFree = true;
                             takeItem.currentItemID = 0;
                             StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
                             break;
                         case 3:
-                            Debug.Log("Gracias por la venta! ");
                             break;
                     }
                 }
@@ -91,26 +89,20 @@ public class GiveItemEvent : MonoBehaviour
 
             if (Physics.Raycast(origin, direction, out RaycastHit shoot, maxDistance, layerDeliveryMask))
             {
-                Debug.Log("Entra");
                 Delivery delivery = shoot.collider.GetComponent<Delivery>();
 
 
                 if (delivery.deliveryID == takeItem.currentItemID)
                 {
-                    Debug.Log("Gracias por la venta!");
                     takeItem.cultivo.SetActive(false);
-                    takeItem.currentItemID = 0;
-                    takeItem.isFree = true;
+                    StartCoroutine(ChangeIsFree());
                     delivery.deliverySum++;
 
                     string newString = delivery.deliverySum.ToString();
                     sellCount.text = "Ventas:" + newString;
 
-                    Debug.Log(delivery.deliverySum);
-
-                    if (delivery.deliverySum == 1)
+                    if (delivery.deliverySum == 10)
                     {
-                        Debug.Log("Ha obtenido el primer logro");
                         achievEvent.CompareValuesInChildren(0);
                     }
 
@@ -119,6 +111,13 @@ public class GiveItemEvent : MonoBehaviour
             }
         }
 
+    }
+
+    private IEnumerator ChangeIsFree()
+    {
+        yield return new WaitForSeconds(1f);
+        takeItem.currentItemID = 0;
+        takeItem.isFree = true;
     }
 
 }

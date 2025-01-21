@@ -34,7 +34,6 @@ namespace DialogueSystem
 
         public void ButtonSelected(int index)
         {
-            Debug.Log($"Se selecciono el boton: {index} con texto: {choiceTexts[index].text}");
             selectedButtonIndex = index;
             dialogueManager.IsSelecting = false;
         }

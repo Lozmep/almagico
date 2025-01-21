@@ -13,46 +13,14 @@ public class SignageDetector : MonoBehaviour
     public TakeItemEvent takeItem;
     public string type;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag(playerTag))
-        {
-            signObject.SetActive(true);
-            Debug.Log(dialogueManager.isActive);
-
-            if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive && takeItem.isFree)
-            {
-                Debug.Log("XD");
-
-                SignalObject signal = null;
-                foreach (var signalObject in signalDialogue.signalPool)
-                {
-                    if (signalObject.type == type)
-                    {
-                        signal = signalObject;
-                        break;
-                    }
-                }
-                if (signal != null)
-                {
-                    StartCoroutine(dialogueManager.Speak(signal.dialogue.spanish));
-                }
-
-            }
-        }
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag(playerTag))
         {
             signObject.SetActive(true);
-            Debug.Log(dialogueManager.isActive);
 
-            if (Input.GetKeyDown(KeyCode.X) && !dialogueManager.isActive && takeItem.isFree)
+            if (Input.GetKey(KeyCode.X) && !dialogueManager.isActive && takeItem.isFree)
             {
-                Debug.Log("XD");
-
                 SignalObject signal = null;
                 foreach (var signalObject in signalDialogue.signalPool)
                 {

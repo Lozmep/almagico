@@ -45,10 +45,6 @@ public class EventDialogue : MonoBehaviour
             string jsonContent = File.ReadAllText(path);
             initDialoguePool = JsonUtility.FromJson<InitialDialogueList>(jsonContent).initialeventext;
         }
-        else
-        {
-            Debug.LogError("No se encontró el archivo de eventos: " + path);
-        }
     }
     void Update()
     {
@@ -60,12 +56,9 @@ public class EventDialogue : MonoBehaviour
         if (Input.GetKey(KeyCode.X) && takeItem.isFree)
         {
             Debug.DrawRay(origin, direction * maxDistance, Color.red);
-            Debug.Log("MMMM0");
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
             {
                 NPC npc = hit.collider.GetComponent<NPC>();
-                Debug.Log("MMMM1");
-
                 if (npc.ID != eventManager.currentNPC) {
                     if (!dialogueManager.isActive) {
                         dialogueManager.IntTxt();
@@ -73,12 +66,8 @@ public class EventDialogue : MonoBehaviour
                     return;
                 }
 
-                Debug.Log("MMMM2");
-
                 if (!dialogueManager.isActive)
                 {
-                    Debug.Log("MMMM3");
-
                     InitialDialogue compareID = null;
                     foreach (var initialDialogue in initDialoguePool)
                     {

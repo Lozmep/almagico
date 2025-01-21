@@ -35,7 +35,6 @@ public class TextController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("TextMeshProUGUI no está asignado.");
         }
     }
 
@@ -91,7 +90,6 @@ public class TextController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     j = _dialogue[i].texts.Length;
-                    Debug.Log("Skip");
                 }
                 txtDialogue.text = _dialogue[i].texts.Substring(0, j);
 

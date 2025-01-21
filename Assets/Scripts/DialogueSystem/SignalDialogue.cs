@@ -28,10 +28,6 @@ namespace SignalSystem
                 string jsonContent = File.ReadAllText(path);
                 signalPool = JsonUtility.FromJson<SignalObjectArray>(jsonContent).signals;
             }
-            else
-            {
-                Debug.LogError("No se encontró el archivo de eventos: " + path);
-            }
         }
     }
   

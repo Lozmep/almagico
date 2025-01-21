@@ -19,10 +19,14 @@ namespace EventManager
         public List<EventData> eventPool = new List<EventData>();
         public EventData currentEvent;
         public int currentNPC;
+        public NPC currentNpcObject; 
         public bool isFarming;
 
         [Header("Event Management")]
         public AchievementSystem achievementSystem;
+
+        [Header("Dialogue Management")]
+        public DialogueManager dialogueManager;
 
         [Header("Initial Event Dialogue Management")]
         public EventDialogue eventDialogue;
@@ -72,7 +76,6 @@ namespace EventManager
 
                 if (!eventInProgress)
                 {
-                    Debug.Log("Validando si evento se debe activar");
                     ValidateAndActivateEvent();
                 }
             }
@@ -80,15 +83,6 @@ namespace EventManager
 
         private void ValidateAndActivateEvent()
         {
-            // Reduce el cooldown si es necesario
-            //if (eventCooldownTimer > 0)
-            //{
-            //    eventCooldownTimer -= Time.deltaTime;
-            //    return;
-            //}
-            // Mezclar las claves (condiciones)
-
-            // Evaluar condiciones en orden aleatorio
             var shuffledKeys = new List<System.Func<bool>>(events.Keys);
             Shuffle(shuffledKeys);
 
@@ -97,38 +91,9 @@ namespace EventManager
                 if (condition.Invoke())
                 {
                     events[condition].Invoke();
-                    break; // Salir al cumplirse la primera condición
+                    break;
                 }
             }
-
-            // SE CAMBIA PARA QUE LA PRIORIDAD NO SIEMPRE SEA LA MISMA
-            //if (ShouldTriggerEvent(stressIndicator, true))
-            //{
-            //    EventData eventSelected = SelectEvent(IndicatorType.Stress);
-            //}
-            //else if (ShouldTriggerEvent(selfCareIndicator, false))
-            //{
-            //    EventData eventSelected = SelectEvent(IndicatorType.SelfCare);
-            //}
-            //else if (ShouldTriggerEvent(communicationIndicator, false))
-            //{
-            //    EventData eventSelected = SelectEvent(IndicatorType.Communication);
-            //}
-            //else if (validateIndicatorProb(maintenanceIndicator, false))
-            //{
-
-
-
-            //}
-            //// Forma anterior de buscar eventos
-            //foreach (var e in eventPool)
-            //{
-            //    if (e.status == EventStatus.Pending && ShouldActivateEvent(e))
-            //    {
-            //        ActivateEvent(e);
-            //        break;
-            //    }
-            //}
         }
 
         private bool ShouldTriggerEvent(float indicatorValue, bool inverse)
@@ -137,32 +102,26 @@ namespace EventManager
 
             if ((inverse && indicatorValue < 10f) || (!inverse && indicatorValue > 90f))
             {
-                Debug.Log("PROP 1");
                 prob = 1f;
             }
             else if ((inverse && indicatorValue >= 10f && indicatorValue < 30f) || (!inverse && indicatorValue > 70f && indicatorValue <= 90f))
             {
-                Debug.Log("PROP 10");
                 prob = 10f;
             }
             else if ((inverse && indicatorValue >= 30f && indicatorValue < 50f) || (!inverse && indicatorValue > 50f && indicatorValue <= 70f))
             {
-                Debug.Log("PROP 20");
                 prob = 20f;
             }
             else if ((inverse && indicatorValue >= 50f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 50f))
             {
-                Debug.Log("PROP 30");
                 prob = 30f;
             }
             else if ((inverse && indicatorValue >= 70f && indicatorValue < 90f) || (!inverse && indicatorValue > 10f && indicatorValue <= 30f))
             {
-                Debug.Log("PROP 50");
                 prob = 50f;
             }
             else
             {
-                Debug.Log("PROP 100");
                 prob = 100f;
             }
 
@@ -191,12 +150,12 @@ namespace EventManager
         {
             StartCoroutine(fade.Fading(activatePanel, activatePanelText));
             currentNPC = Random.Range(1, 4);
+            currentNpcObject = dialogueManager.npcList[currentNPC - 1];
+            currentNpcObject.exclamation.SetActive(true);
             lastEventId = currentEvent.id;
 
             indicatorManager.IncreaseDecayRate = true;
-            Debug.Log($"Evento activado: {currentEvent.name}");
 
-            // Cambiar el estado del evento
             currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
             isFarming = false;
@@ -208,10 +167,6 @@ namespace EventManager
             {
                 string jsonContent = File.ReadAllText(path);
                 eventPool = JsonUtility.FromJson<EventDataArray>(jsonContent).eventList;
-            }
-            else
-            {
-                Debug.LogError("No se encontró el archivo de eventos: " + path);
             }
         }
 
@@ -228,15 +183,15 @@ namespace EventManager
         {
             if (currentEvent != null)
             {
+                currentNpcObject.exclamation.SetActive(false);
                 currentEvent.status = EventStatus.Completed;
                 indicatorManager.IncreaseDecayRate = true;
-                if (currentEvent.mainIndicator != IndicatorType.Communication) {
+                if (currentEvent.mainIndicator != IndicatorType.Communication || currentEvent.mainIndicator != IndicatorType.Farming) {
                     indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
-                }
+                } 
                 eventInProgress = false;
                 eventDialogue.isIndicated = false;
                 checkEventAchievement();
-                Debug.Log($"Evento {currentEvent.name} completado.");
                 currentEvent = null;
             }
         }
@@ -245,7 +200,7 @@ namespace EventManager
             if (!completedEvents.Contains(currentEvent.id)) { 
                 completedEvents.Add(currentEvent.id);
             }
-            if (completedEvents.Count == 1) { //4
+            if (completedEvents.Count == 4) {
                 achievementSystem.CompareValuesInChildren(1);
             }
         }

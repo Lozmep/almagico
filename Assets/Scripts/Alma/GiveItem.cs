@@ -51,19 +51,16 @@ public class GiveItem : MonoBehaviour
                 switch (value)
                 {
                     case 1:
-                        Debug.Log("Gracias por el tinto! Seamos amigos");
                         takeItem.tinto.SetActive(false);
                         takeItem.isFree = true;
                         break;
 
                     case 2:
-                        Debug.Log("Leer es saber");
                         takeItem.libro.SetActive(false);
                         takeItem.isFree = true;
                         break;
 
                     case 3:
-                        Debug.Log("Gracias por la venta! " );
                         break;
 
                     default:
@@ -77,18 +74,15 @@ public class GiveItem : MonoBehaviour
 
             if (Physics.Raycast(origin, direction, out RaycastHit shoot, maxDistance, layerDeliveryMask))
             {
-                Debug.Log("Entra");
                 Delivery delivery = shoot.collider.GetComponent<Delivery>();
                 
 
                 if (delivery.deliveryID == takeItem.currentItemID)
                 {
-                    Debug.Log("Gracias por la venta!");
                     takeItem.cultivo.SetActive(false);
                     takeItem.currentItemID = 0;
                     takeItem.isFree = true;
                     delivery.deliverySum++;
-                    Debug.Log(delivery.deliverySum);
                 }
 
             }

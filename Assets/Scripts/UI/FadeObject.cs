@@ -20,7 +20,6 @@ public class FadeObject : MonoBehaviour
     {
         if (image == null || text == null)
         {
-            Debug.LogError("No se encontró un componente Image o TextMeshProUGUI. Asigna los componentes correctamente.");
             yield break;
         }
 
