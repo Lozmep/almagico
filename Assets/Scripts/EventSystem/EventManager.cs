@@ -234,6 +234,7 @@ namespace EventManager
                     indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
                 }
                 eventInProgress = false;
+                eventDialogue.isIndicated = false;
                 checkEventAchievement();
                 Debug.Log($"Evento {currentEvent.name} completado.");
                 currentEvent = null;

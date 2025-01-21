@@ -59,33 +59,33 @@ public class GiveItemEvent : MonoBehaviour
                 NPC npc = hit.collider.GetComponent<NPC>();
                 Debug.Log($"tARGET: {eventManager.currentNPC} DETECTED: {npc.ID}");
 
-                if (npc.ID != eventManager.currentNPC || !dialogueManager.isActive) {
-                    dialogueManager.IntTxt();
-                    return;
-                }
-
-                switch (takeItem.currentItemID)
+                if (npc.ID == eventManager.currentNPC)
                 {
-                    case 1:
-                        Debug.Log("Gracias por el tinto! Seamos amigos");
-                        takeItem.tinto.SetActive(false);
-                        takeItem.isFree = true;
-                        takeItem.currentItemID = 0;
-                        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
-                        eventDialogue.isIndicated = false;
-                        break;
+                    switch (takeItem.currentItemID)
+                    {
+                        case 1:
+                            Debug.Log("Gracias por el tinto! Seamos amigos");
+                            takeItem.tinto.SetActive(false);
+                            takeItem.isFree = true;
+                            takeItem.currentItemID = 0;
+                            StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
+                            break;
 
-                    case 2:
-                        Debug.Log("Leer es saber");
-                        takeItem.libro.SetActive(false);
-                        takeItem.isFree = true;
-                        takeItem.currentItemID = 0;
-                        StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
-                        eventDialogue.isIndicated = false;
-                        break;
-                    case 3:
-                        Debug.Log("Gracias por la venta! ");
-                        break;
+                        case 2:
+                            Debug.Log("Leer es saber");
+                            takeItem.libro.SetActive(false);
+                            takeItem.isFree = true;
+                            takeItem.currentItemID = 0;
+                            StartCoroutine(dialogueManager.Speak(eventManager.currentEvent.dialogue.spanish));
+                            break;
+                        case 3:
+                            Debug.Log("Gracias por la venta! ");
+                            break;
+                    }
+                }
+                else if (!dialogueManager.isActive)
+                {
+                    dialogueManager.IntTxt();
                 }
             }
 
