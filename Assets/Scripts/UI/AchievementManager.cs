@@ -12,7 +12,6 @@ public class AchievementManager : MonoBehaviour
     {
         if (stopExecution)
         {
-            Debug.Log("Ejecución detenida.");
             return;
         }
 
@@ -22,9 +21,8 @@ public class AchievementManager : MonoBehaviour
             elapsedTime = 0f;            
         }
 
-        if (Mathf.FloorToInt(elapsedTime) > 10)
+        if (Mathf.FloorToInt(elapsedTime) > 180)
         {
-            Debug.Log("Han pasado 10 segundos.");
             achievementSystem.CompareValuesInChildren(2);
             stopExecution = true;
             gameObject.SetActive(false);

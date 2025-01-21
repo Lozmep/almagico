@@ -4,7 +4,6 @@ using TMPro;
 
 public class EnvMapAnimator : MonoBehaviour {
 
-    //private Vector3 TranslationSpeeds;
     public Vector3 RotationSpeeds;
     private TMP_Text m_textMeshPro;
     private Material m_material;
@@ -12,12 +11,10 @@ public class EnvMapAnimator : MonoBehaviour {
 
     void Awake()
     {
-        //Debug.Log("Awake() on Script called.");
         m_textMeshPro = GetComponent<TMP_Text>();
         m_material = m_textMeshPro.fontSharedMaterial;
     }
 
-    // Use this for initialization
 	IEnumerator Start ()
     {
         Matrix4x4 matrix = new Matrix4x4(); 

@@ -60,18 +60,12 @@ public class TakeItemEvent : MonoBehaviour
             HandleHit(hit);
         }
 
-        if (Physics.Raycast(origin, direction, out RaycastHit cropHit, maxDistance, layerCropMask))
-        {
-            HandleCropHit(cropHit);
-        }
-
         Debug.DrawRay(origin, direction * maxDistance, Color.red);
     }
 
     private void HandleHit(RaycastHit hit)
     {
         Item item = hit.collider.GetComponent<Item>();
-        Debug.Log("Item" + item.name);
         if (item == null) return;
 
         currentItemID = item.itemID;
@@ -92,7 +86,6 @@ public class TakeItemEvent : MonoBehaviour
     {
         if (dialogueManager.isActive)
         {
-            Debug.LogWarning("Dialogue already active, ignoring new interaction.");
             return;
         }
         NPC npc = hit.collider.GetComponent<NPC>();
@@ -106,38 +99,17 @@ public class TakeItemEvent : MonoBehaviour
         switch (objectTag)
         {
             case "Semillas":
-                Debug.Log($"Impacto con Semillas: {hit.collider.name}");
                 isCultivating = true;
                 semillas.SetActive(true);
                 isFree = false;
                 break;
 
             case "Cultivo":
-                Debug.Log($"Impacto con Cultivo: {hit.collider.name}");
                 cultivo.SetActive(true);
                 isFree = false;
+                hit.transform.parent.GetComponent<Crop>().isCropFree = true;
+                hit.transform.gameObject.SetActive(false);
                 break;
-        }
-    }
-
-    private void HandleCropHit(RaycastHit cropHit)
-    {
-        string objectTag = cropHit.collider.tag;
-
-        if (objectTag == "Cultivo")
-        {
-            Crop crop = cropHit.collider.GetComponent<Crop>();
-            if (crop != null)
-            {
-                crop.isCropFree = true;
-                Debug.Log("KLK");
-                GameObject collidedObject = cropHit.collider.gameObject;
-                Transform childTransform = collidedObject.transform.GetChild(1);
-                if (childTransform != null)
-                {
-                    childTransform.gameObject.SetActive(false);
-                }
-            }
         }
     }
 
@@ -151,7 +123,6 @@ public class TakeItemEvent : MonoBehaviour
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)
         {
-            Debug.Log($"{action.message}: {hit.collider.name}");
             action.obj.SetActive(true);
             isFree = false;
         }
@@ -167,7 +138,6 @@ public class TakeItemEvent : MonoBehaviour
 
         if (actions.TryGetValue(eventId, out var action) && action.tag == objectTag)
         {
-            Debug.Log($"{action.message}: {hit.collider.name}");
             action.obj.SetActive(true);
             isFree = false;
         }

@@ -49,23 +49,19 @@ public class TakeItem : MonoBehaviour
                 switch (objectTag)
                 {
                     case "Tetera":
-                        Debug.Log("Impacto con una Tetera: " + hit.collider.name);
                         tinto.SetActive(true);
                         break;
 
                     case "Librero":
-                        Debug.Log("Impacto con un Cubo: " + hit.collider.name);
                         libro.SetActive(true);
                         break;
 
                     case "Semillas":
-                        Debug.Log("Impacto con una Esfera: " + hit.collider.name);
                         isCultivating = true;
                         semillas.SetActive(true);
                         break;
 
                     case "Cultivo":
-                        Debug.Log("Impacto con una Esfera: " + hit.collider.name);
                         cultivo.SetActive(true);
                         break;
 

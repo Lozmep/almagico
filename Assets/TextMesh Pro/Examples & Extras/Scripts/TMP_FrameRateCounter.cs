@@ -90,9 +90,6 @@ namespace TMPro.Examples
                 else
                     htmlColorTag = "<color=green>";
 
-                //string format = System.String.Format(htmlColorTag + "{0:F2} </color>FPS \n{1:F2} <#8080ff>MS",fps, ms);
-                //m_TextMeshPro.text = format;
-
                 m_TextMeshPro.SetText(htmlColorTag + fpsLabel, fps, ms);
 
                 m_Frames = 0;
@@ -103,7 +100,6 @@ namespace TMPro.Examples
 
         void Set_FrameCounter_Position(FpsCounterAnchorPositions anchor_position)
         {
-            //Debug.Log("Changing frame counter anchor position.");
             m_TextMeshPro.margin = new Vector4(1f, 1f, 1f, 1f);
 
             switch (anchor_position)

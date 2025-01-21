@@ -16,6 +16,7 @@ public class AchievementSystem : MonoBehaviour
     public IndicatorManager indicatorManager;
     public TextController textController;
     public GameStatusManager gameStatusManager;
+    public ChildData childData;
     private List<int> completedAchievements = new List<int>();
 
     private void Awake()
@@ -76,24 +77,17 @@ public class AchievementSystem : MonoBehaviour
                 {
                     if (childData.value == targetValue)
                     {
-                        Debug.Log("Entró");
-                        Debug.Log(child.gameObject.name);   
                         SetAlphaTo100(child.gameObject);
-                        Debug.Log("Se logró gente");
                         indicatorManager.modifyIndicators(7f, 6f, 6f, 6f);
                         textController.ShowTextWithFade("Has desbloqueado un logro!!!");
                         CheckAchievements(targetValue);
+                        childData.emptyStar.gameObject.SetActive(false);
+                        childData.star.gameObject.SetActive(true);
                     }
 
-                } else
-                {
-                    Debug.Log("No se ha encontra un panel con el mimso ID");
                 }
 
             }
-        } else
-        {
-            Debug.Log("No se ha encontrado al padre");
         }
 
     }
