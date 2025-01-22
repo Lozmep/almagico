@@ -23,7 +23,7 @@ namespace GameSystem
         {
             if (achievementSystem.isGameFinished) {
                 isOver = true;
-                //PauseGame();
+                PauseGame();
                 panel.SetActive(true);
                 title.text = "VICTORIA!";
                 return; 

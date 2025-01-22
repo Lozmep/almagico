@@ -54,6 +54,10 @@ namespace DialogueSystem
             foreach (Lines dialogue in dialogueLines)
             {
                 txtName.text = dialogue.character;
+                if (eventManager.currentNpcObject != null)
+                {
+                    txtName.text = dialogue.character.Replace("NPC", eventManager.currentNpcObject.npcName);
+                }
                 string[] textLines;
                 txtDialogue.text = "";
 
@@ -150,6 +154,10 @@ namespace DialogueSystem
             foreach (SignalLines dialogue in dialogueLines)
             {
                 txtName.text = dialogue.character;
+                if (eventManager.currentNpcObject != null)
+                {
+                    txtName.text = dialogue.character.Replace("NPC", eventManager.currentNpcObject.npcName);
+                }
                 string[] textLines;
 
                 textLines = dialogue.text;
@@ -218,6 +226,10 @@ namespace DialogueSystem
             foreach (InitEventLines dialogue in dialogueLines)
             {
                 txtName.text = dialogue.character;
+                if (eventManager.currentNpcObject != null)
+                {
+                    txtName.text = dialogue.character.Replace("NPC", eventManager.currentNpcObject.npcName);
+                }
                 string[] textLines;
 
                 textLines = dialogue.text;
@@ -287,6 +299,9 @@ namespace DialogueSystem
             foreach (TxtLines dialogue in dialogueLines)
             {
                 txtName.text = dialogue.character;
+                if (eventManager.currentNpcObject != null) {
+                    txtName.text = dialogue.character.Replace("NPC", eventManager.currentNpcObject.npcName);
+                }
                 string[] textLines;
 
                 textLines = dialogue.texts;
