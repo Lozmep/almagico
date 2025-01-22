@@ -15,7 +15,7 @@
             "character": "Alma",
             "text": [
               "Recuerda que el estrés es una reacción normal ante situaciones difíciles",
-              "Pero si dura mucho tiempo, puede afectar tu salud física y mental.",
+              "Pero si dura mucho tiempo, puede afectar tu salud física y mental",
               "Dificultad para dormir, dolores de cabeza, problemas digestivos o incluso mal genio",
               "Son señales de que debes parar y tomar un respiro."          
             ],
@@ -24,7 +24,7 @@
           {
             "character": "NPC",
             "text": [
-              "¡Gracias, Alma! Voy a intentar tomarme un tiempo para descansar."          
+              "¡Gracias, Alma! Voy a intentar tomarme un tiempo para descansar"          
             ],
             "triggerChoices": false
           }
@@ -45,16 +45,18 @@
           {
             "character": "Alma",
             "text": [
-              "Recuerda que el estrés prolongado puede traer consecuencias negativas.",
-              "Intenta identificar tus fuentes de estrés y busca soluciones pequeñas.",
-              "A veces, hablar de lo que te preocupa o tomarte unos minutos para ti mismo puede hacer la diferencia."
+              "Recuerda que el estrés prolongado puede traer consecuencias negativas",
+              "Intenta identificar tus fuentes de estrés y busca soluciones pequeñas",
+              "A veces, hablar de lo que te preocupa",
+              "O tomarte unos minutos para ti mismo puede hacer la diferencia"
             ],
             "triggerChoices": false
           },
           {
             "character": "NPC",
             "text": [
-              "¡Muchas gracias, Alma! Voy a intentar buscar esos pequeños momentos para relajarme."
+              "¡Muchas gracias, Alma!",
+              "Voy a intentar buscar esos pequeños momentos para relajarme"
             ],
             "triggerChoices": false
           }
@@ -75,15 +77,17 @@
           {
             "character": "Alma",
             "text": [
-              "El autocuidado no es un lujo, es una necesidad. Dormir bien, comer sano y buscar momentos para relajarte",
-              "Son pequeñas acciones que pueden cambiar tu día.",
-              "No descuides tu salud física y emocional por estar ocupado."
+              "El autocuidado no es un lujo, es una necesidad",
+              "Dormir bien, comer sano y buscar momentos para relajarte",
+              "Son pequeñas acciones que pueden cambiar tu día",
+              "No descuides tu salud física y emocional por estar ocupado"
             ],
             "triggerChoices": false
           },
           {
             "character": "NPC",
-            "text": [ "¡Gracias, Alma! Necesitaba un recordatorio de eso. Voy a comer algo y tomarme un descanso." ],
+            "text": [ "¡Gracias, Alma! Necesitaba un recordatorio de eso",
+            "Voy a comer algo y tomarme un descanso" ],
             "triggerChoices": false
           }
         ]
@@ -102,14 +106,19 @@
         "spanish": [
           {
             "character": "Alma",
-            "text": [ "Recuerda que el autocuidado no es solo descansar, sino también cuidar de ti mismo de manera integral.",
-            "Duerme bien, alimenta tu cuerpo de forma saludable y, sobre todo, haz espacio para ti.",
-            "Esto te ayudará a estar más fuerte y equilibrado."],
+            "text": [ "Recuerda que el autocuidado no es solo descansar",
+            "También es cuidar de ti mismo de manera integral",
+            "Duerme bien, alimenta tu cuerpo de forma saludable",
+            "Y, sobre todo, haz espacio para ti",
+            "Esto te ayudará a estar más fuerte y equilibrado"],
             "triggerChoices": false
           },
           {
             "character": "NPC",
-            "text": [ "Gracias, Alma. Voy a intentar descansar un poco más y tomarme un tiempo para mí." ],
+            "text": [
+              "Gracias, Alma.",
+              "Voy a intentar descansar un poco más y tomarme un tiempo para mí" 
+            ],
             "triggerChoices": false
           }
         ]
@@ -128,7 +137,8 @@
         "spanish": [
           {
             "character": "NPC",
-            "text": ["Últimamente me siento un poco desconectado, no sé qué hacer al respecto."],
+            "text": ["Últimamente me siento un poco desconectado",
+            "No sé qué hacer al respecto"],
             "triggerChoices": false
           },
           {
@@ -137,28 +147,28 @@
             "triggerChoices": true,
             "choices": [
               {
-                "text": "Decirle que se tome un descanso y se de un respiro.",
+                "text": "Decirle que se tome un descanso y se de un respiro",
                 "stressImpact": 2,
                 "selfCareImpact": 20,
                 "communicationImpact": 2,
                 "maintenanceImpact": 2
               },
               {
-                "text": "Sugerirle que quizás hablar con alguien de confianza sobre lo que siente podría ayudarle.",
+                "text": "Sugerirle que quizás hablar con alguien de confianza sobre lo que siente podría ayudarle",
                 "stressImpact": 2,
                 "selfCareImpact": 2,
                 "communicationImpact": 20,
                 "maintenanceImpact": 2
               },
               {
-                "text": "Decirle que Intente organizar sus tareas y que enfocarse en una cosa a la vez puede aliviarle.",
+                "text": "Decirle que Intente organizar sus tareas y que enfocarse en una cosa a la vez puede aliviarle",
                 "stressImpact": 2,
                 "selfCareImpact": 2,
                 "communicationImpact": 20,
                 "maintenanceImpact": 2
               },
               {
-                "text": "Finge demencia.",
+                "text": "Finge demencia",
                 "stressImpact": -5,
                 "selfCareImpact": -10,
                 "communicationImpact": -5,
@@ -171,16 +181,16 @@
             "text": [],
             "triggerChoices": false,
             "conditionalText1": [
-              "Eso suena bien, podría intentar descansar un poco.",
-              "Me parece buena idea, necesito organizarme mejor."
+              "Eso suena bien, podría intentar descansar un poco",
+              "Me parece buena idea, necesito organizarme mejor"
             ],
             "conditionalText2": [
-              "Hablar con alguien suena útil, pero no sé con quién.",
-              "No había pensado en hablarlo con alguien, podría probar."
+              "Hablar con alguien suena útil, pero no sé con quién",
+              "No había pensado en hablarlo con alguien, podría probar"
             ],
             "conditionalText3": [
-              "Definitivamente necesito organizarme mejor. Intentaré hacerlo de a poco.",
-              "Creo que podría tomar un respiro y enfocarme en una cosa a la vez."
+              "Definitivamente necesito organizarme mejor. Intentaré hacerlo de a poco",
+              "Creo que podría tomar un respiro y enfocarme en una cosa a la vez"
             ],
             "conditionalText4": [
               "Te miro, te observo, te analizo y te ignoro!"
@@ -202,7 +212,7 @@
         "spanish": [
           {
             "character": "NPC",
-            "text": [ "A veces me siento incomprendido, y no sé cómo decirlo." ],
+            "text": [ "A veces me siento incomprendido, y no sé cómo decirlo" ],
             "triggerChoices": false
           },
           {
@@ -211,21 +221,21 @@
             "triggerChoices": true,
             "choices": [
               {
-                "text": "Quizás podrías empezar por hablar con alguien de confianza y contarle cómo te sientes.",
+                "text": "Quizás podrías empezar por hablar con alguien de confianza y contarle cómo te sientes",
                 "stressImpact": 2,
                 "selfCareImpact": 2,
                 "communicationImpact": 20,
                 "maintenanceImpact": 2
               },
               {
-                "text": "Desahogarte escribiendo tus pensamientos también puede ayudarte a aclarar lo que sientes.",
+                "text": "Desahogarte escribiendo tus pensamientos también puede ayudarte a aclarar lo que sientes",
                 "stressImpact": 2,
                 "selfCareImpact": 2,
                 "communicationImpact": 20,
                 "maintenanceImpact": 2
               },
               {
-                "text": "Es importante que te des permiso para sentir lo que sientes sin miedo al juicio.",
+                "text": "Es importante que te des permiso para sentir lo que sientes sin miedo al juicio",
                 "stressImpact": 2,
                 "selfCareImpact": 2,
                 "communicationImpact": 20,
@@ -245,8 +255,8 @@
             "text": [],
             "triggerChoices": false,
             "conditionalText1": [
-              "¡Gracias! Hablarlo con alguien de confianza me hará sentir mejor.",
-              "Me siento mejor al poder compartirlo con alguien."
+              "¡Gracias! Hablarlo con alguien de confianza me hará sentir mejor",
+              "Me siento mejor al poder compartirlo con alguien"
             ],
             "conditionalText2": [
               "Escribiré lo que siento en mi diario",

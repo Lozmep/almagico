@@ -200,7 +200,7 @@ namespace EventManager
             if (!completedEvents.Contains(currentEvent.id)) { 
                 completedEvents.Add(currentEvent.id);
             }
-            if (completedEvents.Count == 4) {
+            if (completedEvents.Count == 1) {
                 achievementSystem.CompareValuesInChildren(1);
             }
         }

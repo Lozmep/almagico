@@ -21,7 +21,7 @@ public class AchievementManager : MonoBehaviour
             elapsedTime = 0f;            
         }
 
-        if (Mathf.FloorToInt(elapsedTime) > 180)
+        if (Mathf.FloorToInt(elapsedTime) > 30)
         {
             achievementSystem.CompareValuesInChildren(2);
             stopExecution = true;

@@ -101,7 +101,7 @@ public class GiveItemEvent : MonoBehaviour
                     string newString = delivery.deliverySum.ToString();
                     sellCount.text = "Ventas:" + newString;
 
-                    if (delivery.deliverySum == 10)
+                    if (delivery.deliverySum == 1)
                     {
                         achievEvent.CompareValuesInChildren(0);
                     }

@@ -13,7 +13,7 @@
                 {
                     "character": "Alma",
                     "text": [
-                        "A veces, unos minutos de descanso pueden marcar la diferencia.",
+                        "A veces, unos minutos de descanso pueden marcar la diferencia",
                         "Voy a buscar una aromatica, que te puede ayudar"
                     ]
                 }
@@ -27,15 +27,15 @@
                 {
                     "character": "NPC",
                     "text": [
-                        "Hoy me siento como si tuviera un peso enorme encima.",
-                        "Nada me sale bien."
+                        "Hoy me siento como si tuviera un peso enorme encima",
+                        "Nada me sale bien"
                     ]
                 },
                 {
                     "character": "Alma",
                     "text": [
                         "Es normal sentirse así a veces. Vamos a buscar una solución.",
-                        "Voy a buscar un libro ideal para este caso."
+                        "Voy a buscar un libro ideal para este caso"
                     ]
                 }
             ]
@@ -49,7 +49,7 @@
                     "character": "NPC",
                     "text": [
                         "No sé, Alma. Siento que no tengo tiempo ni para mí mismo",
-                        "No he podido desayunar nada."
+                        "No he podido desayunar nada"
                     ]
                 },
                 {
