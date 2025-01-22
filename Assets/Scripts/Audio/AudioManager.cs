@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
 
     public void Start()
     {
-        volumeSlider.value = volSaved;
+        volumeSlider.value = volSaved == 0f ? 0.3f : volSaved;
         volumeValue = volumeSlider.value;
         ChangeVolume();
         Play("Musica");
