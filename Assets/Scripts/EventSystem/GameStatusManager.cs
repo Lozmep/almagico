@@ -15,6 +15,7 @@ namespace GameSystem
 
         private void Start()
         {
+            Time.timeScale = 1f;
             panel.SetActive(false);
         }
 
