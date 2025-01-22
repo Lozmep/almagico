@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System.Collections; // Necesario para trabajar con TextMeshProUGUI
-using UnityEngine.UI;
 
 public class TextController : MonoBehaviour
 {
