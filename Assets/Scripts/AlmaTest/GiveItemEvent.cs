@@ -1,10 +1,7 @@
 using DialogueSystem;
-using System;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using TMPro;
 using Indicator;
-using SignalSystem;
 using System.Collections;
 
 public class GiveItemEvent : MonoBehaviour

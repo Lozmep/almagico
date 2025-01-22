@@ -45,8 +45,8 @@ namespace GameSystem
 
         public void QuitGame()
         {
-            //Application.Quit(); //PROD
-            UnityEditor.EditorApplication.isPlaying = false;
+            Application.Quit(); //PROD
+            //UnityEditor.EditorApplication.isPlaying = false;
         }
 
         public void Menu()
