@@ -53,7 +53,7 @@ public class GiveItemEvent : MonoBehaviour
         Vector3 direction = transform.forward;
         Vector3 origin = transform.position + new Vector3(0, verticalDistance, 0);
         
-        if (Input.GetKey(KeyCode.X) && !takeItem.isFree)
+        if (Input.GetKeyDown(KeyCode.X) && !takeItem.isFree)
         {
             Debug.DrawRay(origin, direction * maxDistance, Color.red);
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))
