@@ -7,12 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Amarillo
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: -3138371035411834140, guid: ea1a1cb409a2fdb4cb067a4fc55dce42, type: 3}
+  m_Name: Other Color
+  m_Shader: {fileID: 4800000, guid: 61e53729ad706d049b12a441f328fe34, type: 3}
+  m_Parent: {fileID: 2100000, guid: 59734b88a72799e46b377c98dabeedcf, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _METALLICGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,19 +25,10 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - _GlossMapScale: 0
-    - _GlossyReflections: 0
-    - _Parallax: 0.005
-    - _QueueControl: 0
-    m_Colors:
-    - _Color: {r: 0.917372, g: 0.7382938, b: 0.012800879, a: 1}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &316496147976203591
