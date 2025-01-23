@@ -11,7 +11,9 @@ namespace SignalSystem
 
         void Start()
         {
-            LoadEventsFromFile("Assets/Data/signals.json");
+            //LoadEventsFromFile("Assets/Data/signals.json");
+            string path = Path.Combine(Application.streamingAssetsPath, "signals.json");
+            LoadEventsFromFile(path);
         }
 
         // Update is called once per frame
