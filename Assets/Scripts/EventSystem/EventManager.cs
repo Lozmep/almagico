@@ -56,7 +56,9 @@ namespace EventManager
 
         void Start()
         {
-            LoadEventsFromFile("Assets/Data/events.json");
+            string path = Path.Combine(Application.streamingAssetsPath, "events.json");
+            LoadEventsFromFile(path);
+            //LoadEventsFromFile("Assets/Data/events.json");
             events = new Dictionary<System.Func<bool>, System.Action>
             {
                 { () => ShouldTriggerEvent(indicatorManager.stressIndicator, true), () => SelectEvent(IndicatorType.Stress) },
@@ -101,23 +103,23 @@ namespace EventManager
 
             if ((inverse && indicatorValue < 10f) || (!inverse && indicatorValue > 90f))
             {
-                prob = 1f;
+                prob = 10f;
             }
             else if ((inverse && indicatorValue >= 10f && indicatorValue < 30f) || (!inverse && indicatorValue > 70f && indicatorValue <= 90f))
             {
-                prob = 10f;
+                prob = 15f;
             }
             else if ((inverse && indicatorValue >= 30f && indicatorValue < 50f) || (!inverse && indicatorValue > 50f && indicatorValue <= 70f))
             {
-                prob = 20f;
+                prob = 30f;
             }
             else if ((inverse && indicatorValue >= 50f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 50f))
             {
-                prob = 30f;
+                prob = 50f;
             }
             else if ((inverse && indicatorValue >= 70f && indicatorValue < 90f) || (!inverse && indicatorValue > 10f && indicatorValue <= 30f))
             {
-                prob = 50f;
+                prob = 70f;
             }
             else
             {
