@@ -57,7 +57,7 @@ namespace Indicator {
         {
             while (true)
             {
-                decayRate = increaseDecayRate ? 3f : 2f;
+                decayRate = increaseDecayRate ? 5f : 2f;
                 yield return new WaitForSeconds(decayRate);
                 stressIndicator = Mathf.Clamp(stressIndicator + 2f, 0f, 100f);
                 selfCareIndicator = Mathf.Clamp(selfCareIndicator - 1f, 0f, 100f);
