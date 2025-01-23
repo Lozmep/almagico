@@ -34,7 +34,9 @@ public class EventDialogue : MonoBehaviour
 
     void Start()
     {
-        LoadEventsFromFile("Assets/Data/initialeventext.json");
+        //LoadEventsFromFile("Assets/Data/initialeventext.json");
+        string path = Path.Combine(Application.streamingAssetsPath, "initialeventext.json");
+        LoadEventsFromFile(path);
         isIndicated = false;
     }
 

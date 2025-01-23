@@ -1,10 +1,8 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using EventManager;
 using SignalSystem;
 using Indicator;
-using NUnit.Framework;
 
 namespace DialogueSystem
 {
