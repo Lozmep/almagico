@@ -6,6 +6,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using NUnit.Framework;
+using System.Linq;
 
 namespace EventManager
 {
@@ -20,6 +22,7 @@ namespace EventManager
         public int currentNPC;
         public NPC currentNpcObject; 
         public bool isFarming;
+        public List<EventData> currentEventPool = new List<EventData>();
 
         [Header("Event Management")]
         public AchievementSystem achievementSystem;
@@ -61,10 +64,9 @@ namespace EventManager
             //LoadEventsFromFile("Assets/Data/events.json");
             events = new Dictionary<System.Func<bool>, System.Action>
             {
-                { () => ShouldTriggerEvent(indicatorManager.stressIndicator, true), () => SelectEvent(IndicatorType.Stress) },
-                { () => ShouldTriggerEvent(indicatorManager.selfCareIndicator, false), () => SelectEvent(IndicatorType.SelfCare) },
-                { () => ShouldTriggerEvent(indicatorManager.communicationIndicator, false), () => SelectEvent(IndicatorType.Communication) },
-                { () => ShouldTriggerEvent(indicatorManager.maintenanceIndicator, false), () => SelectEvent(IndicatorType.Farming) }
+                { () => ShouldTriggerEvent(indicatorManager.stressIndicator, true, IndicatorType.Stress), () => SelectEvent(IndicatorType.Stress) },
+                { () => ShouldTriggerEvent(indicatorManager.selfCareIndicator, false, IndicatorType.SelfCare), () => SelectEvent(IndicatorType.SelfCare) },
+                { () => ShouldTriggerEvent(indicatorManager.communicationIndicator, false, IndicatorType.Communication), () => SelectEvent(IndicatorType.Communication) }
             };
             StartCoroutine(CheckForEventActivationRoutine());
         }
@@ -73,7 +75,7 @@ namespace EventManager
         {
             while (true)
             {
-                yield return new WaitForSeconds(10f); // Chequeo cada 10 segundos
+                yield return new WaitForSeconds(10f);
 
                 if (!eventInProgress)
                 {
@@ -97,8 +99,14 @@ namespace EventManager
             }
         }
 
-        private bool ShouldTriggerEvent(float indicatorValue, bool inverse)
+        private bool ShouldTriggerEvent(float indicatorValue, bool inverse, IndicatorType indicatorType)
         {
+            var foundEvent = currentEventPool.FirstOrDefault(e => e.mainIndicator == indicatorType);
+
+            if (foundEvent == null) {
+                return false;
+            }
+
             float prob = 0f;
 
             if ((inverse && indicatorValue < 10f) || (!inverse && indicatorValue > 90f))
@@ -132,7 +140,7 @@ namespace EventManager
 
         private EventData SelectEvent(IndicatorType indicatorType)
         {
-            List<EventData> shuffledEvents = new List<EventData>(eventPool);
+            List<EventData> shuffledEvents = new List<EventData>(currentEventPool);
             Shuffle(shuffledEvents);
 
             foreach (EventData e in shuffledEvents)
@@ -168,6 +176,8 @@ namespace EventManager
             {
                 string jsonContent = File.ReadAllText(path);
                 eventPool = JsonUtility.FromJson<EventDataArray>(jsonContent).eventList;
+                string serializedEventPool = JsonUtility.ToJson(new EventDataArray { eventList = eventPool });
+                currentEventPool = JsonUtility.FromJson<EventDataArray>(serializedEventPool).eventList;
             }
         }
 
@@ -192,7 +202,13 @@ namespace EventManager
                 } 
                 eventInProgress = false;
                 eventDialogue.isIndicated = false;
+                currentEventPool.RemoveAll(e => e.id == currentEvent.id);
+                if (currentEventPool.Count == 0)
+                {
+                    currentEventPool = eventPool;
+                }
                 checkEventAchievement();
+                currentNPC = 0;
                 currentEvent = null;
             }
         }
@@ -201,7 +217,7 @@ namespace EventManager
             if (!completedEvents.Contains(currentEvent.id)) { 
                 completedEvents.Add(currentEvent.id);
             }
-            if (completedEvents.Count == 4) {
+            if (completedEvents.Count == 6) {
                 achievementSystem.CompareValuesInChildren(1);
             }
         }

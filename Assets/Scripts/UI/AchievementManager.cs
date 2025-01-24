@@ -17,7 +17,7 @@ public class AchievementManager : MonoBehaviour
 
         elapsedTime += Time.deltaTime;
 
-        if (indicatorManager.globalIndicator < 200) {
+        if (indicatorManager.globalIndicator < 100) {
             elapsedTime = 0f;            
         }
 

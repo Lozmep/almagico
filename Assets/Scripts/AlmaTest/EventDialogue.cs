@@ -55,7 +55,7 @@ public class EventDialogue : MonoBehaviour
 
         if (eventManager.currentEvent == null || eventManager.currentEvent.mainIndicator == IndicatorType.Communication) return;
 
-        if (Input.GetKey(KeyCode.X) && takeItem.isFree)
+        if (Input.GetKey(KeyCode.X))
         {
             Debug.DrawRay(origin, direction * maxDistance, Color.red);
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask))

@@ -38,7 +38,7 @@
       "selfCareImpact": 5, 
       "communicationImpact": 5, 
       "maintenanceImpact": 5, 
-      "mainIndicator": 5,
+      "mainIndicator": 0,
       "status": 0,
       "dialogue": {
         "spanish": [
@@ -131,7 +131,7 @@
       "selfCareImpact": 5,
       "communicationImpact": 20,
       "maintenanceImpact": 5,
-      "mainIndicator": 5,
+      "mainIndicator": 2,
       "status": 0,
       "dialogue": {
         "spanish": [
