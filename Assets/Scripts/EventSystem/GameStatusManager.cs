@@ -11,12 +11,15 @@ namespace GameSystem
         public IndicatorManager indicatorManager;
         public TextMeshProUGUI title;
         public GameObject panel;
+        public GameObject pausePanel;
+        public bool isPaused;
         public bool isOver;
 
         private void Start()
         {
             Time.timeScale = 1f;
             panel.SetActive(false);
+            isPaused = true;
         }
 
         private void Update()
@@ -62,6 +65,22 @@ namespace GameSystem
         public void ResumeGame()
         {
             Time.timeScale = 1f;
+            isPaused = true;
+        }
+
+        public void PausePanel()
+        {
+            isPaused = !isPaused;
+
+            if (isPaused) { 
+                pausePanel.SetActive(false);
+                ResumeGame();
+            } else
+            {
+                pausePanel.SetActive(true);
+                PauseGame();
+            }
+            
         }
     }
 }
