@@ -68,10 +68,9 @@ namespace EventManager
                 { () => ShouldTriggerEvent(indicatorManager.selfCareIndicator, false, IndicatorType.SelfCare), () => SelectEvent(IndicatorType.SelfCare) },
                 { () => ShouldTriggerEvent(indicatorManager.communicationIndicator, false, IndicatorType.Communication), () => SelectEvent(IndicatorType.Communication) }
             };
-            StartCoroutine(CheckForEventActivationRoutine());
         }
 
-        private IEnumerator CheckForEventActivationRoutine()
+        public IEnumerator CheckForEventActivationRoutine()
         {
             while (true)
             {

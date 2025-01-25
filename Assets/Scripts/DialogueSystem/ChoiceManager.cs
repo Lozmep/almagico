@@ -30,6 +30,7 @@ namespace DialogueSystem
                     choiceButtons[i].gameObject.SetActive(false);
                 }
             }
+            gameObject.SetActive(true);
         }
 
         public void ButtonSelected(int index)

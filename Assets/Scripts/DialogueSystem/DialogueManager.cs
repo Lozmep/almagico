@@ -121,7 +121,6 @@ namespace DialogueSystem
                     isSelecting = true;
                     txtDialogue.text = dialogue.text[0];
                     choiceManager.SetChoiceTexts(dialogue.choices);
-                    choiceManager.gameObject.SetActive(true);
                     while (isSelecting) {
                         yield return new WaitForSeconds(0.1f);
                     }
@@ -346,6 +345,7 @@ namespace DialogueSystem
             if (isTutorial)
             {
                 StartCoroutine(indicatorManager.DecreaseIndicatorsRoutine());
+                StartCoroutine(eventManager.CheckForEventActivationRoutine());
                 isTutorial = false;
             }
         }
