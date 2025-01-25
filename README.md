@@ -1,4 +1,4 @@
-# Proyecto **[Almágico]**
+# Proyecto Almágico
 
 ## Descripción
 
