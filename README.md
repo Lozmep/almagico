@@ -8,10 +8,10 @@ Este proyecto es parte del curso de desarrollo de videojuegos ofrecido por Acade
 
 ### Integrantes:
 
-1. **[Mauricio Lozano Perez]:**
-2. **[Julián Camilo Cabrera Echeverri]:**
-3. **[Valentina Uribe Valencia]:**
-4. **[Juan David Cadavid Rodriguez]:**
+1. **Mauricio Lozano Perez**
+2. **Julián Camilo Cabrera Echeverri**
+3. **Valentina Uribe Valencia**
+4. **Juan David Cadavid Rodriguez**
 
 ### GDD:
 
