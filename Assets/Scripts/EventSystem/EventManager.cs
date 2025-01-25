@@ -1,8 +1,13 @@
+using DialogueSystem;
 using Indicator;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using NUnit.Framework;
+using System.Linq;
 
 namespace EventManager
 {
@@ -15,6 +20,24 @@ namespace EventManager
         public List<EventData> eventPool = new List<EventData>();
         public EventData currentEvent;
         public int currentNPC;
+        public NPC currentNpcObject; 
+        public bool isFarming;
+        public List<EventData> currentEventPool = new List<EventData>();
+
+        [Header("Event Management")]
+        public AchievementSystem achievementSystem;
+
+        [Header("Dialogue Management")]
+        public DialogueManager dialogueManager;
+
+        [Header("Initial Event Dialogue Management")]
+        public EventDialogue eventDialogue;
+        private List<int> completedEvents = new List<int>();
+
+        [Header("Fade feature")]
+        public FadeObject fade;
+        public Image activatePanel;
+        public TextMeshProUGUI activatePanelText;
 
         // Tiempo
         //private float timeSinceLastCheck = 0f;
@@ -36,26 +59,25 @@ namespace EventManager
 
         void Start()
         {
-            LoadEventsFromFile("Assets/Data/events.json");
+            string path = Path.Combine(Application.streamingAssetsPath, "events.json");
+            LoadEventsFromFile(path);
+            //LoadEventsFromFile("Assets/Data/events.json");
             events = new Dictionary<System.Func<bool>, System.Action>
             {
-                { () => ShouldTriggerEvent(indicatorManager.stressIndicator, true), () => SelectEvent(IndicatorType.Stress) },
-                { () => ShouldTriggerEvent(indicatorManager.selfCareIndicator, false), () => SelectEvent(IndicatorType.SelfCare) },
-                { () => ShouldTriggerEvent(indicatorManager.communicationIndicator, false), () => SelectEvent(IndicatorType.Communication) },
-                { () => ShouldTriggerEvent(indicatorManager.maintenanceIndicator, false), () => SelectEvent(IndicatorType.Farming) }
+                { () => ShouldTriggerEvent(indicatorManager.stressIndicator, true, IndicatorType.Stress), () => SelectEvent(IndicatorType.Stress) },
+                { () => ShouldTriggerEvent(indicatorManager.selfCareIndicator, false, IndicatorType.SelfCare), () => SelectEvent(IndicatorType.SelfCare) },
+                { () => ShouldTriggerEvent(indicatorManager.communicationIndicator, false, IndicatorType.Communication), () => SelectEvent(IndicatorType.Communication) }
             };
-            StartCoroutine(CheckForEventActivationRoutine());
         }
 
-        private IEnumerator CheckForEventActivationRoutine()
+        public IEnumerator CheckForEventActivationRoutine()
         {
             while (true)
             {
-                yield return new WaitForSeconds(10f); // Chequeo cada 10 segundos
+                yield return new WaitForSeconds(10f);
 
                 if (!eventInProgress)
                 {
-                    Debug.Log("Validando si evento se debe activar");
                     ValidateAndActivateEvent();
                 }
             }
@@ -63,15 +85,6 @@ namespace EventManager
 
         private void ValidateAndActivateEvent()
         {
-            // Reduce el cooldown si es necesario
-            //if (eventCooldownTimer > 0)
-            //{
-            //    eventCooldownTimer -= Time.deltaTime;
-            //    return;
-            //}
-            // Mezclar las claves (condiciones)
-
-            // Evaluar condiciones en orden aleatorio
             var shuffledKeys = new List<System.Func<bool>>(events.Keys);
             Shuffle(shuffledKeys);
 
@@ -80,58 +93,44 @@ namespace EventManager
                 if (condition.Invoke())
                 {
                     events[condition].Invoke();
-                    break; // Salir al cumplirse la primera condición
+                    break;
                 }
             }
-
-            // SE CAMBIA PARA QUE LA PRIORIDAD NO SIEMPRE SEA LA MISMA
-            //if (ShouldTriggerEvent(stressIndicator, true))
-            //{
-            //    EventData eventSelected = SelectEvent(IndicatorType.Stress);
-            //}
-            //else if (ShouldTriggerEvent(selfCareIndicator, false))
-            //{
-            //    EventData eventSelected = SelectEvent(IndicatorType.SelfCare);
-            //}
-            //else if (ShouldTriggerEvent(communicationIndicator, false))
-            //{
-            //    EventData eventSelected = SelectEvent(IndicatorType.Communication);
-            //}
-            //else if (validateIndicatorProb(maintenanceIndicator, false))
-            //{
-
-
-
-            //}
-            //// Busca un evento elegible
-            //foreach (var e in eventPool)
-            //{
-            //    if (e.status == EventStatus.Pending && ShouldActivateEvent(e))
-            //    {
-            //        ActivateEvent(e);
-            //        break;
-            //    }
-            //}
         }
 
-        private bool ShouldTriggerEvent(float indicatorValue, bool inverse)
+        private bool ShouldTriggerEvent(float indicatorValue, bool inverse, IndicatorType indicatorType)
         {
+            var foundEvent = currentEventPool.FirstOrDefault(e => e.mainIndicator == indicatorType);
+
+            if (foundEvent == null) {
+                return false;
+            }
+
             float prob = 0f;
 
-            if ((inverse && indicatorValue < 30f) || (!inverse && indicatorValue > 70f))
+            if ((inverse && indicatorValue < 10f) || (!inverse && indicatorValue > 90f))
             {
-                Debug.Log("PROP 15");
+                prob = 10f;
+            }
+            else if ((inverse && indicatorValue >= 10f && indicatorValue < 30f) || (!inverse && indicatorValue > 70f && indicatorValue <= 90f))
+            {
                 prob = 15f;
             }
-            else if ((inverse && indicatorValue >= 30f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 70f))
+            else if ((inverse && indicatorValue >= 30f && indicatorValue < 50f) || (!inverse && indicatorValue > 50f && indicatorValue <= 70f))
             {
-                Debug.Log("PROP 30");
                 prob = 30f;
+            }
+            else if ((inverse && indicatorValue >= 50f && indicatorValue < 70f) || (!inverse && indicatorValue > 30f && indicatorValue <= 50f))
+            {
+                prob = 50f;
+            }
+            else if ((inverse && indicatorValue >= 70f && indicatorValue < 90f) || (!inverse && indicatorValue > 10f && indicatorValue <= 30f))
+            {
+                prob = 70f;
             }
             else
             {
-                Debug.Log("PROP 65");
-                prob = 60f;
+                prob = 100f;
             }
 
             float randomValue = Random.Range(0f, 100f);
@@ -140,7 +139,7 @@ namespace EventManager
 
         private EventData SelectEvent(IndicatorType indicatorType)
         {
-            List<EventData> shuffledEvents = new List<EventData>(eventPool);
+            List<EventData> shuffledEvents = new List<EventData>(currentEventPool);
             Shuffle(shuffledEvents);
 
             foreach (EventData e in shuffledEvents)
@@ -157,65 +156,18 @@ namespace EventManager
 
         private void ActivateEvent()
         {
+            StartCoroutine(fade.Fading(activatePanel, activatePanelText));
             currentNPC = Random.Range(1, 4);
+            currentNpcObject = dialogueManager.npcList[currentNPC - 1];
+            currentNpcObject.exclamation.SetActive(true);
             lastEventId = currentEvent.id;
-            indicatorManager.IncreaseDecayRate = true;
-            Debug.Log($"Evento activado: {currentEvent.name}");
 
-            // Cambiar el estado del evento
+            indicatorManager.IncreaseDecayRate = true;
+
             currentEvent.status = EventStatus.InProgress;
             eventInProgress = true;
-
-            // Inicia el proceso para finalizar el evento
-            //StartCoroutine(EndEventAfterDelay(5f)); // La duración del evento es de 5 segundos
-            StartCoroutine(EndEventWhenStatusChanges()); // La duración del evento es de 5 segundos
-
-            // Quizas debo validar en la corutina si el evento cambia a estado completado, ahi activo el end event
+            isFarming = false;
         }
-
-        private IEnumerator EndEventWhenStatusChanges()
-        {
-            while (currentEvent != null && currentEvent.status != EventStatus.Completed)
-            {
-                yield return null; // Espera hasta el siguiente frame.
-            }
-
-            // Aplicar impacto en los indicadores
-
-            indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
-
-            // Cambiar el estado del evento
-            eventInProgress = false;
-            //eventCooldownTimer = cooldownDuration;
-
-            Debug.Log($"Evento finalizado: {currentEvent.name}");
-            currentEvent = null;
-        }
-
-
-        // SE MODIFICA PARA QUE NO SEA CADA CIERTO TIEMPO, SINO CUANDO TERMINA EL EVENTO
-        //private IEnumerator EndEventAfterDelay(float duration)
-        //{
-        //    yield return new WaitForSeconds(duration);
-
-        //    // Aplicar impacto en los indicadores
-        //    stressIndicator = Mathf.Clamp(stressIndicator + currentEvent.stressImpact, 0f, 100f);
-        //    selfCareIndicator = Mathf.Clamp(selfCareIndicator + currentEvent.selfCareImpact, 0f, 100f);
-        //    communicationIndicator = Mathf.Clamp(communicationIndicator + currentEvent.communicationImpact, 0f, 100f);
-        //    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator + currentEvent.maintenanceImpact, 0f, 100f);
-
-        //    // Cambia el estado del evento a completado
-        //    currentEvent.status = EventStatus.Completed; // Cuando valide la completitud esto ya no es necesario
-        //    eventInProgress = false;
-
-        //    // Reinicia el cooldown
-        //    eventCooldownTimer = cooldownDuration;
-
-        //    Debug.Log($"Evento finalizado: {currentEvent.name}");
-        //    currentEvent = null;
-        //}
-
-
 
         private void LoadEventsFromFile(string path)
         {
@@ -223,10 +175,8 @@ namespace EventManager
             {
                 string jsonContent = File.ReadAllText(path);
                 eventPool = JsonUtility.FromJson<EventDataArray>(jsonContent).eventList;
-            }
-            else
-            {
-                Debug.LogError("No se encontró el archivo de eventos: " + path);
+                string serializedEventPool = JsonUtility.ToJson(new EventDataArray { eventList = eventPool });
+                currentEventPool = JsonUtility.FromJson<EventDataArray>(serializedEventPool).eventList;
             }
         }
 
@@ -243,9 +193,31 @@ namespace EventManager
         {
             if (currentEvent != null)
             {
+                currentNpcObject.exclamation.SetActive(false);
                 currentEvent.status = EventStatus.Completed;
                 indicatorManager.IncreaseDecayRate = true;
-                Debug.Log($"Evento {currentEvent.name} completado.");
+                if (currentEvent.mainIndicator != IndicatorType.Communication || currentEvent.mainIndicator != IndicatorType.Farming) {
+                    indicatorManager.modifyIndicators(currentEvent.stressImpact, currentEvent.selfCareImpact, currentEvent.communicationImpact, currentEvent.maintenanceImpact);
+                } 
+                eventInProgress = false;
+                eventDialogue.isIndicated = false;
+                currentEventPool.RemoveAll(e => e.id == currentEvent.id);
+                if (currentEventPool.Count == 0)
+                {
+                    currentEventPool = eventPool;
+                }
+                checkEventAchievement();
+                currentNPC = 0;
+                currentEvent = null;
+            }
+        }
+
+        private void checkEventAchievement() {
+            if (!completedEvents.Contains(currentEvent.id)) { 
+                completedEvents.Add(currentEvent.id);
+            }
+            if (completedEvents.Count == 6) {
+                achievementSystem.CompareValuesInChildren(1);
             }
         }
     }
@@ -275,10 +247,11 @@ namespace EventManager
         public float selfCareImpact;
         public float communicationImpact;
         public float maintenanceImpact;
+        public DialogueScript dialogue;
         public IndicatorType mainIndicator;
         public EventStatus status;
     }
-
+    
     [System.Serializable]
     public class EventDataArray
     {

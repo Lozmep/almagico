@@ -1,4 +1,5 @@
 using System.Collections;
+using UI;
 using UnityEngine;
 
 namespace Indicator {    
@@ -10,6 +11,17 @@ namespace Indicator {
         [Range(0f, 100f)] public float communicationIndicator = 100f;
         [Range(0f, 100f)] public float maintenanceIndicator = 100f;
         [Range(0f, 400f)] public float globalIndicator = 400f;
+
+        [Header("Indicators UI")]
+        public ProgressBar stressBar;
+        public ProgressBar selfcareBar;
+        public ProgressBar communicationBar;
+        public ProgressBar maintenanceBar;
+        public ProgressBar globalBar;
+
+        [Header("Event Manager")]
+        private EventManager.EventManager eventManager;
+        public bool isGameOver;
 
         [Range(0, 1)] private int threshold;
         private bool increaseDecayRate = false;
@@ -26,24 +38,45 @@ namespace Indicator {
             set { increaseDecayRate = value; }
         }
 
-        void Start()
+        private void Awake()
         {
-            StartCoroutine(DecreaseIndicatorsRoutine());
+            eventManager = GetComponent<EventManager.EventManager>();
         }
 
-        private IEnumerator DecreaseIndicatorsRoutine()
+        private void Update()
+        {
+            if (globalIndicator <= 0)
+            {
+                isGameOver = true;
+                gameObject.SetActive(false);
+                return;
+            }
+        }
+
+        public IEnumerator DecreaseIndicatorsRoutine()
         {
             while (true)
             {
-                decayRate = increaseDecayRate ? 10f : 2f;
+                decayRate = increaseDecayRate ? 5f : 2f;
                 yield return new WaitForSeconds(decayRate);
                 stressIndicator = Mathf.Clamp(stressIndicator + 2f, 0f, 100f);
                 selfCareIndicator = Mathf.Clamp(selfCareIndicator - 1f, 0f, 100f);
                 communicationIndicator = Mathf.Clamp(communicationIndicator - 1f, 0f, 100f);
-                maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 1f, 0f, 100f);
 
-                UpdateGlobalIndicator();
-                Debug.Log($"[Indicadores] Estrés: {stressIndicator}, Autocuidado: {selfCareIndicator}, Comunicación: {communicationIndicator}, Mantenimiento: {maintenanceIndicator}, Global: {globalIndicator}");           
+                if(eventManager.isFarming)
+                {
+                    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 2f, 0f, 100f);
+                } else
+                {
+                    maintenanceIndicator = Mathf.Clamp(maintenanceIndicator - 1f, 0f, 100f);
+                }
+
+                stressBar.SetProgress(stressIndicator);
+                selfcareBar.SetProgress(100f - selfCareIndicator);
+                communicationBar.SetProgress(100f - communicationIndicator);
+                maintenanceBar.SetProgress(100f - maintenanceIndicator);
+
+                UpdateGlobalIndicator();                
             }
         }
 
@@ -51,9 +84,10 @@ namespace Indicator {
         {
             globalIndicator = selfCareIndicator + communicationIndicator + maintenanceIndicator + (100 - stressIndicator);
 
+            globalBar.SetProgress(400f - globalIndicator);
+
             if (globalIndicator < 200)
             {
-                Debug.Log("¡Umbral crítico alcanzado en el indicador global!");
                 threshold = 1;
             } 
             else
