@@ -19,6 +19,6 @@ This project is part of the video game development course offered by Academy by 
 
 ### Instructions:
 
-1. Download the game [here].(https://drive.google.com/drive/folders/1BAR-b67RuJdJyaggK_7HQklvqJAykzyz?usp=sharing).
+1. Download the game [here](https://drive.google.com/drive/folders/1BAR-b67RuJdJyaggK_7HQklvqJAykzyz?usp=sharing).
 2. Run the main file **ProyectoAlmaG1.exe**.
 3. Follow the instructions when starting the game.
