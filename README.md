@@ -1,12 +1,12 @@
-# Proyecto Almágico
+# Almágico
 
 ## Descripción
 
-Este proyecto es parte del curso de desarrollo de videojuegos ofrecido por Academy by PolygonUs. Almágico es un juego de simulación en el que el jugador asume el rol de Alma, una psicóloga encargada de gestionar las emociones de los agricultores de una granja. El jugador debe equilibrar la salud emocional de los NPCs (estrés, autocuidado, comunicación asertiva) mientras mantiene la granja funcionando. La dinámica se centra en mejorar el bienestar mental de los personajes a través de interacciones y actividades, mientras se cultiva y vende productos para sostener la granja.
+This project is part of the video game development course offered by Academy by PolygonUs. Almágico is a simulation game where the player takes on the role of Alma, a psychologist tasked with managing the emotions of the farmers on a farm. The player must balance the NPCs' emotional health (stress, self-care, assertive communication) while keeping the farm operational. The gameplay focuses on improving the characters' mental well-being through interactions and activities, while also cultivating and selling products to sustain the farm.
 
-## Equipo de desarrollo
+## Development Team
 
-### Integrantes:
+### Members:
 
 1. **Mauricio Lozano Perez**
 2. **Julián Camilo Cabrera Echeverri**
@@ -15,10 +15,10 @@ Este proyecto es parte del curso de desarrollo de videojuegos ofrecido por Acade
 
 ### GDD:
 
-[Enlace al GDD](https://docs.google.com/document/d/1SLRhr6Oyaw0mIqaf1ijUOe5O0Az5ZUszf-XZqggstJk/edit?usp=sharing)
+[Link to the GDD](https://docs.google.com/document/d/1SLRhr6Oyaw0mIqaf1ijUOe5O0Az5ZUszf-XZqggstJk/edit?usp=sharing)
 
-### Instrucciones:
+### Instructions:
 
-1. Descargar el juego [aquí](https://drive.google.com/drive/folders/1BAR-b67RuJdJyaggK_7HQklvqJAykzyz?usp=sharing).
-2. Ejecutar el archivo principal ([ProyectoAlmaG1.exe]).
-3. Seguir las instrucciones al comenzar la partida.
+1. Download the game [here].(https://drive.google.com/drive/folders/1BAR-b67RuJdJyaggK_7HQklvqJAykzyz?usp=sharing).
+2. Run the main file **ProyectoAlmaG1.exe**.
+3. Follow the instructions when starting the game.
