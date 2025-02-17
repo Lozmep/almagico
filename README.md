@@ -1,6 +1,6 @@
 # Almágico
 
-## Descripción
+## Description
 
 This project is part of the video game development course offered by Academy by PolygonUs. Almágico is a simulation game where the player takes on the role of Alma, a psychologist tasked with managing the emotions of the farmers on a farm. The player must balance the NPCs' emotional health (stress, self-care, assertive communication) while keeping the farm operational. The gameplay focuses on improving the characters' mental well-being through interactions and activities, while also cultivating and selling products to sustain the farm.
 
