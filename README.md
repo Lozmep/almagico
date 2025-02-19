@@ -17,6 +17,9 @@ This project is part of the video game development course offered by Academy by 
 
 [Link to the GDD](https://docs.google.com/document/d/1SLRhr6Oyaw0mIqaf1ijUOe5O0Az5ZUszf-XZqggstJk/edit?usp=sharing)
 
+## Gameplay 
+Check out our gameplay [here](https://youtu.be/EeNCt4PmW0U).
+
 ### Instructions:
 
 1. Download the game [here](https://drive.google.com/drive/folders/1BAR-b67RuJdJyaggK_7HQklvqJAykzyz?usp=sharing).
